@@ -14,53 +14,27 @@ export const crmDashboardData = {
     statisticData: [
         {
             key: 'newLeads',
-            label: 'New Leads',
+            label: 'Total Patients',
             value: 63,
             growShrink: 2.6,
         },
         {
-            key: 'emailResponse',
-            label: 'Email',
+            key: 'appointments',
+            label: 'Appointments',
             value: 25,
             growShrink: 5.5,
         },
         {
-            key: 'proposals',
-            label: 'Proposals',
+            key: 'prescriptions',
+            label: 'Prescriptions',
             value: 49,
             growShrink: -0.7,
         },
         {
-            key: 'appointment',
-            label: 'Appointment',
+            key: 'totalEarnings',
+            label: 'Total Earnings',
             value: 12,
             growShrink: 2.6,
-        },
-    ],
-    leadByRegionData: [
-        {
-            name: 'United States of America',
-            value: 37.61,
-        },
-        {
-            name: 'Brazil',
-            value: 16.79,
-        },
-        {
-            name: 'India',
-            value: 12.42,
-        },
-        {
-            name: 'China',
-            value: 9.85,
-        },
-        {
-            name: 'Algeria',
-            value: 7.68,
-        },
-        {
-            name: 'Indonesia',
-            value: 5.11,
         },
     ],
     recentLeadsData: [
@@ -119,11 +93,79 @@ export const crmDashboardData = {
             assignee: 'Perry Ward',
         },
     ],
-    emailSentData: {
-        precent: 73,
-        opened: 893,
-        unopen: 330,
-        total: 1223,
+    revStatsData: {
+        week: {
+            series: [
+                {
+                    name: 'Porfolio Balance',
+                    data: [
+                        24773.31, 33188.05, 29175.61, 36728.42, 34730.97,
+                        43912.42, 40774.19,
+                    ],
+                },
+            ],
+            timeRange: [
+                '01 Feb',
+                '02 Feb',
+                '03 Feb',
+                '04 Feb',
+                '05 Feb',
+                '06 Feb',
+                '07 Feb',
+            ],
+        },
+        month: {
+            series: [
+                {
+                    name: 'Porfolio Balance',
+                    data: [
+                        14576.39, 23895.12, 19473.64, 26454.96, 24741.98,
+                        33153.32, 30218.32, 37645.11, 35556.15, 38886.34,
+                        36135.95, 45966.12,
+                    ],
+                },
+            ],
+            timeRange: [
+                '02 Jan',
+                '05 Jan',
+                '07 Jan',
+                '10 Jan',
+                '13 Jan',
+                '15 Jan',
+                '18 Jan',
+                '20 Jan',
+                '23 Jan',
+                '25 Jan',
+                '28 Jan',
+                '30 Jan',
+            ],
+        },
+        year: {
+            series: [
+                {
+                    name: 'Porfolio Balance',
+                    data: [
+                        20874.12, 26583.56, 23943.65, 24453.84, 22473.43,
+                        29185.37, 27815.48, 36834.69, 32422.11, 35888.32,
+                        32112.84, 38764.22,
+                    ],
+                },
+            ],
+            timeRange: [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+            ],
+        },
     },
 }
 

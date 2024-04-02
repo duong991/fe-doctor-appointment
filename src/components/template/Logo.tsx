@@ -21,19 +21,28 @@ const Logo = (props: LogoProps) => {
         logoWidth = 'auto',
     } = props
 
+    const logoStyle = {
+        ...style,
+        width: logoWidth,
+        margin: '15px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+    const textStyle = {
+        color: '#333',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        marginLeft: '10px',
+    }
     return (
-        <div
-            className={classNames('logo', className)}
-            style={{
-                ...style,
-                ...{ width: logoWidth },
-            }}
-        >
+        <div className={classNames('logo')} style={logoStyle}>
             <img
                 className={imgClass}
-                src={`${LOGO_SRC_PATH}logo-${mode}-${type}.png`}
+                src={`${LOGO_SRC_PATH}DoctorQ.svg`}
                 alt={`${APP_NAME} logo`}
             />
+            {className === 'px-6' && <p style={textStyle}>DoctorQ</p>}
         </div>
     )
 }

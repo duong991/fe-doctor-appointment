@@ -746,7 +746,7 @@ export const marketData = {
 }
 
 export const cryptoDashboardData = {
-    portfolioStatsData: {
+    RevStatsData: {
         week: {
             series: [
                 {
