@@ -17,9 +17,9 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                     backgroundImage: `url('/img/others/auth-side-bg.jpg')`,
                 }}
             >
-                <Logo mode="dark" />
+                <Logo mode="light" textColor="white" className="px-6" />
                 <div>
-                    <div className="mb-6 flex items-center gap-4">
+                    {/* <div className="mb-6 flex items-center gap-4">
                         <Avatar
                             className="border-2 border-white"
                             shape="circle"
@@ -35,8 +35,8 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                     <p className="text-lg text-white opacity-80">
                         Elstar comes with a complete set of UI components
                         crafted with Tailwind CSS, it fulfilled most of the use
-                        case to create modern and beautiful UI and application
-                    </p>
+                        case to create modern and beautiful UI and application */}
+                    {/* </p> */}
                 </div>
                 <span className="text-white">
                     Copyright &copy; {`${new Date().getFullYear()}`}{' '}

@@ -28,13 +28,6 @@ export type Lead = {
     assignee: string
 }
 
-export type Emails = {
-    precent: number
-    opened: number
-    unopen: number
-    total: number
-}
-
 export type DashboardData = {
     statisticData: Statistic[]
     recentLeadsData: Lead[]

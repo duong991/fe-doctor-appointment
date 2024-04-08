@@ -1,18 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_BASE_NAME } from './constants'
+import { Role } from '@/@types/enum'
+
+// export type UserState = {
+//     avatar?: string
+//     userName?: string
+//     email?: string
+//     authority?: string[]
+// }
 
 export type UserState = {
-    avatar?: string
-    userName?: string
-    email?: string
-    authority?: string[]
+    email: string
+    userId?: string
+    role?: Role
 }
 
 const initialState: UserState = {
-    avatar: '',
-    userName: '',
     email: '',
-    authority: [],
+    userId: '',
 }
 
 const userSlice = createSlice({
@@ -20,10 +25,9 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action: PayloadAction<UserState>) {
-            state.avatar = action.payload?.avatar
             state.email = action.payload?.email
-            state.userName = action.payload?.userName
-            state.authority = action.payload?.authority
+            state.userId = action.payload?.userId
+            state.role = action.payload?.role
         },
     },
 })

@@ -1,4 +1,4 @@
-import ApiService from './ApiService'
+import ApiService, { IResponse } from './ApiService'
 import type {
     SignInCredential,
     SignUpCredential,
@@ -9,20 +9,20 @@ import type {
 } from '@/@types/auth'
 
 export async function apiSignIn(data: SignInCredential) {
-    return ApiService.fetchData<SignInResponse>({
-        url: '/sign-in',
+    return ApiService.fetchData<IResponse<SignInResponse>>({
+        url: '/login',
         method: 'post',
         data,
     })
 }
 
-export async function apiSignUp(data: SignUpCredential) {
-    return ApiService.fetchData<SignUpResponse>({
-        url: '/sign-up',
-        method: 'post',
-        data,
-    })
-}
+// export async function apiSignUp(data: SignUpCredential) {
+//     return ApiService.fetchData<SignUpResponse>({
+//         url: '/sign-up',
+//         method: 'post',
+//         data,
+//     })
+// }
 
 export async function apiSignOut() {
     return ApiService.fetchData({

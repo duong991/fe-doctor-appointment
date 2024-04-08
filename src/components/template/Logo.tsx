@@ -7,6 +7,7 @@ interface LogoProps extends CommonProps {
     mode?: 'light' | 'dark'
     imgClass?: string
     logoWidth?: number | string
+    textColor?: 'white'
 }
 
 const LOGO_SRC_PATH = '/img/logo/'
@@ -19,6 +20,7 @@ const Logo = (props: LogoProps) => {
         imgClass,
         style,
         logoWidth = 'auto',
+        textColor,
     } = props
 
     const logoStyle = {
@@ -30,7 +32,7 @@ const Logo = (props: LogoProps) => {
         alignItems: 'center',
     }
     const textStyle = {
-        color: '#333',
+        color: textColor === 'white' ? 'white' : '#333',
         fontSize: '20px',
         fontWeight: 'bold',
         marginLeft: '10px',

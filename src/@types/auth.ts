@@ -1,15 +1,17 @@
+import { Role } from './enum'
+
 export type SignInCredential = {
-    userName: string
+    email: string
     password: string
 }
 
 export type SignInResponse = {
-    token: string
-    user: {
-        userName: string
-        authority: string[]
-        avatar: string
+    accessToken: string
+    refreshToken: string
+    userData: {
         email: string
+        userId?: string
+        role?: Role
     }
 }
 
