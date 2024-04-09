@@ -22,7 +22,7 @@ export type Lead = {
     id: number
     name: string
     avatar: string
-    status: number
+    // status: number
     createdTime: number
     email: string
     assignee: string

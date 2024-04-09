@@ -29,32 +29,32 @@ const NameColumn = ({ row }: { row: Lead }) => {
     )
 }
 
-const LeadStatus = ({ status }: { status: number }) => {
-    switch (status) {
-        case 0:
-            return <Tag className="rounded-md">New</Tag>
-        case 1:
-            return (
-                <Tag className="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100  border-0 rounded">
-                    Sold
-                </Tag>
-            )
-        case 2:
-            return (
-                <Tag className="text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20  border-0 rounded">
-                    Not Interested
-                </Tag>
-            )
-        case 3:
-            return (
-                <Tag className="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-100 border-0 rounded">
-                    In Progress
-                </Tag>
-            )
-        default:
-            return <></>
-    }
-}
+// const LeadStatus = ({ status }: { status: number }) => {
+//     switch (status) {
+//         case 0:
+//             return <Tag className="rounded-md">New</Tag>
+//         case 1:
+//             return (
+//                 <Tag className="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100  border-0 rounded">
+//                     Sold
+//                 </Tag>
+//             )
+//         case 2:
+//             return (
+//                 <Tag className="text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20  border-0 rounded">
+//                     Not Interested
+//                 </Tag>
+//             )
+//         case 3:
+//             return (
+//                 <Tag className="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-100 border-0 rounded">
+//                     In Progress
+//                 </Tag>
+//             )
+//         default:
+//             return <></>
+//     }
+// }
 
 const columnHelper = createColumnHelper<Lead>()
 
@@ -66,13 +66,13 @@ const columns = [
             return <NameColumn row={row} />
         },
     }),
-    columnHelper.accessor('status', {
-        header: 'Status',
-        cell: (props) => {
-            const row = props.row.original
-            return <LeadStatus status={row.status} />
-        },
-    }),
+    // columnHelper.accessor('status', {
+    //     header: 'Status',
+    //     cell: (props) => {
+    //         const row = props.row.original
+    //         return <LeadStatus status={row.status} />
+    //     },
+    // }),
     columnHelper.accessor('email', {
         header: 'Email',
     }),
