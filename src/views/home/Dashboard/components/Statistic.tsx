@@ -10,6 +10,7 @@ import {
     HiOutlineTrendingDown,
 } from 'react-icons/hi'
 import type { Statistic } from '../store'
+import { convertNumberToOneDecimalPlaces } from '@/utils'
 
 const GrowShrink = ({ value }: { value: number }) => {
     return (
@@ -80,7 +81,6 @@ const StatisticIcon = ({ type }: { type?: string }) => {
 }
 
 const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
-    console.log('🚀 ~ StatisticCard ~ data:', data.value)
     return (
         <Card>
             <div className="flex items-center gap-4">
@@ -93,7 +93,11 @@ const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
                         <p className="font-semibold">{data.label}</p>
                     </div>
                     <p className="flex items-center gap-1">
-                        <GrowShrink value={data.growShrink || 0} />
+                        <GrowShrink
+                            value={convertNumberToOneDecimalPlaces(
+                                data.growShrink || 0
+                            )}
+                        />
                         <span>this month</span>
                     </p>
                 </div>
@@ -103,7 +107,6 @@ const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
 }
 
 const Statistic = ({ data = [] }: { data?: Partial<Statistic>[] }) => {
-    console.log('🚀 ~ Statistic ~ data:', data)
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
             {data.map((card) => (
