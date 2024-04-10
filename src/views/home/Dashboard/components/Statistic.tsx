@@ -80,13 +80,16 @@ const StatisticIcon = ({ type }: { type?: string }) => {
 }
 
 const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
+    console.log('🚀 ~ StatisticCard ~ data:', data.value)
     return (
         <Card>
             <div className="flex items-center gap-4">
                 <StatisticIcon type={data.key} />
                 <div>
                     <div className="flex gap-1.5 items-end mb-2">
-                        <h3 className="font-bold leading-none">{data.value}</h3>
+                        <h3 className="font-bold leading-none">
+                            {data?.value || 0}
+                        </h3>
                         <p className="font-semibold">{data.label}</p>
                     </div>
                     <p className="flex items-center gap-1">
@@ -100,6 +103,7 @@ const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
 }
 
 const Statistic = ({ data = [] }: { data?: Partial<Statistic>[] }) => {
+    console.log('🚀 ~ Statistic ~ data:', data)
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
             {data.map((card) => (
