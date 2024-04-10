@@ -23,7 +23,11 @@ const { Tr, Td, TBody, THead, Th } = Table
 const NameColumn = ({ row }: { row: Lead }) => {
     return (
         <div className="flex items-center gap-2">
-            <Avatar shape="circle" size={25} src={row.avatar} />
+            <Avatar
+                shape="circle"
+                size={25}
+                src={'http://localhost:3000' + row.avatar}
+            />
             <span className="font-semibold">{row.name}</span>
         </div>
     )
@@ -78,14 +82,15 @@ const columns = [
     }),
     columnHelper.accessor('createdTime', {
         header: 'Created Time',
-        cell: (props) => {
-            const row = props.row.original
-            return (
-                <span>
-                    {dayjs.unix(row.createdTime).format('DD/MM/YYYY hh:mm')}
-                </span>
-            )
-        },
+        // cell: (props) => {
+        //     const row = props.row.original
+        //     // return (
+        //     //     <span>
+        //     //         {dayjs.unix(row.createdTime).format('DD/MM/YYYY hh:mm')}
+        //     //     </span>
+        //     // )
+        //     return < r/>
+        // },
     }),
     columnHelper.accessor('assignee', {
         header: 'Assignee',
