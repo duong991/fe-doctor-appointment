@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import type { Lead } from '../store'
+import appConfig from '@/configs/app.config'
 
 type LeadsProps = {
     data?: Lead[]
@@ -26,7 +27,7 @@ const NameColumn = ({ row }: { row: Lead }) => {
             <Avatar
                 shape="circle"
                 size={25}
-                src={'http://localhost:3000' + row.avatar}
+                src={appConfig.apiPrefix + row.avatar}
             />
             <span className="font-semibold">{row.name}</span>
         </div>
