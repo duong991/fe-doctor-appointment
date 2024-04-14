@@ -65,7 +65,7 @@ const columnHelper = createColumnHelper<Lead>()
 
 const columns = [
     columnHelper.accessor('name', {
-        header: 'Name',
+        header: 'Họ tên',
         cell: (props) => {
             const row = props.row.original
             return <NameColumn row={row} />
@@ -82,7 +82,7 @@ const columns = [
         header: 'Email',
     }),
     columnHelper.accessor('createdTime', {
-        header: 'Created Time',
+        header: 'Chuyên Khoa',
         // cell: (props) => {
         //     const row = props.row.original
         //     // return (
@@ -94,7 +94,7 @@ const columns = [
         // },
     }),
     columnHelper.accessor('assignee', {
-        header: 'Assignee',
+        header: 'Đánh giá',
         cell: (props) => {
             const row = props.row.original
             return (
@@ -122,9 +122,9 @@ const Leads = ({ data = [], className }: LeadsProps) => {
     return (
         <Card className={className}>
             <div className="flex items-center justify-between mb-4">
-                <h4>Leads</h4>
+                <h4>Bác sĩ</h4>
                 <Button size="sm" onClick={onNavigate}>
-                    View All Leads
+                    Xem Tất Cả
                 </Button>
             </div>
             <Table>
