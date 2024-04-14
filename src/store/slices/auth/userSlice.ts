@@ -12,7 +12,7 @@ import { Role } from '@/@types/enum'
 export type UserState = {
     email: string
     userId?: string
-    role?: Role
+    role?: Role | string
 }
 
 const initialState: UserState = {

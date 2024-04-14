@@ -17,6 +17,16 @@ const navigationConfig: NavigationTree[] = [
         subMenu: [],
     },
     {
+        key: 'doctor',
+        path: '/doctor',
+        title: 'Doctor',
+        translateKey: 'nav.doctor',
+        icon: 'doctor',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
+    {
         key: 'patient',
         path: '/patient',
         title: 'Patient',
