@@ -9,7 +9,7 @@ import {
     useAppSelector,
 } from '../store'
 
-const ProductDeleteConfirmation = () => {
+const DoctorDeleteConfirmation = () => {
     const dispatch = useAppDispatch()
     const dialogOpen = useAppSelector(
         (state) => state.salesProductList.data.deleteConfirmation
@@ -66,4 +66,4 @@ const ProductDeleteConfirmation = () => {
     )
 }
 
-export default ProductDeleteConfirmation
+export default DoctorDeleteConfirmation

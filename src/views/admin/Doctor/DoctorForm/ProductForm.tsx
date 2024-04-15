@@ -181,16 +181,17 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     <BasicInformationFields
                                         touched={touched}
                                         errors={errors}
+                                        values={values}
                                     />
                                     <PricingFields
                                         touched={touched}
                                         errors={errors}
                                     />
-                                    <OrganizationFields
+                                    {/* <OrganizationFields
                                         touched={touched}
                                         errors={errors}
                                         values={values}
-                                    />
+                                    /> */}
                                 </div>
                                 <div className="lg:col-span-1">
                                     <ProductImages values={values} />

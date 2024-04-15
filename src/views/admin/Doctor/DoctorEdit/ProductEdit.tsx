@@ -17,7 +17,7 @@ import ProductForm, {
     FormModel,
     SetSubmitting,
     OnDeleteCallback,
-} from '@/views/admin/Doctor/ProductForm'
+} from '@/views/admin/Doctor/DoctorForm'
 import isEmpty from 'lodash/isEmpty'
 
 injectReducer('salesProductEdit', reducer)

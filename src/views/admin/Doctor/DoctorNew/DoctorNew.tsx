@@ -1,13 +1,13 @@
 import ProductForm, {
     FormModel,
     SetSubmitting,
-} from '@/views/admin/Doctor/ProductForm'
+} from '@/views/admin/Doctor/DoctorForm'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
 import { apiCreateSalesProduct } from '@/services/SalesService'
 
-const ProductNew = () => {
+const DoctorNew = () => {
     const navigate = useNavigate()
 
     const addProduct = async (data: FormModel) => {
@@ -29,7 +29,7 @@ const ProductNew = () => {
                     type="success"
                     duration={2500}
                 >
-                    Product successfuly added
+                    Thêm mới doctor thành công
                 </Notification>,
                 {
                     placement: 'top-center',
@@ -54,4 +54,4 @@ const ProductNew = () => {
     )
 }
 
-export default ProductNew
+export default DoctorNew

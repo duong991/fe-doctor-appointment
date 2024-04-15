@@ -66,7 +66,6 @@ const crmDashboardSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getCrmDashboardData.fulfilled, (state, action) => {
-                console.log('🚀 ~ .addCase ~ action:', action.payload)
                 state.dashboardData = action.payload
                 state.loading = false
             })

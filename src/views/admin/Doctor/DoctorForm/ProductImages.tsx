@@ -164,7 +164,6 @@ const ProductImages = (props: ProductImagesProps) => {
             img: URL.createObjectURL(files[latestUpload]),
         }
         const imageList = [...values.imgList, ...[image]]
-        console.log('imageList', imageList)
         form.setFieldValue(field.name, imageList)
     }
 
@@ -180,10 +179,9 @@ const ProductImages = (props: ProductImagesProps) => {
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Product Image</h5>
-            <p className="mb-6">Add or change image for the product</p>
+            <h5 className="mb-6">Ảnh</h5>
             <FormItem>
-                <Field name="imgList">
+                <Field name="imgList ">
                     {({ field, form }: FieldProps) => {
                         if (values.imgList.length > 0) {
                             return (

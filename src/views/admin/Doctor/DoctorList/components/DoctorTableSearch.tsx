@@ -12,7 +12,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import type { TableQueries } from '@/@types/common'
 import type { ChangeEvent } from 'react'
 
-const ProductTableSearch = () => {
+const DoctorTableSearch = () => {
     const dispatch = useAppDispatch()
 
     const searchInput = useRef(null)
@@ -50,11 +50,11 @@ const ProductTableSearch = () => {
             ref={searchInput}
             className="max-w-md md:w-52 md:mb-0 mb-4"
             size="sm"
-            placeholder="Search product"
+            placeholder="Tìm kiếm bác sĩ"
             prefix={<HiOutlineSearch className="text-lg" />}
             onChange={onEdit}
         />
     )
 }
 
-export default ProductTableSearch
+export default DoctorTableSearch

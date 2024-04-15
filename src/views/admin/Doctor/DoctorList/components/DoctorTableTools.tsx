@@ -1,14 +1,14 @@
 import Button from '@/components/ui/Button'
 import { HiDownload, HiPlusCircle } from 'react-icons/hi'
-import ProductTableSearch from './ProductTableSearch'
-import ProductFilter from './ProductFilter'
+import DoctorTableSearch from './DoctorTableSearch'
+import DoctorFilter from './DoctorFilter'
 import { Link } from 'react-router-dom'
 
-const ProductTableTools = () => {
+const DoctorTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
-            <ProductTableSearch />
-            <ProductFilter />
+            <DoctorTableSearch />
+            <DoctorFilter />
             <Link
                 download
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
@@ -16,7 +16,7 @@ const ProductTableTools = () => {
                 target="_blank"
             >
                 <Button block size="sm" icon={<HiDownload />}>
-                    Export
+                    Tải xuông
                 </Button>
             </Link>
             <Link
@@ -24,11 +24,11 @@ const ProductTableTools = () => {
                 to="/doctor/doctor-new"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Add Product
+                    Thêm mới Bác sĩ
                 </Button>
             </Link>
         </div>
     )
 }
 
-export default ProductTableTools
+export default DoctorTableTools

@@ -13,7 +13,7 @@ import {
     useAppSelector,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
-import ProductDeleteConfirmation from './ProductDeleteConfirmation'
+import DoctorDeleteConfirmation from './DoctorDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import type {
@@ -90,7 +90,7 @@ const ActionColumn = ({ row }: { row: Product }) => {
     )
 }
 
-const ProductColumn = ({ row }: { row: Product }) => {
+const DoctorColumn = ({ row }: { row: Product }) => {
     const avatar = row.img ? (
         <Avatar src={row.img} />
     ) : (
@@ -105,7 +105,7 @@ const ProductColumn = ({ row }: { row: Product }) => {
     )
 }
 
-const ProductTable = () => {
+const DoctorTable = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
     const dispatch = useAppDispatch()
@@ -149,28 +149,28 @@ const ProductTable = () => {
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
             {
-                header: 'Name',
+                header: 'Tên',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <ProductColumn row={row} />
+                    return <DoctorColumn row={row} />
                 },
             },
             {
-                header: 'Category',
+                header: 'Chuyên khoa',
                 accessorKey: 'category',
                 cell: (props) => {
                     const row = props.row.original
                     return <span className="capitalize">{row.category}</span>
                 },
             },
+            // {
+            //     header: 'Quantity',
+            //     accessorKey: 'stock',
+            //     sortable: true,
+            // },
             {
-                header: 'Quantity',
-                accessorKey: 'stock',
-                sortable: true,
-            },
-            {
-                header: 'Status',
+                header: 'Trạng thái hoạt động',
                 accessorKey: 'status',
                 cell: (props) => {
                     const { status } = props.row.original
@@ -190,14 +190,14 @@ const ProductTable = () => {
                     )
                 },
             },
-            {
-                header: 'Price',
-                accessorKey: 'price',
-                cell: (props) => {
-                    const { price } = props.row.original
-                    return <span>${price}</span>
-                },
-            },
+            // {
+            //     header: 'Price',
+            //     accessorKey: 'price',
+            //     cell: (props) => {
+            //         const { price } = props.row.original
+            //         return <span>${price}</span>
+            //     },
+            // },
             {
                 header: '',
                 id: 'action',
@@ -244,9 +244,9 @@ const ProductTable = () => {
                 onSelectChange={onSelectChange}
                 onSort={onSort}
             />
-            <ProductDeleteConfirmation />
+            <DoctorDeleteConfirmation />
         </>
     )
 }
 
-export default ProductTable
+export default DoctorTable

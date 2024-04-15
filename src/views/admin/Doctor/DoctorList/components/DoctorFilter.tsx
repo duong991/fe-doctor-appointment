@@ -223,7 +223,7 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     )
 }
 
-const ProductFilter = () => {
+const DoctorFilter = () => {
     const formikRef = useRef<FormikProps<FormModel>>(null)
 
     const [isOpen, setIsOpen] = useState(false)
@@ -248,7 +248,7 @@ const ProductFilter = () => {
                 icon={<HiOutlineFilter />}
                 onClick={() => openDrawer()}
             >
-                Filter
+                Lọc
             </Button>
             <Drawer
                 title="Filter"
@@ -270,4 +270,4 @@ const ProductFilter = () => {
 
 FilterForm.displayName = 'FilterForm'
 
-export default ProductFilter
+export default DoctorFilter

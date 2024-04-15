@@ -14,28 +14,28 @@ export const protectedRoutes: Routes = [
     {
         key: '/doctor',
         path: '/doctor',
-        component: lazy(() => import('@/views/admin/Doctor/ProductList')),
+        component: lazy(() => import('@/views/admin/Doctor/DoctorList')),
         authority: [],
     },
     {
         key: '/doctor',
         path: '/doctor',
-        component: lazy(() => import('@/views/admin/Doctor/ProductList')),
+        component: lazy(() => import('@/views/admin/Doctor/DoctorList')),
         authority: [],
     },
     {
         key: 'doctor.doctorNew',
         path: `/doctor/doctor-new`,
-        component: lazy(() => import('@/views/admin/Doctor/ProductNew')),
+        component: lazy(() => import('@/views/admin/Doctor/DoctorNew')),
         authority: [],
         meta: {
-            header: 'Add New Doctor',
+            header: 'Thêm mới bác sĩ',
         },
     },
     {
         key: 'doctor.editDoctor',
         path: `/doctor/doctor-edit/:doctorId`,
-        component: lazy(() => import('@/views/admin/Doctor/ProductEdit')),
+        component: lazy(() => import('@/views/admin/Doctor/DoctorEdit')),
         authority: [],
         meta: {
             header: 'Edit Doctor',
