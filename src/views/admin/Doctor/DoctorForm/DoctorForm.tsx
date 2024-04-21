@@ -8,7 +8,7 @@ import { Form, Formik, FormikProps } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import PricingFields from './PricingFields'
 import OrganizationFields from './OrganizationFields'
-import ProductImages from './ProductImages'
+import ProductImages from './DoctorImages'
 import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
@@ -20,28 +20,26 @@ type FormikRef = FormikProps<any>
 type InitialData = {
     id?: string
     name?: string
-    productCode?: string
+    dob?: string
+    phone?: string
+    email?: string
+    gender?: boolean
     img?: string
     imgList?: {
         id: string
         name: string
         img: string
     }[]
-    category?: string
-    price?: number
-    stock?: number
-    status?: number
-    costPerItem?: number
-    bulkDiscountPrice?: number
-    taxRate?: number
-    tags?: string[]
-    brand?: string
-    vendor?: string
+    yearsOfExperience?: string
+    specialist?: string
+    services?: string[]
+    onlinePrice?: number
+    offlinePrice?: number
     description?: string
 }
 
-export type FormModel = Omit<InitialData, 'tags'> & {
-    tags: { label: string; value: string }[] | string[]
+export type FormModel = Omit<InitialData, 'services'> & {
+    services: { label: string; value: string }[] | string[]
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
@@ -61,10 +59,15 @@ type ProductForm = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Product Name Required'),
-    price: Yup.number().required('Price Required'),
-    stock: Yup.number().required('SKU Required'),
-    category: Yup.string().required('Category Required'),
+    name: Yup.string().required('Tên bác sĩ không được để trống'),
+    dob: Yup.date().required('Ngày sinh không được để trống'),
+    phone: Yup.string().required('Số điện thoại không được để trống'),
+    email: Yup.string()
+        .email('Email không hợp lệ')
+        .required('Email không được để trống'),
+    gender: Yup.boolean().required('Điền giới tính cho bác sĩ'),
+    specialist: Yup.string().required('Chọn chuyên khoa của bác sĩ'),
+    services: Yup.string().required('Chọn dịch vu của bác sĩ'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -105,9 +108,9 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
                 onConfirm={handleConfirm}
             >
                 <p>
-                    Are you sure you want to delete this product? All record
-                    related to this product will be deleted as well. This action
-                    cannot be undone.
+                    Bạn có chắc chắn muốn xóa bác sĩ này không? Tất cả các hồ sơ
+                    liên quan đến bác sĩ này cũng sẽ bị xóa. Hành động này không
+                    thể hoàn tác.
                 </p>
             </ConfirmDialog>
         </>
@@ -120,19 +123,16 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         initialData = {
             id: '',
             name: '',
-            productCode: '',
+            dob: '',
+            phone: '',
+            email: '',
+            gender: 1,
             img: '',
             imgList: [],
-            category: '',
-            price: 0,
-            stock: 0,
-            status: 0,
-            costPerItem: 0,
-            bulkDiscountPrice: 0,
-            taxRate: 6,
-            tags: [],
-            brand: '',
-            vendor: '',
+            specialist: '',
+            services: [],
+            onlinePrice: 0,
+            offlinePrice: 0,
             description: '',
         },
         onFormSubmit,
@@ -140,7 +140,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         onDelete,
     } = props
 
-    const newId = useUniqueId('product-')
+    const newId = useUniqueId('doctor-')
 
     return (
         <>
@@ -148,21 +148,22 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                 innerRef={ref}
                 initialValues={{
                     ...initialData,
-                    tags: initialData?.tags
-                        ? initialData.tags.map((value) => ({
+                    services: initialData?.services
+                        ? initialData.services.map((value) => ({
                               label: value,
                               value,
                           }))
                         : [],
                 }}
-                validationSchema={validationSchema}
+                // validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
+                    console.log('🚀 ~ ProductForm ~ values:', values)
                     const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => {
-                        if (typeof tag !== 'string') {
-                            return tag.value
+                    formData.services = formData.services.map((service) => {
+                        if (typeof service !== 'string') {
+                            return service.value
                         }
-                        return tag
+                        return service
                     })
                     if (type === 'new') {
                         formData.id = newId
@@ -170,6 +171,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                             formData.img = formData.imgList[0].img
                         }
                     }
+                    console.log('🚀 ~ ProductForm ~ formData:', formData)
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -187,11 +189,6 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                         touched={touched}
                                         errors={errors}
                                     />
-                                    {/* <OrganizationFields
-                                        touched={touched}
-                                        errors={errors}
-                                        values={values}
-                                    /> */}
                                 </div>
                                 <div className="lg:col-span-1">
                                     <ProductImages values={values} />

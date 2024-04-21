@@ -12,14 +12,12 @@ import {
 const DoctorDeleteConfirmation = () => {
     const dispatch = useAppDispatch()
     const dialogOpen = useAppSelector(
-        (state) => state.salesProductList.data.deleteConfirmation
+        (state) => state.doctorList.data.deleteConfirmation
     )
     const selectedProduct = useAppSelector(
-        (state) => state.salesProductList.data.selectedProduct
+        (state) => state.doctorList.data.selectedProduct
     )
-    const tableData = useAppSelector(
-        (state) => state.salesProductList.data.tableData
-    )
+    const tableData = useAppSelector((state) => state.doctorList.data.tableData)
 
     const onDialogClose = () => {
         dispatch(toggleDeleteConfirmation(false))

@@ -11,7 +11,6 @@ import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import Checkbox from '@/components/ui/Checkbox'
-import Radio from '@/components/ui/Radio'
 import Drawer from '@/components/ui/Drawer'
 import { Field, Form, Formik, FormikProps, FieldProps } from 'formik'
 import type { MouseEvent } from 'react'
@@ -19,8 +18,6 @@ import type { MouseEvent } from 'react'
 type FormModel = {
     name: string
     category: string[]
-    status: number[]
-    productStatus: number
 }
 
 type FilterFormProps = {
@@ -37,7 +34,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.salesProductList.data.filterData
+            (state) => state.doctorList.data.filterData
         )
 
         const handleSubmit = (values: FormModel) => {
@@ -128,77 +125,6 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                 </Checkbox>
                                             </Checkbox.Group>
                                         </>
-                                    )}
-                                </Field>
-                            </FormItem>
-                            <FormItem
-                                invalid={errors.status && touched.status}
-                                errorMessage={errors.status as string}
-                            >
-                                <h6 className="mb-4">Product Category</h6>
-                                <Field name="status">
-                                    {({ field, form }: FieldProps) => (
-                                        <>
-                                            <Checkbox.Group
-                                                vertical
-                                                value={values.status}
-                                                onChange={(options) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        options
-                                                    )
-                                                }
-                                            >
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value={0}
-                                                >
-                                                    In Stock{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value={1}
-                                                >
-                                                    Limited{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value={2}
-                                                >
-                                                    Out Of Stock{' '}
-                                                </Checkbox>
-                                            </Checkbox.Group>
-                                        </>
-                                    )}
-                                </Field>
-                            </FormItem>
-                            <FormItem
-                                invalid={
-                                    errors.productStatus &&
-                                    touched.productStatus
-                                }
-                                errorMessage={errors.productStatus}
-                            >
-                                <h6 className="mb-4">Product Status</h6>
-                                <Field name="productStatus">
-                                    {({ field, form }: FieldProps) => (
-                                        <Radio.Group
-                                            vertical
-                                            value={values.productStatus}
-                                            onChange={(val) =>
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    val
-                                                )
-                                            }
-                                        >
-                                            <Radio value={0}>Published</Radio>
-                                            <Radio value={1}>Disabled</Radio>
-                                            <Radio value={2}>Archive</Radio>
-                                        </Radio.Group>
                                     )}
                                 </Field>
                             </FormItem>

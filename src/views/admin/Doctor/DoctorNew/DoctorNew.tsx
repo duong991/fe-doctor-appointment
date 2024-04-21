@@ -11,6 +11,7 @@ const DoctorNew = () => {
     const navigate = useNavigate()
 
     const addProduct = async (data: FormModel) => {
+        console.log('🚀 ~ addProduct ~ data:', data)
         const response = await apiCreateSalesProduct<boolean, FormModel>(data)
         return response.data
     }
@@ -35,7 +36,7 @@ const DoctorNew = () => {
                     placement: 'top-center',
                 }
             )
-            navigate('/app/sales/product-list')
+            // navigate('/app/sales/product-list')
         }
     }
 

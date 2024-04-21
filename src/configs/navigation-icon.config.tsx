@@ -1,14 +1,7 @@
-import {
-    HiOutlineColorSwatch,
-    HiOutlineDesktopComputer,
-    HiOutlineTemplate,
-    HiOutlineViewGridAdd,
-    HiOutlineHome,
-    HiOutlineUserGroup,
-} from 'react-icons/hi'
-import { FaUserDoctor } from 'react-icons/fa6'
+import { HiOutlineHome, HiOutlineUserGroup } from 'react-icons/hi'
 import { GrUserManager } from 'react-icons/gr'
 import { HiOutlineCalendarDays } from 'react-icons/hi2'
+import { MdOutlinePayments } from 'react-icons/md'
 
 export type NavigationIcons = Record<string, JSX.Element>
 
@@ -18,10 +11,7 @@ const navigationIcon: NavigationIcons = {
     patient: <HiOutlineUserGroup />,
     calender: <HiOutlineCalendarDays />,
     appointment: <HiOutlineCalendarDays />,
-    singleMenu: <HiOutlineViewGridAdd />,
-    collapseMenu: <HiOutlineTemplate />,
-    groupSingleMenu: <HiOutlineDesktopComputer />,
-    groupCollapseMenu: <HiOutlineColorSwatch />,
+    payment: <MdOutlinePayments />,
 }
 
 export default navigationIcon

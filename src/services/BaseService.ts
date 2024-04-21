@@ -52,4 +52,14 @@ BaseService.interceptors.response.use(
     }
 )
 
+// const uploadImage = (imageFile) => {
+//     const formData = new FormData()
+//     formData.append('image', imageFile)
+//     return BaseService.post('/upload', formData, {
+//         headers: {
+//             'Content-Type': 'multipart/form-data',
+//         },
+//     })
+// }
+
 export default BaseService

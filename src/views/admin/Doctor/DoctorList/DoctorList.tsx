@@ -4,7 +4,7 @@ import AdaptableCard from '@/components/shared/AdaptableCard'
 import DoctorTable from './components/DoctorTable'
 import DoctorTableTools from './components/DoctorTableTools'
 
-injectReducer('salesProductList', reducer)
+injectReducer('doctorList', reducer)
 
 const DoctorList = () => {
     return (

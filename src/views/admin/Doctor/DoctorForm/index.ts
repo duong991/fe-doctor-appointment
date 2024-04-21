@@ -1,4 +1,4 @@
-import ProductForm from './ProductForm'
+import ProductForm from './DoctorForm'
 
-export * from './ProductForm'
+export * from './DoctorForm'
 export default ProductForm

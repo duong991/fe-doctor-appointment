@@ -25,12 +25,11 @@ import type {
 type Product = {
     id: string
     name: string
-    productCode: string
+    email: string
     img: string
     category: string
-    price: number
-    stock: number
-    status: number
+    online_price: number
+    offline_price: number
 }
 
 const inventoryStatusColor: Record<
@@ -111,20 +110,16 @@ const DoctorTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.salesProductList.data.tableData
+        (state) => state.doctorList.data.tableData
     )
 
     const filterData = useAppSelector(
-        (state) => state.salesProductList.data.filterData
+        (state) => state.doctorList.data.filterData
     )
 
-    const loading = useAppSelector(
-        (state) => state.salesProductList.data.loading
-    )
+    const loading = useAppSelector((state) => state.doctorList.data.loading)
 
-    const data = useAppSelector(
-        (state) => state.salesProductList.data.productList
-    )
+    const data = useAppSelector((state) => state.doctorList.data.doctorList)
 
     useEffect(() => {
         fetchData()
@@ -157,6 +152,14 @@ const DoctorTable = () => {
                 },
             },
             {
+                header: 'Email',
+                accessorKey: 'email',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span>{row.email}</span>
+                },
+            },
+            {
                 header: 'Chuyên khoa',
                 accessorKey: 'category',
                 cell: (props) => {
@@ -164,40 +167,7 @@ const DoctorTable = () => {
                     return <span className="capitalize">{row.category}</span>
                 },
             },
-            // {
-            //     header: 'Quantity',
-            //     accessorKey: 'stock',
-            //     sortable: true,
-            // },
-            {
-                header: 'Trạng thái hoạt động',
-                accessorKey: 'status',
-                cell: (props) => {
-                    const { status } = props.row.original
-                    return (
-                        <div className="flex items-center gap-2">
-                            <Badge
-                                className={
-                                    inventoryStatusColor[status].dotClass
-                                }
-                            />
-                            <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
-                            >
-                                {inventoryStatusColor[status].label}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-            // {
-            //     header: 'Price',
-            //     accessorKey: 'price',
-            //     cell: (props) => {
-            //         const { price } = props.row.original
-            //         return <span>${price}</span>
-            //     },
-            // },
+
             {
                 header: '',
                 id: 'action',

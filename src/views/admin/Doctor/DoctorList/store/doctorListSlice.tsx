@@ -5,29 +5,25 @@ import {
 } from '@/services/SalesService'
 import type { TableQueries } from '@/@types/common'
 
-type Product = {
+type Doctor = {
     id: string
     name: string
-    productCode: string
     img: string
     category: string
-    price: number
-    stock: number
-    status: number
+    online_price: number
+    offline_price: number
 }
 
-type Products = Product[]
+type Doctors = Doctor[]
 
 type GetSalesProductsResponse = {
-    data: Products
+    data: Doctors
     total: number
 }
 
 type FilterQueries = {
     name: string
     category: string[]
-    status: number[]
-    productStatus: number
 }
 
 export type SalesProductListState = {
@@ -36,12 +32,12 @@ export type SalesProductListState = {
     selectedProduct: string
     tableData: TableQueries
     filterData: FilterQueries
-    productList: Product[]
+    doctorList: Doctor[]
 }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
-export const SLICE_NAME = 'salesProductList'
+export const SLICE_NAME = 'doctorList'
 
 export const getProducts = createAsyncThunk(
     SLICE_NAME + '/getProducts',
@@ -77,22 +73,20 @@ const initialState: SalesProductListState = {
     loading: false,
     deleteConfirmation: false,
     selectedProduct: '',
-    productList: [],
+    doctorList: [],
     tableData: initialTableData,
     filterData: {
         name: '',
         category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-        status: [0, 1, 2],
-        productStatus: 0,
     },
 }
 
-const productListSlice = createSlice({
+const doctorListSlice = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState,
     reducers: {
         updateProductList: (state, action) => {
-            state.productList = action.payload
+            state.doctorList = action.payload
         },
         setTableData: (state, action) => {
             state.tableData = action.payload
@@ -110,7 +104,7 @@ const productListSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getProducts.fulfilled, (state, action) => {
-                state.productList = action.payload.data
+                state.doctorList = action.payload.data
                 state.tableData.total = action.payload.total
                 state.loading = false
             })
@@ -126,6 +120,6 @@ export const {
     setFilterData,
     toggleDeleteConfirmation,
     setSelectedProduct,
-} = productListSlice.actions
+} = doctorListSlice.actions
 
-export default productListSlice.reducer
+export default doctorListSlice.reducer

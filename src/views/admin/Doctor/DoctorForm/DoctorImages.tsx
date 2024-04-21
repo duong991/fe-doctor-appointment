@@ -13,6 +13,7 @@ type Image = {
     id: string
     name: string
     img: string
+    file?: unknown
 }
 
 type FormModel = {
@@ -119,7 +120,7 @@ const ImageList = (props: ImageListProps) => {
     )
 }
 
-const ProductImages = (props: ProductImagesProps) => {
+const DoctorImages = (props: ProductImagesProps) => {
     const { values } = props
 
     const beforeUpload = (file: FileList | null) => {
@@ -160,10 +161,12 @@ const ProductImages = (props: ProductImagesProps) => {
         }
         const image = {
             id: imageId,
-            name: files[latestUpload].name,
+            name: 'Ảnh đại diện',
             img: URL.createObjectURL(files[latestUpload]),
+            files: files[latestUpload],
         }
         const imageList = [...values.imgList, ...[image]]
+        values.imgList = [image]
         form.setFieldValue(field.name, imageList)
     }
 
@@ -174,6 +177,7 @@ const ProductImages = (props: ProductImagesProps) => {
     ) => {
         let imgList = cloneDeep(values.imgList)
         imgList = imgList.filter((img) => img.id !== deletedImg.id)
+        values.imgList = []
         form.setFieldValue(field.name, imgList)
     }
 
@@ -181,7 +185,7 @@ const ProductImages = (props: ProductImagesProps) => {
         <AdaptableCard className="mb-4">
             <h5 className="mb-6">Ảnh</h5>
             <FormItem>
-                <Field name="imgList ">
+                <Field name="imgList">
                     {({ field, form }: FieldProps) => {
                         if (values.imgList.length > 0) {
                             return (
@@ -251,4 +255,4 @@ const ProductImages = (props: ProductImagesProps) => {
     )
 }
 
-export default ProductImages
+export default DoctorImages

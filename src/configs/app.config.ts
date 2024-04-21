@@ -7,14 +7,22 @@ export type AppConfig = {
     enableMock: boolean
 }
 
+// const appConfig: AppConfig = {
+//     apiPrefix: '/',
+//     authenticatedEntryPath: '/home',
+//     unAuthenticatedEntryPath: '/sign-in',
+//     tourPath: '/',
+//     locale: 'en',
+//     enableMock: true,
+// }
+
 const appConfig: AppConfig = {
-    apiPrefix: '/',
-    // apiPrefix: 'http://10.1.100.157:3000',
+    apiPrefix: 'http://localhost:3000',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
     locale: 'en',
-    enableMock: true,
+    enableMock: false,
 }
 
 export default appConfig

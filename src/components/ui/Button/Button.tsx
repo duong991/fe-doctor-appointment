@@ -192,6 +192,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         const { onClick } = props
+        console.log('onClick', onClick)
         if (disabled || loading) {
             e.preventDefault()
             return

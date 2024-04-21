@@ -13,10 +13,8 @@ import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 
 type FormFieldsName = {
-    stock: number
-    price: number
-    bulkDiscountPrice: number
-    taxRate: number
+    online_price: number
+    offline_price: number
 }
 
 type PricingFieldsProps = {
@@ -65,10 +63,13 @@ const PricingFields = (props: PricingFieldsProps) => {
                 <div className="col-span-1">
                     <FormItem
                         label="Online"
-                        invalid={(errors.price && touched.price) as boolean}
-                        errorMessage={errors.price}
+                        invalid={
+                            (errors.online_price &&
+                                touched.online_price) as boolean
+                        }
+                        errorMessage={errors.online_price}
                     >
-                        <Field name="price">
+                        <Field name="online_price">
                             {({ field, form }: FieldProps) => {
                                 return (
                                     <NumericFormatInput
@@ -92,11 +93,14 @@ const PricingFields = (props: PricingFieldsProps) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Price"
-                        invalid={(errors.price && touched.price) as boolean}
-                        errorMessage={errors.price}
+                        label="Giá khám offline"
+                        invalid={
+                            (errors.offline_price &&
+                                touched.offline_price) as boolean
+                        }
+                        errorMessage={errors.offline_price}
                     >
-                        <Field name="price">
+                        <Field name="offline_price">
                             {({ field, form }: FieldProps) => {
                                 return (
                                     <NumericFormatInput

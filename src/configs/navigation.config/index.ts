@@ -39,6 +39,16 @@ const navigationConfig: NavigationTree[] = [
         authority: ['admin'],
         subMenu: [],
     },
+    {
+        key: 'payment',
+        path: '/payment',
+        title: 'Thanh toán',
+        translateKey: 'nav.payment',
+        icon: 'payment',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: ['admin'],
+        subMenu: [],
+    },
     /*
      * DOCTOR NAVIGATION
      */
