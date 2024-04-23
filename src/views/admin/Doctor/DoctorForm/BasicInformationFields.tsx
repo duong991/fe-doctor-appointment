@@ -18,15 +18,14 @@ type FormFieldsName = {
     gender: boolean
     img: string
     specialist: string
-    services: string
+    address: string
     description: string
     [key: string]: unknown
 }
 
 type BasicInformationFields = {
     values: {
-        category: string
-        tags: Options
+        specialist: string
         [key: string]: unknown
     }
     touched: FormikTouched<FormFieldsName>
@@ -34,19 +33,25 @@ type BasicInformationFields = {
 }
 
 const specialists = [
-    { label: 'Da liễu', value: 'xx01' },
-    { label: 'Khoa sản', value: 'xx02' },
-    { label: 'Xương khớp', value: 'xx01' },
+    { label: 'Nhãn khoa', value: '1ef5d817-3d04-4a5f-a8a4-9ef7c2330277' },
+    {
+        label: 'Ngoại thần kinh',
+        value: '2c1d26b5-ea2a-418f-9540-fa56489df84c',
+    },
+    { label: 'Thần kinh', value: '39c4c531-442f-4a54-ba08-b3431d9757e1' },
+    { label: 'Phụ khoa', value: '43b622ed-2c1d-46cd-8900-477ece84a171' },
+    { label: 'Tim Mạch', value: '7d2e9106-864f-47a7-8ed7-852b24b1e142' },
+    { label: 'Da Liễu', value: 'a5cf9713-520b-4c34-99e6-cbf095009040' },
+    { label: 'Nhi Khoa', value: 'c53396c2-9215-4efb-b656-edb0f2302a5e' },
+    {
+        label: 'Răng hàm mặt',
+        value: 'd922a008-b255-4587-901a-0e9d57aad5f4',
+    },
 ]
 
 const genders = [
     { label: 'Nam', value: 1 },
     { label: 'Nữ', value: 0 },
-]
-
-const tags = [
-    { label: 'online', value: 'trend' },
-    { label: 'offline', value: 'unisex' },
 ]
 
 const yoes = [
@@ -73,7 +78,7 @@ const yoes = [
 ]
 
 const BasicInformationFields = (props: BasicInformationFields) => {
-    const { values = { category: '', tags: [] }, touched, errors } = props
+    const { values = { specialist: '' }, touched, errors } = props
 
     return (
         <AdaptableCard divider isLastChild className="mb-4">
@@ -134,7 +139,7 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     >
                         <Field
                             type="email"
-                            autoComplete="off"
+                            autoComplete="true"
                             name="email"
                             placeholder="Điền thông tin email"
                             component={Input}
@@ -172,32 +177,17 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Số năm kinh nghiệm"
-                        invalid={
-                            (errors.tags && touched.tags) as unknown as boolean
-                        }
-                        errorMessage={errors.tags as string}
+                        label="Địa chỉ"
+                        invalid={(errors.address && touched.address) as boolean}
+                        errorMessage={errors.address}
                     >
-                        <Field name="yearsOfExperience">
-                            {({ field, form }: FieldProps) => (
-                                <Select
-                                    field={field}
-                                    form={form}
-                                    options={yoes}
-                                    value={yoes.filter(
-                                        (yoe) =>
-                                            yoe.value ===
-                                            values.yearsOfExperience
-                                    )}
-                                    onChange={(option) =>
-                                        form.setFieldValue(
-                                            field.name,
-                                            option?.value
-                                        )
-                                    }
-                                />
-                            )}
-                        </Field>
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="address"
+                            placeholder="Địa chỉ"
+                            component={Input}
+                        />
                     </FormItem>
                 </div>
             </div>
@@ -234,24 +224,28 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Dịch vụ"
+                        label="Số năm kinh nghiệm"
                         invalid={
-                            (errors.services &&
-                                touched.services) as unknown as boolean
+                            (errors.tags && touched.tags) as unknown as boolean
                         }
-                        errorMessage={errors.services as string}
+                        errorMessage={errors.tags as string}
                     >
-                        <Field name="services">
+                        <Field name="yearsOfExperience">
                             {({ field, form }: FieldProps) => (
                                 <Select
-                                    isMulti
-                                    componentAs={CreatableSelect}
                                     field={field}
                                     form={form}
-                                    options={tags}
-                                    value={values.services}
+                                    options={yoes}
+                                    value={yoes.filter(
+                                        (yoe) =>
+                                            yoe.value ===
+                                            values.yearsOfExperience
+                                    )}
                                     onChange={(option) =>
-                                        form.setFieldValue(field.name, option)
+                                        form.setFieldValue(
+                                            field.name,
+                                            option?.value
+                                        )
                                     }
                                 />
                             )}
