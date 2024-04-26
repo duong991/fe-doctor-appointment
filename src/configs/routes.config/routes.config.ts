@@ -68,6 +68,12 @@ const adminRoutes: Routes = [
 
 export const doctorRoutes: Routes = [
     {
+        key: 'home',
+        path: '/home',
+        component: lazy(() => import('@/views/doctor/Calendar')),
+        authority: ['doctor'],
+    },
+    {
         key: 'calender',
         path: '/calender',
         component: lazy(() => import('@/views/doctor/Calendar/Calendar')),
@@ -95,5 +101,5 @@ export const doctorRoutes: Routes = [
 ]
 
 export const publicRoutes: Routes = [...authRoute]
-
-export const protectedRoutes: Routes = [...adminRoutes, ...doctorRoutes]
+export const protectedAdminRoutes: Routes = [...adminRoutes]
+export const protectedDoctorRoutes: Routes = [...doctorRoutes]

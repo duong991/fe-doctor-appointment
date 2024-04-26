@@ -25,6 +25,8 @@ function useAuth() {
         (state) => state.auth.session
     )
 
+    const { role, userId, email } = useAppSelector((state) => state.auth.user)
+
     const signIn = async (
         values: SignInCredential
     ): Promise<
@@ -37,7 +39,8 @@ function useAuth() {
         try {
             const resp = await apiSignIn(values)
             if (resp.data && resp.data.status === 'success') {
-                const { accessToken, refreshToken, userData } = resp.data.data
+                const { accessToken, refreshToken, userData } =
+                    resp.data.data.data
                 dispatch(
                     signInSuccess({
                         signedIn: true,
@@ -122,6 +125,11 @@ function useAuth() {
     }
 
     return {
+        user: {
+            role,
+            email,
+            userId,
+        },
         authenticated: accessToken && refreshToken && signedIn,
         signIn,
         signUp,
