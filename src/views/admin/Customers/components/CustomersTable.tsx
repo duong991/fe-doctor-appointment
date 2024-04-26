@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
+import { imagePath } from '@/utils/imagePath'
 
 const statusColor: Record<string, string> = {
     active: 'bg-emerald-500',
@@ -47,7 +48,7 @@ const NameColumn = ({ row }: { row: Customer }) => {
 
     return (
         <div className="flex items-center">
-            <Avatar size={28} shape="circle" src={row.img} />
+            <Avatar size={28} shape="circle" src={imagePath(row.img)} />
             <Link
                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
                 to={`/patient-details?id=${row.id}`}

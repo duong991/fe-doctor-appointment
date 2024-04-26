@@ -8,6 +8,7 @@ import Upload from '@/components/ui/Upload'
 import { HiEye, HiTrash } from 'react-icons/hi'
 import cloneDeep from 'lodash/cloneDeep'
 import { Field, FieldProps, FieldInputProps, FormikProps } from 'formik'
+import { imagePath } from '@/utils/imagePath'
 
 type Image = {
     id: string
@@ -73,7 +74,7 @@ const ImageList = (props: ImageListProps) => {
                 >
                     <img
                         className="rounded max-h-[140px] max-w-full"
-                        src={img.img}
+                        src={imagePath(img.img)}
                         alt={img.name}
                     />
                     <div className="absolute inset-2 bg-gray-900/[.7] group-hover:flex hidden text-xl items-center justify-center">

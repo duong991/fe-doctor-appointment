@@ -21,6 +21,7 @@ import type {
     OnSortParam,
     ColumnDef,
 } from '@/components/shared/DataTable'
+import { imagePath } from '@/utils/imagePath'
 
 type Doctor = {
     id: string
@@ -68,7 +69,7 @@ const ActionColumn = ({ row }: { row: Doctor }) => {
 
 const DoctorColumn = ({ row }: { row: Doctor }) => {
     const avatar = row.img ? (
-        <Avatar src={row.img} />
+        <Avatar src={imagePath(row.img)} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )

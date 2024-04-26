@@ -62,7 +62,7 @@ const PricingFields = (props: PricingFieldsProps) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Online"
+                        label="Giá khám online"
                         invalid={
                             (errors.onlinePrice &&
                                 touched.onlinePrice) as boolean
@@ -75,7 +75,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Giá khám online"
+                                        placeholder="Price"
                                         customInput={
                                             PriceInput as ComponentType
                                         }

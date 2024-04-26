@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetCrmCustomers,
+    apiGetPatients,
     apPutCrmCustomer,
-    apiGetCrmCustomersStatistic,
+    apiGetPatientStatistic,
 } from '@/services/PatientService'
 import type { TableQueries } from '@/@types/common'
 
@@ -95,19 +95,19 @@ export const getCustomerStatistic = createAsyncThunk(
     'crmCustomers/data/getCustomerStatistic',
     async () => {
         const response =
-            await apiGetCrmCustomersStatistic<GetCrmCustomersStatisticResponse>()
-        return response.data
+            await apiGetPatientStatistic<GetCrmCustomersStatisticResponse>()
+        return response.data.data
     }
 )
 
 export const getCustomers = createAsyncThunk(
     'crmCustomers/data/getCustomers',
     async (data: TableQueries & { filterData?: Filter }) => {
-        const response = await apiGetCrmCustomers<
+        const response = await apiGetPatients<
             GetCrmCustomersResponse,
             TableQueries
         >(data)
-        return response.data
+        return response.data.data
     }
 )
 
@@ -115,7 +115,7 @@ export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
     async (data: Customer) => {
         const response = await apPutCrmCustomer(data)
-        return response.data
+        return response.data.data
     }
 )
 
