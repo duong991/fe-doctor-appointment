@@ -7,7 +7,7 @@ import {
 import {
     apiGetSalesOrders,
     apiDeleteSalesOrders,
-} from '@/services/SalesService'
+} from '@/services/DoctorService'
 import type { TableQueries } from '@/@types/common'
 
 type Order = {

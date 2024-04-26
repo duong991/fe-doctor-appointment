@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Table from '@/components/ui/Table'
-import Badge from '@/components/ui/Badge'
 import {
     flexRender,
     getCoreRowModel,
@@ -8,39 +7,23 @@ import {
     useReactTable,
     createColumnHelper,
 } from '@tanstack/react-table'
-import { NumericFormat } from 'react-number-format'
 import { useAppSelector, OrderHistory } from '../store'
 import dayjs from 'dayjs'
 
 const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
-const statusColor: Record<string, string> = {
-    paid: 'bg-emerald-500',
-    pending: 'bg-amber-400',
-}
-
 const columnHelper = createColumnHelper<OrderHistory>()
 
 const columns = [
-    columnHelper.accessor('id', {
-        header: 'Mã giao dịch',
-        cell: (props) => {
-            const row = props.row.original
-            return (
-                <div>
-                    <span className="cursor-pointer">{row.id}</span>
-                </div>
-            )
-        },
+    columnHelper.accessor('item', {
+        header: 'Tên',
     }),
-
     columnHelper.accessor('status', {
-        header: 'Trạng thái',
+        header: 'Chuyên khoa',
         cell: (props) => {
             const row = props.row.original
             return (
                 <div className="flex items-center">
-                    <Badge className={statusColor[row.status]} />
                     <span className="ml-2 rtl:mr-2 capitalize">
                         {row.status}
                     </span>
@@ -49,7 +32,7 @@ const columns = [
         },
     }),
     columnHelper.accessor('date', {
-        header: 'Ngày thanh toán',
+        header: 'Đánh giá',
         cell: (props) => {
             const row = props.row.original
             return (
@@ -59,50 +42,23 @@ const columns = [
             )
         },
     }),
-    columnHelper.accessor('amount', {
-        header: 'Số tiền',
-        cell: (props) => {
-            const row = props.row.original
-            return (
-                <div className="flex items-center">
-                    <NumericFormat
-                        displayType="text"
-                        value={(Math.round(row.amount * 100) / 100).toFixed(2)}
-                        suffix={' VND'}
-                        thousandSeparator={true}
-                    />
-                </div>
-            )
-        },
-    }),
 ]
 
-const PaymentHistory = () => {
+const DoctorFavorite = () => {
     const data = useAppSelector(
         (state) => state.crmCustomerDetails.data.paymentHistoryData
     )
 
-    const [sorting, setSorting] = useState<
-        {
-            id: string
-            desc: boolean
-        }[]
-    >([])
-
     const table = useReactTable({
         data,
         columns,
-        state: {
-            sorting,
-        },
-        onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
     })
 
     return (
         <div className="mb-8">
-            <h6 className="mb-4">Payment History</h6>
+            <h6 className="mb-4">Bác sĩ yêu thích</h6>
             <Table>
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -120,8 +76,6 @@ const PaymentHistory = () => {
                                                         header.column.getCanSort()
                                                             ? 'cursor-pointer select-none'
                                                             : '',
-                                                    onClick:
-                                                        header.column.getToggleSortingHandler(),
                                                 }}
                                             >
                                                 {flexRender(
@@ -168,4 +122,4 @@ const PaymentHistory = () => {
     )
 }
 
-export default PaymentHistory
+export default DoctorFavorite

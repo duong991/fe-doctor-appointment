@@ -3,7 +3,7 @@ import {
     apiGetCrmCustomerDetails,
     apiDeleteCrmCustomer,
     apPutCrmCustomer,
-} from '@/services/CrmService'
+} from '@/services/PatientService'
 
 export const SLICE_NAME = 'crmCustomerDetails'
 
@@ -12,10 +12,6 @@ type PersonalInfo = {
     title: string
     birthday: string
     phoneNumber: string
-    facebook: string
-    twitter: string
-    pinterest: string
-    linkedIn: string
 }
 
 export type OrderHistory = {

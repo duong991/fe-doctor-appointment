@@ -1,50 +1,49 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetSalesProduct,
     apiPutSalesProduct,
     apiDeleteSalesProducts,
-} from '@/services/SalesService'
+    apiGetDoctorDetail,
+} from '@/services/DoctorService'
 
-type ProductData = {
+type DoctorData = {
     id?: string
     name?: string
-    productCode?: string
+    dob?: string
+    phone?: string
+    email?: string
+    gender?: boolean
     img?: string
     imgList?: {
         id: string
         name: string
         img: string
     }[]
-    category?: string
-    price?: number
-    stock?: number
-    status?: number
-    costPerItem?: number
-    bulkDiscountPrice?: number
+    address?: string
+    yearsOfExperience?: string
+    specialist?: string
+    services?: string[]
+    onlinePrice?: number
+    offlinePrice?: number
     description?: string
-    taxRate?: 6
-    tags?: string[]
-    brand?: string
-    vendor?: string
 }
 
 export type SalesProductEditState = {
     loading: boolean
-    productData: ProductData
+    doctorData: DoctorData
 }
 
-type GetSalesProductResponse = ProductData
+type GetSalesProductResponse = DoctorData
 
-export const SLICE_NAME = 'salesProductEdit'
+export const SLICE_NAME = 'doctorEdit'
 
-export const getProduct = createAsyncThunk(
-    SLICE_NAME + '/getProducts',
+export const getDoctorDetail = createAsyncThunk(
+    SLICE_NAME + '/getDoctor',
     async (data: { id: string }) => {
-        const response = await apiGetSalesProduct<
+        const response = await apiGetDoctorDetail<
             GetSalesProductResponse,
             { id: string }
         >(data)
-        return response.data
+        return response.data.data
     }
 )
 
@@ -64,7 +63,7 @@ export const deleteProduct = async <T, U extends Record<string, unknown>>(
 
 const initialState: SalesProductEditState = {
     loading: true,
-    productData: {},
+    doctorData: {},
 }
 
 const productEditSlice = createSlice({
@@ -73,11 +72,11 @@ const productEditSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getProduct.fulfilled, (state, action) => {
-                state.productData = action.payload
+            .addCase(getDoctorDetail.fulfilled, (state, action) => {
+                state.doctorData = action.payload
                 state.loading = false
             })
-            .addCase(getProduct.pending, (state) => {
+            .addCase(getDoctorDetail.pending, (state) => {
                 state.loading = true
             })
     },

@@ -126,7 +126,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             dob: '',
             phone: '',
             email: '',
-            gender: 1,
+            gender: true,
             img: '',
             imgList: [],
             specialist: '',
@@ -155,9 +155,8 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                           }))
                         : [],
                 }}
-                // validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
-                    console.log('🚀 ~ ProductForm ~ values:', values)
                     const formData = cloneDeep(values)
                     formData.services = formData.services.map((service) => {
                         if (typeof service !== 'string') {
@@ -171,7 +170,6 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                             formData.img = formData.imgList[0].img
                         }
                     }
-                    console.log('🚀 ~ ProductForm ~ formData:', formData)
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >

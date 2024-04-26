@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCrmCalendar } from '@/services/CrmService'
+import { apiGetCrmCalendar } from '@/services/PatientService'
 
 type Event = {
     id: string

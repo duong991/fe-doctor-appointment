@@ -1,17 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetSalesProducts,
+    apiGetAllDoctor,
     apiDeleteSalesProducts,
-} from '@/services/SalesService'
+} from '@/services/DoctorService'
 import type { TableQueries } from '@/@types/common'
 
 type Doctor = {
     id: string
     name: string
     img: string
-    category: string
-    online_price: number
-    offline_price: number
+    specialist: string
+    onlinePrice: number
+    offlinePrice: number
 }
 
 type Doctors = Doctor[]
@@ -23,7 +23,7 @@ type GetSalesProductsResponse = {
 
 type FilterQueries = {
     name: string
-    category: string[]
+    specialist: string[]
 }
 
 export type SalesProductListState = {
@@ -40,13 +40,15 @@ type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 export const SLICE_NAME = 'doctorList'
 
 export const getProducts = createAsyncThunk(
-    SLICE_NAME + '/getProducts',
+    SLICE_NAME + '/getDoctors',
     async (data: GetSalesProductsRequest) => {
-        const response = await apiGetSalesProducts<
+        console.log('🚀 ~ data:', data)
+        const response = await apiGetAllDoctor<
             GetSalesProductsResponse,
             GetSalesProductsRequest
         >(data)
-        return response.data
+
+        return response.data.data
     }
 )
 
@@ -77,7 +79,7 @@ const initialState: SalesProductListState = {
     tableData: initialTableData,
     filterData: {
         name: '',
-        category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
+        specialist: [],
     },
 }
 
@@ -92,6 +94,7 @@ const doctorListSlice = createSlice({
             state.tableData = action.payload
         },
         setFilterData: (state, action) => {
+            console.log('🚀 ~ action:', action.payload)
             state.filterData = action.payload
         },
         toggleDeleteConfirmation: (state, action) => {

@@ -12,6 +12,7 @@ import reducer, { getCustomer, useAppDispatch, useAppSelector } from './store'
 import { injectReducer } from '@/store'
 import isEmpty from 'lodash/isEmpty'
 import useQuery from '@/utils/hooks/useQuery'
+import DoctorFavorite from './components/DoctorFavorite'
 
 injectReducer('crmCustomerDetails', reducer)
 
@@ -49,7 +50,7 @@ const CustomerDetail = () => {
                         </div>
                         <div className="w-full">
                             <AdaptableCard>
-                                <CurrentSubscription />
+                                <DoctorFavorite />
                                 <PaymentHistory />
                                 <PaymentMethods />
                             </AdaptableCard>

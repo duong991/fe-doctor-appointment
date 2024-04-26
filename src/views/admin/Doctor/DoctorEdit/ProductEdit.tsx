@@ -4,7 +4,7 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
-    getProduct,
+    getDoctorDetail,
     updateProduct,
     deleteProduct,
     useAppSelector,
@@ -20,23 +20,21 @@ import ProductForm, {
 } from '@/views/admin/Doctor/DoctorForm'
 import isEmpty from 'lodash/isEmpty'
 
-injectReducer('salesProductEdit', reducer)
+injectReducer('doctorEdit', reducer)
 
-const ProductEdit = () => {
+const DoctorEdit = () => {
     const dispatch = useAppDispatch()
 
     const location = useLocation()
     const navigate = useNavigate()
 
     const productData = useAppSelector(
-        (state) => state.salesProductEdit.data.productData
+        (state) => state.doctorEdit.data.doctorData
     )
-    const loading = useAppSelector(
-        (state) => state.salesProductEdit.data.loading
-    )
+    const loading = useAppSelector((state) => state.doctorEdit.data.loading)
 
     const fetchData = (data: { id: string }) => {
-        dispatch(getProduct(data))
+        dispatch(getDoctorDetail(data))
     }
 
     const handleFormSubmit = async (
@@ -66,17 +64,17 @@ const ProductEdit = () => {
     const popNotification = (keyword: string) => {
         toast.push(
             <Notification
-                title={`Successfuly ${keyword}`}
+                title={`Thành công ${keyword}`}
                 type="success"
                 duration={2500}
             >
-                Product successfuly {keyword}
+                Chỉnh sửa thông tin bác sĩ thành công {keyword}
             </Notification>,
             {
                 placement: 'top-center',
             }
         )
-        navigate('/app/sales/product-list')
+        navigate('/doctor')
     }
 
     useEffect(() => {
@@ -110,11 +108,11 @@ const ProductEdit = () => {
                         darkModeSrc="/img/others/img-2-dark.png"
                         alt="No product found!"
                     />
-                    <h3 className="mt-8">No product found!</h3>
+                    <h3 className="mt-8">Không tìm thấy bác sĩ</h3>
                 </div>
             )}
         </>
     )
 }
 
-export default ProductEdit
+export default DoctorEdit

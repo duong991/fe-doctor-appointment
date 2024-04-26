@@ -46,6 +46,12 @@ const adminRoutes: Routes = [
         authority: ['admin'],
     },
     {
+        key: 'patient-details',
+        path: '/patient-details',
+        component: lazy(() => import('@/views/admin/CustomerDetail')),
+        authority: ['admin'],
+    },
+    {
         key: 'payment',
         path: '/payment',
         component: lazy(() => import('@/views/admin/Payment/PaymentList')),

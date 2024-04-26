@@ -148,18 +148,20 @@ export const productsData = [
         email: 'dongminhduong991@gmail.com',
         name: 'Đồng Minh Dương',
         img: '/img/products/product-1.jpg',
+        phone: '09112312312',
+        gender: 1,
         imgList: [
             {
                 id: '12-img-0',
-                name: 'image-1',
+                name: 'Ảnh đại diện',
                 img: '/img/products/product-1.jpg',
             },
         ],
-        category: 'Da liễu',
-        online_price: 252,
-        offline_price: 123,
-        tags: ['trend', 'unisex'],
-
+        specialist: '39c4c531-442f-4a54-ba08-b3431d9757e1',
+        offlinePrice: 252,
+        onlinePrice: 123,
+        address: 'Hà Nội',
+        yearsOfExperience: '2',
         description:
             '<p>Make a brew a right royal knees up and we all like figgy pudding a comely wench gutted its nicked pulled out the eating irons, ask your mother if on goggle box toad in the whole Sherlock rather, ar kid pennyboy naff superb pezzy little. </p><br/><ul><li>Scally utter shambles blighty squirrel numbskull rumpy pumpy apple and pears bow ties are cool</li><li>pompous nosh have a butcher at this flabbergasted a right toff black cab jolly good made a pigs ear of it</li><li>Roast beef conked him one on the nose had a barney with the inlaws beefeater is she avin a laugh supper, gobsmacked argy-bargy challenge you to a duel</li><li>whizz air one dirty linen chav not some sort of dosshouse.</li></ul>',
     },

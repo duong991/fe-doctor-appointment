@@ -13,8 +13,8 @@ import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 
 type FormFieldsName = {
-    online_price: number
-    offline_price: number
+    onlinePrice: number
+    offlinePrice: number
 }
 
 type PricingFieldsProps = {
@@ -64,12 +64,12 @@ const PricingFields = (props: PricingFieldsProps) => {
                     <FormItem
                         label="Online"
                         invalid={
-                            (errors.online_price &&
-                                touched.online_price) as boolean
+                            (errors.onlinePrice &&
+                                touched.onlinePrice) as boolean
                         }
-                        errorMessage={errors.online_price}
+                        errorMessage={errors.onlinePrice}
                     >
-                        <Field name="online_price">
+                        <Field name="onlinePrice">
                             {({ field, form }: FieldProps) => {
                                 return (
                                     <NumericFormatInput
@@ -95,12 +95,12 @@ const PricingFields = (props: PricingFieldsProps) => {
                     <FormItem
                         label="Giá khám offline"
                         invalid={
-                            (errors.offline_price &&
-                                touched.offline_price) as boolean
+                            (errors.offlinePrice &&
+                                touched.offlinePrice) as boolean
                         }
-                        errorMessage={errors.offline_price}
+                        errorMessage={errors.offlinePrice}
                     >
-                        <Field name="offline_price">
+                        <Field name="offlinePrice">
                             {({ field, form }: FieldProps) => {
                                 return (
                                     <NumericFormatInput

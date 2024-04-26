@@ -1,3 +1,3 @@
-import ProductList from './DoctorList'
+import DoctorList from './DoctorList'
 
-export default ProductList
+export default DoctorList

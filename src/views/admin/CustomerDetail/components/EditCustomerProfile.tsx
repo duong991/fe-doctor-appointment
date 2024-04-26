@@ -53,19 +53,8 @@ const EditCustomerProfile = () => {
 
     const onFormSubmit = (values: FormModel) => {
         const clonedData = cloneDeep(customer)
-        const {
-            name,
-            birthday,
-            email,
-            img,
-            location,
-            title,
-            phoneNumber,
-            facebook,
-            twitter,
-            pinterest,
-            linkedIn,
-        } = values
+        const { name, birthday, email, img, location, title, phoneNumber } =
+            values
 
         const basicInfo = { name, email, img }
         const personalInfo = {
@@ -73,10 +62,6 @@ const EditCustomerProfile = () => {
             title,
             birthday: dayjs(birthday).format('DD/MM/YYYY'),
             phoneNumber,
-            facebook,
-            twitter,
-            pinterest,
-            linkedIn,
         }
         clonedData.personalInfo = {
             ...clonedData.personalInfo,

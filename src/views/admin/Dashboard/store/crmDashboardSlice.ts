@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCrmDashboardData } from '@/services/CrmService'
+import { apiGetCrmDashboardData } from '@/services/PatientService'
 import { IResponse } from '@/services/ApiService'
 
 export type Statistic = {

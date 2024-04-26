@@ -22,42 +22,19 @@ import type {
     ColumnDef,
 } from '@/components/shared/DataTable'
 
-type Product = {
+type Doctor = {
     id: string
     name: string
+    phone: string
     email: string
     img: string
-    category: string
-    online_price: number
-    offline_price: number
+    averageRating: number
+    specialist: string
+    onlinePrice: number
+    offlinePrice: number
 }
 
-const inventoryStatusColor: Record<
-    number,
-    {
-        label: string
-        dotClass: string
-        textClass: string
-    }
-> = {
-    0: {
-        label: 'In Stock',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    1: {
-        label: 'Limited',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Out of Stock',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-}
-
-const ActionColumn = ({ row }: { row: Product }) => {
+const ActionColumn = ({ row }: { row: Doctor }) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
@@ -89,7 +66,7 @@ const ActionColumn = ({ row }: { row: Product }) => {
     )
 }
 
-const DoctorColumn = ({ row }: { row: Product }) => {
+const DoctorColumn = ({ row }: { row: Doctor }) => {
     const avatar = row.img ? (
         <Avatar src={row.img} />
     ) : (
@@ -141,7 +118,7 @@ const DoctorTable = () => {
         dispatch(getProducts({ pageIndex, pageSize, sort, query, filterData }))
     }
 
-    const columns: ColumnDef<Product>[] = useMemo(
+    const columns: ColumnDef<Doctor>[] = useMemo(
         () => [
             {
                 header: 'Tên',
@@ -160,11 +137,28 @@ const DoctorTable = () => {
                 },
             },
             {
-                header: 'Chuyên khoa',
-                accessorKey: 'category',
+                header: 'Điện thoại',
+                accessorKey: 'phone',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.category}</span>
+                    return <span>{row.phone}</span>
+                },
+            },
+            {
+                header: 'Chuyên khoa',
+                accessorKey: 'specialist',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <span className="capitalize">
+                            {/* {specialists.filter(
+                                (specialist) =>
+                                    specialist.value === row.specialist &&
+                                    specialist.label
+                            )[0]?.label || ''} */}
+                            {row.specialist}
+                        </span>
+                    )
                 },
             },
 

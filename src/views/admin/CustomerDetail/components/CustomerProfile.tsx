@@ -128,45 +128,6 @@ const CustomerProfile = ({ data = {} }: CustomerProfileProps) => {
                         title="Date of birth"
                         value={data.personalInfo?.birthday}
                     />
-                    <CustomerInfoField
-                        title="Title"
-                        value={data.personalInfo?.title}
-                    />
-                    <div className="mb-7">
-                        <span>Social</span>
-                        <div className="flex mt-4">
-                            <Button
-                                className="mr-2"
-                                shape="circle"
-                                size="sm"
-                                icon={
-                                    <FaFacebookF className="text-[#1773ea]" />
-                                }
-                            />
-                            <Button
-                                className="mr-2"
-                                shape="circle"
-                                size="sm"
-                                icon={<FaTwitter className="text-[#1da1f3]" />}
-                            />
-                            <Button
-                                className="mr-2"
-                                shape="circle"
-                                size="sm"
-                                icon={
-                                    <FaLinkedinIn className="text-[#0077b5]" />
-                                }
-                            />
-                            <Button
-                                className="mr-2"
-                                shape="circle"
-                                size="sm"
-                                icon={
-                                    <FaPinterestP className="text-[#df0018]" />
-                                }
-                            />
-                        </div>
-                    </div>
                 </div>
                 <div className="mt-4 flex flex-col xl:flex-row gap-2">
                     <CustomerProfileAction id={data.id} />

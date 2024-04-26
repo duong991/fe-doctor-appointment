@@ -5,14 +5,13 @@ import ProductForm, {
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
-import { apiCreateSalesProduct } from '@/services/SalesService'
+import { apiCreateDoctor } from '@/services/DoctorService'
 
 const DoctorNew = () => {
     const navigate = useNavigate()
 
     const addProduct = async (data: FormModel) => {
-        console.log('🚀 ~ addProduct ~ data:', data)
-        const response = await apiCreateSalesProduct<boolean, FormModel>(data)
+        const response = await apiCreateDoctor<boolean, FormModel>(data)
         return response.data
     }
 
@@ -36,12 +35,12 @@ const DoctorNew = () => {
                     placement: 'top-center',
                 }
             )
-            // navigate('/app/sales/product-list')
+            navigate('/doctor')
         }
     }
 
     const handleDiscard = () => {
-        navigate('/app/sales/product-list')
+        navigate('/doctor')
     }
 
     return (

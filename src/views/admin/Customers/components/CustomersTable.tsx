@@ -50,7 +50,7 @@ const NameColumn = ({ row }: { row: Customer }) => {
             <Avatar size={28} shape="circle" src={row.img} />
             <Link
                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
-                to={`/app/crm/customer-details?id=${row.id}`}
+                to={`/patient-details?id=${row.id}`}
             >
                 {row.name}
             </Link>
@@ -124,11 +124,11 @@ const Customers = () => {
                     )
                 },
             },
-            {
-                header: '',
-                id: 'action',
-                cell: (props) => <ActionColumn row={props.row.original} />,
-            },
+            // {
+            //     header: '',
+            //     id: 'action',
+            //     cell: (props) => <ActionColumn row={props.row.original} />,
+            // },
         ],
         []
     )

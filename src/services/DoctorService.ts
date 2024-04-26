@@ -9,11 +9,11 @@ export async function apiGetSalesDashboardData<
     })
 }
 
-export async function apiGetSalesProducts<T, U extends Record<string, unknown>>(
+export async function apiGetAllDoctor<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/products',
+        url: '/admin/get-all-doctor',
         method: 'post',
         data,
     })
@@ -30,11 +30,11 @@ export async function apiDeleteSalesProducts<
     })
 }
 
-export async function apiGetSalesProduct<T, U extends Record<string, unknown>>(
+export async function apiGetDoctorDetail<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/product',
+        url: '/admin/doctor-detail',
         method: 'get',
         params,
     })
@@ -50,12 +50,14 @@ export async function apiPutSalesProduct<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiCreateSalesProduct<
-    T,
-    U extends Record<string, unknown>
->(data: U) {
+export async function apiCreateDoctor<T, U extends Record<string, unknown>>(
+    data: U
+) {
     const formData = new FormData()
 
+    /*
+     *
+     */
     Object.keys(data).forEach((key) => {
         if (key === 'imgList') {
             const imgList = (data[key] as any[])?.map(

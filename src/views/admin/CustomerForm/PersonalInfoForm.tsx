@@ -16,7 +16,6 @@ import { Field, FieldProps, FormikErrors, FormikTouched } from 'formik'
 type FormFieldsName = {
     upload: string
     name: string
-    title: string
     email: string
     location: string
     phoneNumber: string
@@ -130,20 +129,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                     prefix={<HiPhone className="text-xl" />}
                 />
             </FormItem>
-            <FormItem
-                label="Title"
-                invalid={errors.title && touched.title}
-                errorMessage={errors.title}
-            >
-                <Field
-                    type="text"
-                    autoComplete="off"
-                    name="title"
-                    placeholder="Title"
-                    component={Input}
-                    prefix={<HiPhone className="text-xl" />}
-                />
-            </FormItem>
+
             <FormItem
                 label="Birthday"
                 invalid={(errors.birthday && touched.birthday) as boolean}

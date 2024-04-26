@@ -3,7 +3,7 @@ import {
     apiGetCrmCustomers,
     apPutCrmCustomer,
     apiGetCrmCustomersStatistic,
-} from '@/services/CrmService'
+} from '@/services/PatientService'
 import type { TableQueries } from '@/@types/common'
 
 type PersonalInfo = {

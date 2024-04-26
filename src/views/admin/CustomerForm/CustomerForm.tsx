@@ -16,13 +16,8 @@ type BaseCustomerInfo = {
 
 type CustomerPersonalInfo = {
     location: string
-    title: string
     phoneNumber: string
     birthday: string
-    facebook: string
-    twitter: string
-    pinterest: string
-    linkedIn: string
 }
 
 export type Customer = BaseCustomerInfo & CustomerPersonalInfo
@@ -45,19 +40,17 @@ type CustomerFormProps = {
 dayjs.extend(customParseFormat)
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email Required'),
-    name: Yup.string().required('User Name Required'),
+    email: Yup.string()
+        .email('Email không hợp lệ')
+        .required('Email là bắt buộc'),
+    name: Yup.string().required('Tên người dùng là bắt buộc'),
     location: Yup.string(),
     title: Yup.string(),
     phoneNumber: Yup.string().matches(
         /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
-        'Phone number is not valid'
+        'Số điện thoại không hợp lệ'
     ),
     birthday: Yup.string(),
-    facebook: Yup.string(),
-    twitter: Yup.string(),
-    pinterest: Yup.string(),
-    linkedIn: Yup.string(),
     img: Yup.string(),
 })
 
@@ -74,17 +67,12 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                 email: customer.email || '',
                 img: customer.img || '',
                 location: customer?.personalInfo?.location || '',
-                title: customer?.personalInfo?.title || '',
                 phoneNumber: customer?.personalInfo?.phoneNumber || '',
                 birthday: (customer?.personalInfo?.birthday &&
                     dayjs(
                         customer.personalInfo.birthday,
                         'DD/MM/YYYY'
                     ).toDate()) as Date,
-                facebook: customer?.personalInfo?.facebook || '',
-                twitter: customer?.personalInfo?.twitter || '',
-                pinterest: customer?.personalInfo?.pinterest || '',
-                linkedIn: customer?.personalInfo?.linkedIn || '',
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
@@ -98,19 +86,12 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                         <Tabs defaultValue="personalInfo">
                             <TabList>
                                 <TabNav value="personalInfo">
-                                    Personal Info
+                                    Thông tin người dùng
                                 </TabNav>
-                                <TabNav value="social">Social</TabNav>
                             </TabList>
                             <div className="p-6">
                                 <TabContent value="personalInfo">
                                     <PersonalInfoForm
-                                        touched={touched}
-                                        errors={errors}
-                                    />
-                                </TabContent>
-                                <TabContent value="social">
-                                    <SocialLinkForm
                                         touched={touched}
                                         errors={errors}
                                     />

@@ -14,10 +14,11 @@ import Checkbox from '@/components/ui/Checkbox'
 import Drawer from '@/components/ui/Drawer'
 import { Field, Form, Formik, FormikProps, FieldProps } from 'formik'
 import type { MouseEvent } from 'react'
+import { specialists } from '@/constants/data.constant'
 
 type FormModel = {
     name: string
-    category: string[]
+    specialist: string[]
 }
 
 type FilterFormProps = {
@@ -59,12 +60,12 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 invalid={errors.name && touched.name}
                                 errorMessage={errors.name}
                             >
-                                <h6 className="mb-4">Included text</h6>
+                                <h6 className="mb-4">Từ khóa tìm kiếm</h6>
                                 <Field
                                     type="text"
                                     autoComplete="off"
                                     name="name"
-                                    placeholder="Keyword"
+                                    placeholder="Tìm kiếm"
                                     component={Input}
                                     prefix={
                                         <HiOutlineSearch className="text-lg" />
@@ -72,16 +73,18 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 />
                             </FormItem>
                             <FormItem
-                                invalid={errors.category && touched.category}
-                                errorMessage={errors.category as string}
+                                invalid={
+                                    errors.specialist && touched.specialist
+                                }
+                                errorMessage={errors.specialist as string}
                             >
-                                <h6 className="mb-4">Product Category</h6>
-                                <Field name="category">
+                                <h6 className="mb-4">Danh mục chuyên khoa</h6>
+                                <Field name="specialist">
                                     {({ field, form }: FieldProps) => (
                                         <>
                                             <Checkbox.Group
                                                 vertical
-                                                value={values.category}
+                                                value={values.specialist}
                                                 onChange={(options) =>
                                                     form.setFieldValue(
                                                         field.name,
@@ -89,40 +92,18 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                     )
                                                 }
                                             >
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="bags"
-                                                >
-                                                    Bags{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="cloths"
-                                                >
-                                                    Cloths{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="devices"
-                                                >
-                                                    Devices{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="shoes"
-                                                >
-                                                    Shoes{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    name={field.name}
-                                                    value="watches"
-                                                >
-                                                    Watches{' '}
-                                                </Checkbox>
+                                                {specialists.map(
+                                                    ({ label, value }) => (
+                                                        <Checkbox
+                                                            key={value}
+                                                            className="mb-3"
+                                                            name={field.name}
+                                                            value={value}
+                                                        >
+                                                            {label}{' '}
+                                                        </Checkbox>
+                                                    )
+                                                )}
                                             </Checkbox.Group>
                                         </>
                                     )}
@@ -140,10 +121,10 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     return (
         <div className="text-right w-full">
             <Button size="sm" className="mr-2" onClick={onCancel}>
-                Cancel
+                Hủy bỏ
             </Button>
             <Button size="sm" variant="solid" onClick={onSaveClick}>
-                Query
+                Tìm kiếm
             </Button>
         </div>
     )
@@ -177,7 +158,7 @@ const DoctorFilter = () => {
                 Lọc
             </Button>
             <Drawer
-                title="Filter"
+                title="Lọc bác sĩ"
                 isOpen={isOpen}
                 footer={
                     <DrawerFooter

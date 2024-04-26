@@ -22,30 +22,13 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const { id } = customer
 
     const onFormSubmit = (values: FormModel) => {
-        const {
-            name,
-            birthday,
-            email,
-            img,
-            location,
-            title,
-            phoneNumber,
-            facebook,
-            twitter,
-            pinterest,
-            linkedIn,
-        } = values
+        const { name, birthday, email, img, location, phoneNumber } = values
 
         const basicInfo = { name, email, img }
         const personalInfo = {
             location,
-            title,
             birthday: dayjs(birthday).format('DD/MM/YYYY'),
             phoneNumber,
-            facebook,
-            twitter,
-            pinterest,
-            linkedIn,
         }
         let newData = cloneDeep(data)
         let editedCustomer: Partial<Customer> = {}

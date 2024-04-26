@@ -166,6 +166,7 @@ const DoctorImages = (props: ProductImagesProps) => {
             files: files[latestUpload],
         }
         const imageList = [...values.imgList, ...[image]]
+        console.log('🚀 ~ DoctorImages ~ imageList:', imageList)
         values.imgList = [image]
         form.setFieldValue(field.name, imageList)
     }
