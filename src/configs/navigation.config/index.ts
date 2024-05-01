@@ -4,6 +4,7 @@ import {
     NAV_ITEM_TYPE_COLLAPSE,
 } from '@/constants/navigation.constant'
 import type { NavigationTree } from '@/@types/navigation'
+import { Role } from '@/@types/enum'
 
 const navigationConfig: NavigationTree[] = [
     /*
@@ -20,11 +21,11 @@ const navigationConfig: NavigationTree[] = [
         subMenu: [],
     },
     {
-        key: 'doctor',
+        key: Role.DOCTOR,
         path: '/doctor',
         title: 'Bác sĩ',
         translateKey: 'nav.doctor',
-        icon: 'doctor',
+        icon: Role.DOCTOR,
         type: NAV_ITEM_TYPE_ITEM,
         authority: ['admin'],
         subMenu: [],
@@ -59,7 +60,18 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'nav.home',
         icon: 'home',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: ['doctor'],
+        authority: [Role.DOCTOR],
+        subMenu: [],
+    },
+
+    {
+        key: 'appointment',
+        path: '/appointment',
+        title: 'Appointment',
+        translateKey: 'nav.appointment',
+        icon: 'appointment',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [Role.DOCTOR],
         subMenu: [],
     },
     {
@@ -69,7 +81,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'nav.calender',
         icon: 'calender',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: ['doctor'],
+        authority: [Role.DOCTOR],
         subMenu: [],
     },
 ]

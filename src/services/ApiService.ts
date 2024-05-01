@@ -15,8 +15,10 @@ const ApiService = {
     ) {
         return new Promise<AxiosResponse<IResponse<Response>>>(
             (resolve, reject) => {
+                // return new Promise<AxiosResponse<Response>>((resolve, reject) => {
                 BaseService(param)
                     .then((response: AxiosResponse<IResponse<Response>>) => {
+                        // .then((response: AxiosResponse<Response>) => {
                         resolve(response)
                     })
                     .catch((errors: AxiosError) => {

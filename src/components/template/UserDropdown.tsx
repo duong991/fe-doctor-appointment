@@ -16,15 +16,14 @@ type DropdownList = {
 const dropdownItemList: DropdownList[] = []
 
 const _UserDropdown = ({ className }: CommonProps) => {
-
-    const { signOut } = useAuth()
+    const { signOut, user } = useAuth()
 
     const UserAvatar = (
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">admin</div>
-                <div className="font-bold">User01</div>
+                <div className="text-xs capitalize">{user?.role}</div>
+                <div className="font-bold">{user?.email}</div>
             </div>
         </div>
     )
@@ -41,9 +40,9 @@ const _UserDropdown = ({ className }: CommonProps) => {
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                User01
+                                {user?.role}
                             </div>
-                            <div className="text-xs">user01@mail.com</div>
+                            <div className="text-xs">{user?.email}</div>
                         </div>
                     </div>
                 </Dropdown.Item>
@@ -54,8 +53,8 @@ const _UserDropdown = ({ className }: CommonProps) => {
                         eventKey={item.label}
                         className="mb-1 px-0"
                     >
-                        <Link 
-                            className="flex h-full w-full px-2" 
+                        <Link
+                            className="flex h-full w-full px-2"
                             to={item.path}
                         >
                             <span className="flex gap-2 items-center w-full">

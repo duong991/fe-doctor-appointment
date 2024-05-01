@@ -39,8 +39,7 @@ function useAuth() {
         try {
             const resp = await apiSignIn(values)
             if (resp.data && resp.data.status === 'success') {
-                const { accessToken, refreshToken, userData } =
-                    resp.data.data.data
+                const { accessToken, refreshToken, userData } = resp.data.data
                 dispatch(
                     signInSuccess({
                         signedIn: true,

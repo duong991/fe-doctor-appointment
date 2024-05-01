@@ -9,7 +9,7 @@ import type {
 } from '@/@types/auth'
 
 export async function apiSignIn(data: SignInCredential) {
-    return ApiService.fetchData<IResponse<SignInResponse>>({
+    return ApiService.fetchData<SignInResponse>({
         url: '/login',
         method: 'post',
         data,
