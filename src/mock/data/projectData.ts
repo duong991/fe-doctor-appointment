@@ -199,7 +199,6 @@ export const projectList = [
 
 export const projectDashboardData = {
     userName: 'Carolyn Perkins',
-    taskCount: 5,
     projectOverviewData: {
         chart: {
             daily: {
@@ -397,36 +396,6 @@ export const projectDashboardData = {
         },
     ],
     projectsData: projectList.filter((_, index) => index <= 3),
-    activitiesData: [
-        {
-            type: 'UPDATE-TICKET',
-            dateTime: 1646580000,
-            ticket: 'PD-979',
-            status: 0,
-            userName: 'Carolyn Perkins',
-            userImg: '',
-        },
-        {
-            type: 'COMMENT',
-            dateTime: 1646578417,
-            userName: 'Ron Vargas',
-            userImg: '/img/avatars/thumb-3.jpg',
-            comment: `Fine, Java MIGHT be a good example of what a programming language should be like. But Java applications are good examples of what applications SHOULDN'T be like.`,
-        },
-        {
-            type: 'ADD-TAGS-TO-TICKET',
-            dateTime: 1646574027,
-            userName: 'Joyce Freeman',
-            tags: ['Live Issue', 'Backend'],
-        },
-        {
-            type: 'ADD-FILES-TO-TICKET',
-            dateTime: 1646569123,
-            userName: 'Luke Cook',
-            files: ['document.csv'],
-            ticket: 'PD-1092',
-        },
-    ],
 }
 
 export const labels = [

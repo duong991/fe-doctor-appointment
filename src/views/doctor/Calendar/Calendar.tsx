@@ -18,6 +18,7 @@ import type {
     EventClickArg,
     DateSelectArg,
 } from '@fullcalendar/core'
+import { v4 as uuidv4 } from 'uuid'
 
 injectReducer('crmCalendar', reducer)
 
@@ -59,8 +60,11 @@ const Calendar = () => {
 
     const onSubmit = (data: EventParam, type: string) => {
         let newEvents = cloneDeep(events)
+        console.log('🚀 ~ onSubmit ~ newEvents:', newEvents)
         if (type === 'NEW') {
-            newEvents.push(data)
+            console.log('🚀 ~ onSubmit ~ data:', data)
+            const id = uuidv4()
+            newEvents.push({ ...data, id })
         }
 
         if (type === 'EDIT') {

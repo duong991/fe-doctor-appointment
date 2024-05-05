@@ -1,25 +1,27 @@
 import { lazy } from 'react'
 import authRoute from './authRoute'
 import type { Routes } from '@/@types/routes'
+import { Role } from '@/@types/enum'
+import commonRoutes from './commonRoute'
 
 const adminRoutes: Routes = [
     {
         key: 'home',
         path: '/home',
         component: lazy(() => import('@/views/admin/Dashboard/Dashboard')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
     {
         key: '/doctor',
         path: '/doctor',
         component: lazy(() => import('@/views/admin/Doctor/DoctorList')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
     {
         key: 'doctor.doctorNew',
         path: `/doctor/doctor-new`,
         component: lazy(() => import('@/views/admin/Doctor/DoctorNew')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
         meta: {
             header: 'Thêm mới bác sĩ',
         },
@@ -28,7 +30,7 @@ const adminRoutes: Routes = [
         key: 'doctor.editDoctor',
         path: `/doctor/doctor-edit/:doctorId`,
         component: lazy(() => import('@/views/admin/Doctor/DoctorEdit')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
         meta: {
             header: 'Edit Doctor',
         },
@@ -37,48 +39,70 @@ const adminRoutes: Routes = [
         key: '/doctor-info',
         path: '/doctor',
         component: lazy(() => import('@/views/doctor/Calendar/Calendar')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
     {
         key: 'patient',
         path: '/patient',
         component: lazy(() => import('@/views/admin/Customers')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
     {
         key: 'patient-details',
         path: '/patient-details',
         component: lazy(() => import('@/views/admin/CustomerDetail')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
     {
         key: 'payment',
         path: '/payment',
         component: lazy(() => import('@/views/admin/Payment/PaymentList')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
 
     {
         key: 'payment-details',
         path: '/payment/details/:paymentId',
         component: lazy(() => import('@/views/admin/Payment/PaymentDetails')),
-        authority: ['admin'],
+        authority: [Role.ADMIN],
     },
 ]
 
 export const doctorRoutes: Routes = [
     {
+        key: 'home',
+        path: '/home',
+        component: lazy(() => import('@/views/doctor/Dashboard')),
+        authority: [Role.DOCTOR],
+    },
+    {
         key: 'calender',
         path: '/calender',
         component: lazy(() => import('@/views/doctor/Calendar/Calendar')),
-        authority: [],
+        authority: [Role.DOCTOR],
+    },
+    {
+        key: 'appointment',
+        path: '/appointment',
+        component: lazy(
+            () => import('@/views/doctor/Appointment/AppointmentList')
+        ),
+        authority: [Role.DOCTOR],
+    },
+    {
+        key: 'appointment-detail',
+        path: '/appointment-detail/:orderId',
+        component: lazy(
+            () => import('@/views/doctor/Appointment/OrderDetails')
+        ),
+        authority: [Role.DOCTOR],
     },
 
     {
         key: 'room',
         path: '/room',
         component: lazy(() => import('@/views/doctor/Room')),
-        authority: [],
+        authority: [Role.DOCTOR],
         meta: {
             layout: 'blank',
             pageContainerType: 'gutterless',
@@ -95,5 +119,5 @@ export const doctorRoutes: Routes = [
 ]
 
 export const publicRoutes: Routes = [...authRoute]
-
-export const protectedRoutes: Routes = [...adminRoutes, ...doctorRoutes]
+export const protectedAdminRoutes: Routes = [...adminRoutes]
+export const protectedDoctorRoutes: Routes = [...doctorRoutes]

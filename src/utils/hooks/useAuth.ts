@@ -25,6 +25,8 @@ function useAuth() {
         (state) => state.auth.session
     )
 
+    const { role, userId, email } = useAppSelector((state) => state.auth.user)
+
     const signIn = async (
         values: SignInCredential
     ): Promise<
@@ -122,6 +124,11 @@ function useAuth() {
     }
 
     return {
+        user: {
+            role,
+            email,
+            userId,
+        },
         authenticated: accessToken && refreshToken && signedIn,
         signIn,
         signUp,

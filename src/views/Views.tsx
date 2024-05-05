@@ -1,6 +1,10 @@
 import { Suspense } from 'react'
 import Loading from '@/components/shared/Loading'
-import { protectedRoutes, publicRoutes } from '@/configs/routes.config'
+import {
+    protectedAdminRoutes,
+    protectedDoctorRoutes,
+    publicRoutes,
+} from '@/configs/routes.config'
 import appConfig from '@/configs/app.config'
 import PageContainer from '@/components/template/PageContainer'
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -10,6 +14,7 @@ import PublicRoute from '@/components/route/PublicRoute'
 import AuthorityGuard from '@/components/route/AuthorityGuard'
 import AppRoute from '@/components/route/AppRoute'
 import type { LayoutType } from '@/@types/theme'
+import { Role } from '@/@types/enum'
 
 interface ViewsProps {
     pageContainerType?: 'default' | 'gutterless' | 'contained'
@@ -17,11 +22,37 @@ interface ViewsProps {
 }
 
 type AllRoutesProps = ViewsProps
-
+const createProtectedRoutes = (
+    routes: any[],
+    userAuthority: Role[],
+    props: AllRoutesProps
+) => {
+    return routes.map((route, index) => (
+        <Route
+            key={route.key + index}
+            path={route.path}
+            element={
+                <AuthorityGuard
+                    userAuthority={userAuthority}
+                    authority={route.authority}
+                >
+                    <PageContainer {...props} {...route.meta}>
+                        <AppRoute
+                            routeKey={route.key}
+                            component={route.component}
+                            {...route.meta}
+                        />
+                    </PageContainer>
+                </AuthorityGuard>
+            }
+        />
+    ))
+}
 const { authenticatedEntryPath } = appConfig
-
 const AllRoutes = (props: AllRoutesProps) => {
-    const userAuthority = useAppSelector((state) => state.auth.user.role)
+    const userAuthority = useAppSelector((state) => [
+        state.auth.user.role,
+    ]) as Role[]
 
     return (
         <Routes>
@@ -30,26 +61,18 @@ const AllRoutes = (props: AllRoutesProps) => {
                     path="/"
                     element={<Navigate replace to={authenticatedEntryPath} />}
                 />
-                {protectedRoutes.map((route, index) => (
-                    <Route
-                        key={route.key + index}
-                        path={route.path}
-                        element={
-                            <AuthorityGuard
-                                userAuthority={userAuthority}
-                                authority={route.authority}
-                            >
-                                <PageContainer {...props} {...route.meta}>
-                                    <AppRoute
-                                        routeKey={route.key}
-                                        component={route.component}
-                                        {...route.meta}
-                                    />
-                                </PageContainer>
-                            </AuthorityGuard>
-                        }
-                    />
-                ))}
+                {userAuthority.includes(Role.ADMIN)
+                    ? createProtectedRoutes(
+                          protectedAdminRoutes,
+                          userAuthority,
+                          props
+                      )
+                    : createProtectedRoutes(
+                          protectedDoctorRoutes,
+                          userAuthority,
+                          props
+                      )}
+
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Route>
             <Route path="/" element={<PublicRoute />}>

@@ -10,7 +10,7 @@ const navigationIcon: NavigationIcons = {
     doctor: <GrUserManager />,
     patient: <HiOutlineUserGroup />,
     calender: <HiOutlineCalendarDays />,
-    appointment: <HiOutlineCalendarDays />,
+    appointment: <HiOutlineUserGroup />,
     payment: <MdOutlinePayments />,
 }
 
