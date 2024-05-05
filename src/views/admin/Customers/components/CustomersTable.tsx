@@ -10,6 +10,7 @@ import {
     useAppDispatch,
     useAppSelector,
     Customer,
+    ESmartCardStatus,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import CustomerEditDialog from './CustomerEditDialog'
@@ -18,12 +19,14 @@ import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
 import { imagePath } from '@/utils/imagePath'
+import { defaultImagePath } from '@/constants/data.constant'
 
-const statusColor: Record<string, string> = {
-    active: 'bg-emerald-500',
-    blocked: 'bg-red-500',
+const statusColor: Record<ESmartCardStatus, string> = {
+    [ESmartCardStatus.None]: 'bg-gray-500',
+    [ESmartCardStatus.Pending]: 'bg-yellow-500',
+    [ESmartCardStatus.Publish]: 'bg-green-500',
+    [ESmartCardStatus.Blocked]: 'bg-red-500',
 }
-
 const ActionColumn = ({ row }: { row: Customer }) => {
     const { textTheme } = useThemeClass()
     const dispatch = useAppDispatch()
@@ -48,7 +51,11 @@ const NameColumn = ({ row }: { row: Customer }) => {
 
     return (
         <div className="flex items-center">
-            <Avatar size={28} shape="circle" src={imagePath(row.img)} />
+            <Avatar
+                size={28}
+                shape="circle"
+                src={imagePath(row.img || defaultImagePath)}
+            />
             <Link
                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
                 to={`/patient-details?id=${row.id}`}
@@ -87,7 +94,7 @@ const Customers = () => {
     const columns: ColumnDef<Customer>[] = useMemo(
         () => [
             {
-                header: 'Name',
+                header: 'Họ Tên',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
@@ -99,37 +106,32 @@ const Customers = () => {
                 accessorKey: 'email',
             },
             {
-                header: 'Status',
-                accessorKey: 'status',
+                header: 'Trạng Thái Thẻ',
+                accessorKey: 'smartCardStatus',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            <Badge className={statusColor[row.status]} />
+                            <Badge
+                                className={statusColor[row.smartCardStatus]}
+                            />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.status}
+                                {row.smartCardStatus}
                             </span>
                         </div>
                     )
                 },
             },
             {
-                header: 'Last online',
-                accessorKey: 'lastOnline',
+                header: 'Địa Chỉ',
+                accessorKey: 'address',
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <div className="flex items-center">
-                            {dayjs.unix(row.lastOnline).format('MM/DD/YYYY')}
-                        </div>
+                        <div className="flex items-center">{row.address}</div>
                     )
                 },
             },
-            // {
-            //     header: '',
-            //     id: 'action',
-            //     cell: (props) => <ActionColumn row={props.row.original} />,
-            // },
         ],
         []
     )

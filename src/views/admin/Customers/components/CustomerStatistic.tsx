@@ -87,7 +87,7 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
-                label="Total Customers"
+                label="Tổng số bệnh nhân"
                 value={statisticData?.totalCustomers?.value}
                 growthRate={convertNumberToOneDecimalPlaces(
                     statisticData?.totalCustomers?.growShrink
@@ -97,7 +97,7 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUsers />}
                 avatarClass="!bg-blue-500"
-                label="Active Customers"
+                label="Tổng số thẻ"
                 value={statisticData?.activeCustomers?.value}
                 growthRate={convertNumberToOneDecimalPlaces(
                     statisticData?.activeCustomers?.growShrink
@@ -107,7 +107,7 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUserAdd />}
                 avatarClass="!bg-emerald-500"
-                label="New Customers"
+                label="Bệnh nhân mới"
                 value={statisticData?.newCustomers?.value}
                 growthRate={convertNumberToOneDecimalPlaces(
                     statisticData?.newCustomers?.growShrink

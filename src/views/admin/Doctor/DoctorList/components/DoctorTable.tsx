@@ -22,6 +22,7 @@ import type {
     ColumnDef,
 } from '@/components/shared/DataTable'
 import { imagePath } from '@/utils/imagePath'
+import { specialists } from '@/constants/data.constant'
 
 type Doctor = {
     id: string
@@ -152,11 +153,11 @@ const DoctorTable = () => {
                     const row = props.row.original
                     return (
                         <span className="capitalize">
-                            {/* {specialists.filter(
+                            {specialists.filter(
                                 (specialist) =>
                                     specialist.value === row.specialist &&
                                     specialist.label
-                            )[0]?.label || ''} */}
+                            )[0]?.label || ''}
                             {row.specialist}
                         </span>
                     )

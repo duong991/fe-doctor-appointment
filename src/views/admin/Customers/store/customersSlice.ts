@@ -48,8 +48,8 @@ export type Customer = {
     email: string
     img: string
     role: string
-    lastOnline: number
-    status: string
+    address: string
+    smartCardStatus: ESmartCardStatus
     personalInfo: PersonalInfo
     orderHistory: OrderHistory[]
     paymentMethod: PaymentMethod[]
@@ -68,12 +68,18 @@ type CustomerStatistic = {
 }
 
 type Filter = {
-    status: string
+    smartCardStatus: string
 }
 
 type GetCrmCustomersResponse = {
     data: Customer[]
     total: number
+}
+export enum ESmartCardStatus {
+    None = 'NONE',
+    Pending = 'PENDING',
+    Publish = 'PUBLISH',
+    Blocked = 'BLOCKED',
 }
 
 type GetCrmCustomersStatisticResponse = CustomerStatistic
@@ -131,7 +137,7 @@ export const initialTableData: TableQueries = {
 }
 
 export const initialFilterData = {
-    status: '',
+    smartCardStatus: '',
 }
 
 const initialState: CustomersState = {
