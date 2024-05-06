@@ -20,11 +20,20 @@ const DoctorTableTools = () => {
                 </Button>
             </Link>
             <Link
-                className="block lg:inline-block md:mb-0 mb-4"
+                className="block lg:inline-block md:mb-0 mb-4 md:mx-2"
                 to="/doctor/doctor-new"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
                     Thêm mới Bác sĩ
+                </Button>
+            </Link>
+
+            <Link
+                className="block lg:inline-block md:mb-0 mb-4"
+                to="/doctor/doctor-new"
+            >
+                <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
+                    Đăng ký lịch hẹn cho bác sĩ
                 </Button>
             </Link>
         </div>

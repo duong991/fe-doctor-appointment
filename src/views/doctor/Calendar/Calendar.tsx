@@ -101,8 +101,8 @@ const Calendar = () => {
                 editable
                 selectable
                 events={events}
-                eventClick={onEventClick}
-                select={onCellSelect}
+                // eventClick={onEventClick}
+                // select={onCellSelect}
                 eventDrop={onEventChange}
             />
             <EventDialog submit={onSubmit} />

@@ -5,13 +5,18 @@ import { useLocation } from 'react-router-dom'
 const Room = () => {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
-    const roomId = searchParams.get('roomId')
+    const roomId =
+        'vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/' + searchParams
+    const url = '8x8.vc'
+    // call.daugiasodep.vn
+    // const roomId = '9128371209'
+    // console.log('🚀 ~ Room ~ roomId:', roomId)
     const { user } = useAuth()
     return (
         <div className="flex flex-col gap-4 h-full ">
             <JitsiMeeting
-                domain="call.daugiasodep.vn"
-                roomName={roomId || '9128371209'}
+                domain={url}
+                roomName={roomId}
                 configOverwrite={{
                     startWithAudioMuted: false,
                     disableModeratorIndicator: true,

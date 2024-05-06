@@ -5,6 +5,11 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { CalendarOptions } from '@fullcalendar/core'
+import viLocale from '@fullcalendar/core/locales/vi'
+import Upload from '@/components/ui/Upload'
+import Button from '@/components/ui/Button'
+import { HiOutlineCloudUpload } from 'react-icons/hi'
+import useAuth from '@/utils/hooks/useAuth'
 
 type EventColors = Record<
     string,
@@ -110,7 +115,66 @@ const defaultColorList: Record<
     },
 }
 
+const BeforeUpload = () => {
+    const maxUpload = 1
+
+    const beforeUpload = (
+        files: FileList | null,
+        fileList: File[]
+    ): boolean | string => {
+        let valid: string | boolean = true
+
+        const allowedFileType = [
+            'xlsx',
+            'xls',
+            'csv',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]
+
+        if (fileList.length >= maxUpload) {
+            return `Bạn chỉ được tải lên ${maxUpload} file.`
+        }
+
+        if (files) {
+            for (const f of files) {
+                if (!allowedFileType.includes(f.type)) {
+                    console.log('🚀 ~ beforeUpload ~ f.type:', f.type)
+                    valid = 'Tải lên file excel'
+                }
+            }
+        }
+
+        // call api upload if valid
+        if (typeof valid === 'boolean' && valid) {
+            const formData = new FormData()
+            if (files) {
+                console.log('🚀 ~ beforeUpload ~ files:', files)
+                formData.append('file', files[0])
+                console.log('send file ', formData)
+            }
+
+            // call api upload
+            // Assuming you have a function uploadFile that takes formData as argument
+            // await uploadFile(formData)
+        }
+
+        return valid
+    }
+
+    return (
+        <>
+            <Upload beforeUpload={beforeUpload} showList={true}>
+                <Button icon={<HiOutlineCloudUpload />}>
+                    Tải lên file excel
+                </Button>
+            </Upload>
+        </>
+    )
+}
+
 const CalendarView = (props: CalendarViewProps) => {
+    const { user } = useAuth()
+    const role = user?.role
     const {
         wrapperClass,
         eventColors = () => defaultColorList,
@@ -118,13 +182,32 @@ const CalendarView = (props: CalendarViewProps) => {
     } = props
 
     return (
-        <div className={classNames('calendar', wrapperClass)}>
+        <div className={classNames('calendar relative', wrapperClass)}>
+            {role === 'doctor' && (
+                <div className="absolute top-0 w-full z-0 flex items-center justify-center">
+                    <BeforeUpload />
+                </div>
+            )}
+
             <FullCalendar
-                initialView="dayGridMonth"
+                locales={[viLocale]}
+                locale="vi"
+                initialView={
+                    role === 'doctor' ? 'timeGridWeek' : 'dayGridMonth'
+                }
+                titleFormat={{
+                    month: '2-digit',
+                    year: 'numeric',
+                    day: '2-digit',
+                    weekday: 'short',
+                }}
                 headerToolbar={{
                     left: 'title',
                     center: '',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay prev,next',
+                    right:
+                        role === 'doctor'
+                            ? 'timeGridWeek,timeGridDay prev,next'
+                            : 'dayGridMonth,timeGridWeek,timeGridDay prev,next',
                 }}
                 eventContent={(arg) => {
                     const { extendedProps } = arg.event
