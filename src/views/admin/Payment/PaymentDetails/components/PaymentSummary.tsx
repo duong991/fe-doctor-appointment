@@ -1,17 +1,17 @@
 import Card from '@/components/ui/Card'
+import { EPaymentType } from '@/constants/data.constant'
 import { NumericFormat } from 'react-number-format'
 
 type PaymentInfoProps = {
     label?: string
-    value?: number
+    value?: number | string
     isLast?: boolean
 }
 
 type PaymentSummaryProps = {
     data?: {
         subTotal: number
-        tax: number
-        deliveryFees: number
+        paymentMethod: EPaymentType
         total: number
     }
 }
@@ -27,12 +27,10 @@ const PaymentInfo = ({ label, value, isLast }: PaymentInfoProps) => {
             <span className="font-semibold">
                 <NumericFormat
                     displayType="text"
-                    value={(Math.round((value as number) * 100) / 100).toFixed(
-                        2
-                    )}
-                    prefix={'$'}
+                    value={Math.round(value as number)}
                     thousandSeparator={true}
-                />
+                />{' '}
+                VND
             </span>
         </li>
     )
@@ -41,13 +39,19 @@ const PaymentInfo = ({ label, value, isLast }: PaymentInfoProps) => {
 const PaymentSummary = ({ data }: PaymentSummaryProps) => {
     return (
         <Card className="mb-4">
-            <h5 className="mb-4">Payment Summary</h5>
+            <h5 className="mb-4">Chi tiết Thanh toán</h5>
             <ul>
-                <PaymentInfo label="Subtotal" value={data?.subTotal} />
-                <PaymentInfo label="Delivery fee" value={data?.deliveryFees} />
-                <PaymentInfo label="Tax(6%)" value={data?.tax} />
+                <PaymentInfo label="Giá khám" value={data?.subTotal} />
+                <li className="flex items-center justify-between mb-3">
+                    <span>Phương thức thanh toán</span>
+                    <span className="font-semibold">
+                        {data?.paymentMethod === EPaymentType.ONLINE
+                            ? 'Online'
+                            : 'Smartcard'}
+                    </span>
+                </li>
                 <hr className="mb-3" />
-                <PaymentInfo isLast label="Total" value={data?.total} />
+                <PaymentInfo isLast label="Thành tiền" value={data?.total} />
             </ul>
         </Card>
     )

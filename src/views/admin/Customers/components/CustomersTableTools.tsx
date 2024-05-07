@@ -45,7 +45,7 @@ const CustomersTableTools = () => {
         if (inputRef.current) {
             inputRef.current.value = ''
         }
-        dispatch(setFilterData({ status: '' }))
+        dispatch(setFilterData({ smartCardStatus: '' }))
         fetchData(newTableData)
     }
 

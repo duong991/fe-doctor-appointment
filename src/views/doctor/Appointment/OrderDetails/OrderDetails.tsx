@@ -10,7 +10,7 @@ import ShippingInfo from './components/ShippingInfo'
 import Activity from './components/Activity'
 import CustomerInfo from './components/CustomerInfo'
 import { HiOutlineCalendar } from 'react-icons/hi'
-import { apiGetSalesOrderDetails } from '@/services/SalesService'
+import { apiGetAppointmentDetails } from '@/services/SalesService'
 import { useLocation } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
@@ -116,7 +116,7 @@ const OrderDetails = () => {
         )
         if (id) {
             setLoading(true)
-            const response = await apiGetSalesOrderDetails<
+            const response = await apiGetAppointmentDetails<
                 SalesOrderDetailsResponse,
                 { id: string }
             >({ id })

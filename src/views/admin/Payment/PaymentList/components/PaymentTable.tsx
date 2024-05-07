@@ -25,68 +25,75 @@ import type {
     ColumnDef,
     Row,
 } from '@/components/shared/DataTable'
+// eslint-disable-next-line import/named
+import { EPaymentType, EStatus } from '@/constants/data.constant'
 
 type Order = {
     id: string
     date: number
-    customer: string
-    status: number
-    paymentMehod: string
-    paymentIdendifier: string
+    patient: string
+    status: EStatus
+    paymentMethod: EPaymentType
     totalAmount: number
 }
 
 const orderStatusColor: Record<
-    number,
+    EStatus,
     {
         label: string
         dotClass: string
         textClass: string
     }
 > = {
-    0: {
-        label: 'Paid',
+    [EStatus.APPROVED]: {
+        label: 'Approved',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    1: {
-        label: 'Pending',
+    [EStatus.REJECTED]: {
+        label: 'Rejected',
+        dotClass: 'bg-red-500',
+        textClass: 'text-red-500',
+    },
+    [EStatus.CANCELLED]: {
+        label: 'Cancelled',
         dotClass: 'bg-amber-500',
         textClass: 'text-amber-500',
     },
-    2: { label: 'Failed', dotClass: 'bg-red-500', textClass: 'text-red-500' },
+    [EStatus.COMPLETED]: {
+        label: 'Completed',
+        dotClass: 'bg-blue-500',
+        textClass: 'text-blue-500',
+    },
+    [EStatus.AWAITING_PAYMENT]: {
+        label: 'Awaiting Payment',
+        dotClass: 'bg-yellow-500',
+        textClass: 'text-yellow-500',
+    },
 }
 
 const PaymentMethodImage = ({
-    paymentMehod,
+    paymentMethod,
     className,
 }: {
-    paymentMehod: string
+    paymentMethod: string
     className: string
 }) => {
-    switch (paymentMehod) {
-        case 'visa':
+    switch (paymentMethod) {
+        case 'ONLINE':
             return (
                 <img
                     className={className}
                     src="/img/others/img-8.png"
-                    alt={paymentMehod}
+                    alt={paymentMethod}
                 />
             )
-        case 'master':
+        case 'SMARTCARD':
             return (
                 <img
                     className={className}
                     src="/img/others/img-9.png"
-                    alt={paymentMehod}
-                />
-            )
-        case 'paypal':
-            return (
-                <img
-                    className={className}
-                    src="/img/others/img-10.png"
-                    alt={paymentMehod}
+                    alt={paymentMethod}
                 />
             )
         default:
@@ -101,13 +108,13 @@ const PaymentColumn = ({ row }: { row: Order }) => {
     const onView = useCallback(() => {
         navigate(`/payment/details/${row.id}`)
     }, [navigate, row])
-
+    const shortId = row.id.substr(0, 8)
     return (
         <span
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
             onClick={onView}
         >
-            #{row.id}
+            #{shortId}
         </span>
     )
 }
@@ -189,26 +196,28 @@ const PaymentTable = () => {
     const columns: ColumnDef<Order>[] = useMemo(
         () => [
             {
-                header: 'Order',
+                header: 'Mã Số',
                 accessorKey: 'id',
                 cell: (props) => <PaymentColumn row={props.row.original} />,
             },
             {
-                header: 'Date',
+                header: 'Ngày Khám',
                 accessorKey: 'date',
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <span>{dayjs.unix(row.date).format('DD/MM/YYYY')}</span>
+                        <span>
+                            {dayjs(row.date, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+                        </span>
                     )
                 },
             },
             {
-                header: 'Customer',
+                header: 'Người Khám',
                 accessorKey: 'customer',
             },
             {
-                header: 'Status',
+                header: 'Trạng thái',
                 accessorKey: 'status',
                 cell: (props) => {
                     const { status } = props.row.original
@@ -227,26 +236,22 @@ const PaymentTable = () => {
                 },
             },
             {
-                header: 'Payment Method',
+                header: 'Thanh toán',
                 accessorKey: 'paymentMehod',
                 cell: (props) => {
-                    const { paymentMehod, paymentIdendifier } =
-                        props.row.original
+                    const { paymentMethod } = props.row.original
                     return (
                         <span className="flex items-center">
                             <PaymentMethodImage
                                 className="max-h-[20px]"
-                                paymentMehod={paymentMehod}
+                                paymentMethod={paymentMethod}
                             />
-                            <span className="ltr:ml-2 rtl:mr-2">
-                                {paymentIdendifier}
-                            </span>
                         </span>
                     )
                 },
             },
             {
-                header: 'Total',
+                header: 'Thành tiền',
                 accessorKey: 'totalAmount',
                 cell: (props) => {
                     const { totalAmount } = props.row.original
@@ -255,7 +260,7 @@ const PaymentTable = () => {
                             displayType="text"
                             value={(
                                 Math.round(totalAmount * 100) / 100
-                            ).toFixed(2)}
+                            ).toFixed(0)}
                             suffix={' VND'}
                             thousandSeparator={true}
                         />

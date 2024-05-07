@@ -12,6 +12,7 @@ import {
 } from 'react-icons/hi'
 import { NumericFormat } from 'react-number-format'
 import type { ReactNode } from 'react'
+import { convertNumberToOneDecimalPlaces } from '@/utils'
 
 type StatisticCardProps = {
     icon: ReactNode
@@ -86,25 +87,31 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
-                label="Total Customers"
+                label="Tổng số bệnh nhân"
                 value={statisticData?.totalCustomers?.value}
-                growthRate={statisticData?.totalCustomers?.growShrink}
+                growthRate={convertNumberToOneDecimalPlaces(
+                    statisticData?.totalCustomers?.growShrink
+                )}
                 loading={loading}
             />
             <StatisticCard
                 icon={<HiOutlineUsers />}
                 avatarClass="!bg-blue-500"
-                label="Active Customers"
+                label="Tổng số thẻ"
                 value={statisticData?.activeCustomers?.value}
-                growthRate={statisticData?.activeCustomers?.growShrink}
+                growthRate={convertNumberToOneDecimalPlaces(
+                    statisticData?.activeCustomers?.growShrink
+                )}
                 loading={loading}
             />
             <StatisticCard
                 icon={<HiOutlineUserAdd />}
                 avatarClass="!bg-emerald-500"
-                label="New Customers"
+                label="Bệnh nhân mới"
                 value={statisticData?.newCustomers?.value}
-                growthRate={statisticData?.newCustomers?.growShrink}
+                growthRate={convertNumberToOneDecimalPlaces(
+                    statisticData?.newCustomers?.growShrink
+                )}
                 loading={loading}
             />
         </div>

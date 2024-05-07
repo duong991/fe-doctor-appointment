@@ -21,6 +21,8 @@ import type {
     OnSortParam,
     ColumnDef,
 } from '@/components/shared/DataTable'
+import { imagePath } from '@/utils/imagePath'
+import { specialists } from '@/constants/data.constant'
 
 type Doctor = {
     id: string
@@ -68,7 +70,7 @@ const ActionColumn = ({ row }: { row: Doctor }) => {
 
 const DoctorColumn = ({ row }: { row: Doctor }) => {
     const avatar = row.img ? (
-        <Avatar src={row.img} />
+        <Avatar src={imagePath(row.img)} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )
@@ -151,11 +153,11 @@ const DoctorTable = () => {
                     const row = props.row.original
                     return (
                         <span className="capitalize">
-                            {/* {specialists.filter(
+                            {specialists.filter(
                                 (specialist) =>
                                     specialist.value === row.specialist &&
                                     specialist.label
-                            )[0]?.label || ''} */}
+                            )[0]?.label || ''}
                             {row.specialist}
                         </span>
                     )

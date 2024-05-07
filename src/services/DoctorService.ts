@@ -79,16 +79,6 @@ export async function apiCreateDoctor<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiGetSalesOrders<T, U extends Record<string, unknown>>(
-    params: U
-) {
-    return ApiService.fetchData<T>({
-        url: '/sales/orders',
-        method: 'get',
-        params,
-    })
-}
-
 export async function apiDeleteSalesOrders<
     T,
     U extends Record<string, unknown>
@@ -100,12 +90,21 @@ export async function apiDeleteSalesOrders<
     })
 }
 
-export async function apiGetSalesOrderDetails<
+export async function apiGetAppointments<T, U extends Record<string, unknown>>(
+    params: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/admin/get-all-appointments',
+        method: 'get',
+        params,
+    })
+}
+export async function apiGetAppointmentDetails<
     T,
     U extends Record<string, unknown>
 >(params: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/orders-details',
+        url: '/admin/get-appointment-details',
         method: 'get',
         params,
     })

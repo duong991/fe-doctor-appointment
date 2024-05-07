@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import AdaptableCard from '@/components/shared/AdaptableCard'
 import Table from '@/components/ui/Table'
 import Avatar from '@/components/ui/Avatar'
@@ -9,17 +8,15 @@ import {
     createColumnHelper,
 } from '@tanstack/react-table'
 import { NumericFormat } from 'react-number-format'
-import isLastChild from '@/utils/isLastChild'
+import { imagePath } from '@/utils/imagePath'
 
 type Product = {
     id: string
     name: string
-    productCode: string
     img: string
     price: number
-    quantity: number
+    quantity: string
     total: number
-    details: Record<string, string[]>
 }
 
 type OrderProductsProps = {
@@ -32,11 +29,11 @@ const columnHelper = createColumnHelper<Product>()
 
 const ProductColumn = ({ row }: { row: Product }) => {
     return (
-        <div className="flex">
-            <Avatar size={90} src={row.img} />
+        <div className="flex items-center">
+            <Avatar size={90} src={imagePath(row.img)} />
             <div className="ltr:ml-2 rtl:mr-2">
                 <h6 className="mb-2">{row.name}</h6>
-                {Object.keys(row.details).map((key, i) => (
+                {/* {Object.keys(row.details).map((key, i) => (
                     <div key={key + i} className="mb-1">
                         <span className="capitalize">{key}: </span>
                         {row.details[key].map((item, j) => (
@@ -48,7 +45,7 @@ const ProductColumn = ({ row }: { row: Product }) => {
                             </Fragment>
                         ))}
                     </div>
-                ))}
+                ))} */}
             </div>
         </div>
     )
@@ -58,7 +55,7 @@ const PriceAmount = ({ amount }: { amount: number }) => {
     return (
         <NumericFormat
             displayType="text"
-            value={(Math.round(amount * 100) / 100).toFixed(2)}
+            value={Math.round(amount as number)}
             suffix={' VND'}
             thousandSeparator={true}
         />

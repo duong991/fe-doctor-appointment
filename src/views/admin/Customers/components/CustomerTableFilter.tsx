@@ -19,8 +19,10 @@ const { Control } = components
 
 const options: Option[] = [
     { value: '', label: 'All', color: 'bg-gray-500' },
-    { value: 'active', label: 'Active', color: 'bg-emerald-500' },
-    { value: 'blocked', label: 'Blocked', color: 'bg-red-500' },
+    { value: 'NONE', label: 'None', color: 'bg-gray-500' },
+    { value: 'PUBLISH', label: 'Publish', color: 'bg-green-500' },
+    { value: 'BLOCKED', label: 'Blocked', color: 'bg-red-500' },
+    { value: 'PENDING', label: 'Pending', color: 'bg-yellow-500' },
 ]
 
 const CustomSelectOption = ({
@@ -65,12 +67,12 @@ const CustomControl = ({ children, ...props }: ControlProps<Option>) => {
 const CustomerTableFilter = () => {
     const dispatch = useAppDispatch()
 
-    const { status } = useAppSelector(
+    const { smartCardStatus } = useAppSelector(
         (state) => state.crmCustomers.data.filterData
     )
 
     const onStatusFilterChange = (selected: SingleValue<Option>) => {
-        dispatch(setFilterData({ status: selected?.value }))
+        dispatch(setFilterData({ smartCardStatus: selected?.value }))
     }
 
     return (
@@ -82,7 +84,7 @@ const CustomerTableFilter = () => {
                 Option: CustomSelectOption,
                 Control: CustomControl,
             }}
-            value={options.filter((option) => option.value === status)}
+            value={options.filter((option) => option.value === smartCardStatus)}
             onChange={onStatusFilterChange}
         />
     )

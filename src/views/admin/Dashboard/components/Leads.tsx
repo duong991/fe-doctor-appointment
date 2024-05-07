@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import type { Lead } from '../store'
 import appConfig from '@/configs/app.config'
+import { imagePath } from '@/utils/imagePath'
 
 type LeadsProps = {
     data?: Lead[]
@@ -24,11 +25,7 @@ const { Tr, Td, TBody, THead, Th } = Table
 const NameColumn = ({ row }: { row: Lead }) => {
     return (
         <div className="flex items-center gap-2">
-            <Avatar
-                shape="circle"
-                size={25}
-                src={appConfig.apiPrefix + row.avatar}
-            />
+            <Avatar shape="circle" size={25} src={imagePath(row.avatar)} />
             <span className="font-semibold">{row.name}</span>
         </div>
     )

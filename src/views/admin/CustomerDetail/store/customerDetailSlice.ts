@@ -45,8 +45,8 @@ export type Customer = {
     email: string
     img: string
     role: string
-    lastOnline: number
-    status: string
+    address: string
+    smartCardStatus: string
     personalInfo: PersonalInfo
 }
 
@@ -82,7 +82,7 @@ export const getCustomer = createAsyncThunk(
             GetCrmCustomerDetailsResponse,
             GetCrmCustomerDetailsRequest
         >(data)
-        return response.data
+        return response.data.data
     }
 )
 

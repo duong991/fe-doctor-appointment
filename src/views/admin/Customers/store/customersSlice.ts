@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetCrmCustomers,
+    apiGetPatients,
     apPutCrmCustomer,
-    apiGetCrmCustomersStatistic,
+    apiGetPatientStatistic,
 } from '@/services/PatientService'
 import type { TableQueries } from '@/@types/common'
 
@@ -48,8 +48,8 @@ export type Customer = {
     email: string
     img: string
     role: string
-    lastOnline: number
-    status: string
+    address: string
+    smartCardStatus: ESmartCardStatus
     personalInfo: PersonalInfo
     orderHistory: OrderHistory[]
     paymentMethod: PaymentMethod[]
@@ -68,12 +68,18 @@ type CustomerStatistic = {
 }
 
 type Filter = {
-    status: string
+    smartCardStatus: string
 }
 
 type GetCrmCustomersResponse = {
     data: Customer[]
     total: number
+}
+export enum ESmartCardStatus {
+    None = 'NONE',
+    Pending = 'PENDING',
+    Publish = 'PUBLISH',
+    Blocked = 'BLOCKED',
 }
 
 type GetCrmCustomersStatisticResponse = CustomerStatistic
@@ -95,19 +101,19 @@ export const getCustomerStatistic = createAsyncThunk(
     'crmCustomers/data/getCustomerStatistic',
     async () => {
         const response =
-            await apiGetCrmCustomersStatistic<GetCrmCustomersStatisticResponse>()
-        return response.data
+            await apiGetPatientStatistic<GetCrmCustomersStatisticResponse>()
+        return response.data.data
     }
 )
 
 export const getCustomers = createAsyncThunk(
     'crmCustomers/data/getCustomers',
     async (data: TableQueries & { filterData?: Filter }) => {
-        const response = await apiGetCrmCustomers<
+        const response = await apiGetPatients<
             GetCrmCustomersResponse,
             TableQueries
         >(data)
-        return response.data
+        return response.data.data
     }
 )
 
@@ -115,7 +121,7 @@ export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
     async (data: Customer) => {
         const response = await apPutCrmCustomer(data)
-        return response.data
+        return response.data.data
     }
 )
 
@@ -131,7 +137,7 @@ export const initialTableData: TableQueries = {
 }
 
 export const initialFilterData = {
-    status: '',
+    smartCardStatus: '',
 }
 
 const initialState: CustomersState = {

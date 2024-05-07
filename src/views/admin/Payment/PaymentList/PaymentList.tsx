@@ -11,7 +11,7 @@ const PaymentList = () => {
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="lg:flex items-center justify-between mb-4">
-                <h3 className="mb-4 lg:mb-0">Orders</h3>
+                <h3 className="mb-4 lg:mb-0">Thanh Toán</h3>
                 <OrdersTableTools />
             </div>
             <OrdersTable />

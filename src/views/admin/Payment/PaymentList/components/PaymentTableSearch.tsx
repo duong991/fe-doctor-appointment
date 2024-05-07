@@ -50,7 +50,7 @@ const OrderTableSearch = () => {
             ref={searchInput}
             className="lg:w-52"
             size="sm"
-            placeholder="Search"
+            placeholder="Tìm kiếm"
             prefix={<HiOutlineSearch className="text-lg" />}
             onChange={onEdit}
         />

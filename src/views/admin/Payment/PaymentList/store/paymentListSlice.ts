@@ -5,18 +5,18 @@ import {
     PayloadAction,
 } from '@reduxjs/toolkit'
 import {
-    apiGetSalesOrders,
+    apiGetAppointments,
     apiDeleteSalesOrders,
 } from '@/services/DoctorService'
 import type { TableQueries } from '@/@types/common'
+import { EPaymentType, EStatus } from '@/constants/data.constant'
 
 type Order = {
     id: string
     date: number
     customer: string
-    status: number
-    paymentMehod: string
-    paymentIdendifier: string
+    status: EStatus
+    paymentMethod: EPaymentType
     totalAmount: number
 }
 
@@ -39,13 +39,13 @@ export type SalesOrderListState = {
 export const SLICE_NAME = 'salesOrderList'
 
 export const getOrders = createAsyncThunk(
-    SLICE_NAME + '/getOrders',
+    SLICE_NAME + '/getAppointments',
     async (data: TableQueries) => {
-        const response = await apiGetSalesOrders<
+        const response = await apiGetAppointments<
             GetSalesOrdersResponse,
             TableQueries
         >(data)
-        return response.data
+        return response.data.data
     }
 )
 
@@ -54,7 +54,7 @@ export const deleteOrders = async (data: { id: string | string[] }) => {
         boolean,
         { id: string | string[] }
     >(data)
-    return response.data
+    return response.data.data
 }
 
 const initialState: SalesOrderListState = {
