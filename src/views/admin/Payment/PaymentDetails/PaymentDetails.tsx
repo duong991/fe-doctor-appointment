@@ -6,50 +6,38 @@ import Container from '@/components/shared/Container'
 import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import OrderProducts from './components/OrderProducts'
 import PaymentSummary from './components/PaymentSummary'
-import ShippingInfo from './components/ShippingInfo'
-import Activity from './components/Activity'
 import CustomerInfo from './components/CustomerInfo'
 import { HiOutlineCalendar } from 'react-icons/hi'
-import { apiGetSalesOrderDetails } from '@/services/DoctorService'
+import { apiGetAppointmentDetails } from '@/services/DoctorService'
 import { useLocation } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
+import 'dayjs/locale/vi'
+import {
+    EPaymentStatus,
+    EPaymentType,
+    EStatus,
+} from '@/constants/data.constant'
+
+dayjs.locale('vi')
 
 type SalesOrderDetailsResponse = {
     id?: string
-    progressStatus?: number
-    payementStatus?: number
-    dateTime?: number
+    progressStatus?: EStatus
+    paymentStatus?: EPaymentStatus
+    dateTime?: string
     paymentSummary?: {
         subTotal: number
-        tax: number
-        deliveryFees: number
+        paymentMethod: EPaymentType
         total: number
-    }
-    shipping?: {
-        deliveryFees: number
-        estimatedMin: number
-        estimatedMax: number
-        shippingLogo: string
-        shippingVendor: string
     }
     product?: {
         id: string
         name: string
-        productCode: string
         img: string
         price: number
-        quantity: number
+        quantity: string
         total: number
-        details: Record<string, string[]>
-    }[]
-    activity?: {
-        date: number
-        events: {
-            time: number
-            action: string
-            recipient?: string
-        }[]
     }[]
     customer?: {
         name: string
@@ -57,18 +45,6 @@ type SalesOrderDetailsResponse = {
         phone: string
         img: string
         previousOrder: number
-        shippingAddress: {
-            line1: string
-            line2: string
-            line3: string
-            line4: string
-        }
-        billingAddress: {
-            line1: string
-            line2: string
-            line3: string
-            line4: string
-        }
     }
 }
 
@@ -77,25 +53,40 @@ type PaymentStatus = {
     class: string
 }
 
-const paymentStatus: Record<number, PaymentStatus> = {
-    0: {
-        label: 'Paid',
+const paymentStatus: Record<EPaymentStatus, PaymentStatus> = {
+    PENDING: {
+        label: 'đang chờ',
+        class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
+    },
+    SUCCESS: {
+        label: 'Thành công',
         class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
     },
-    1: {
-        label: 'Unpaid',
+    FAILED: {
+        label: 'Thất bại',
         class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
     },
 }
-
-const progressStatus: Record<number, PaymentStatus> = {
-    0: {
-        label: 'Fulfilled',
+const progressStatus: Record<EStatus, PaymentStatus> = {
+    APPROVED: {
+        label: 'Đã chấp thuận',
+        class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
+    },
+    REJECTED: {
+        label: 'Đã từ chối',
+        class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
+    },
+    CANCELLED: {
+        label: 'Đã hủy',
+        class: 'text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20',
+    },
+    COMPLETED: {
+        label: 'Đã hoàn thành',
         class: 'bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-100',
     },
-    1: {
-        label: 'Unfulfilled',
-        class: 'text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20',
+    AWAITING_PAYMENT: {
+        label: 'Đang chờ thanh toán',
+        class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
     },
 }
 
@@ -116,13 +107,14 @@ const PaymentDetails = () => {
         )
         if (id) {
             setLoading(true)
-            const response = await apiGetSalesOrderDetails<
+            const response = await apiGetAppointmentDetails<
                 SalesOrderDetailsResponse,
                 { id: string }
             >({ id })
             if (response) {
                 setLoading(false)
-                setData(response.data)
+                setData(response.data.data)
+                //call thật thì .data
             }
         }
     }
@@ -135,42 +127,50 @@ const PaymentDetails = () => {
                         <div className="mb-6">
                             <div className="flex items-center mb-2">
                                 <h3>
-                                    <span>Payment</span>
+                                    <span>Lịch hẹn</span>
                                     <span className="ltr:ml-2 rtl:mr-2">
-                                        #{data.id}
+                                        #{data.id?.substring(0, 8)}
                                     </span>
                                 </h3>
                                 <Tag
                                     className={classNames(
                                         'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        paymentStatus[data.payementStatus || 0]
-                                            .class
+                                        paymentStatus[
+                                            data.paymentStatus ||
+                                                EPaymentStatus.PENDING
+                                        ].class
                                     )}
                                 >
                                     {
-                                        paymentStatus[data.payementStatus || 0]
-                                            .label
+                                        paymentStatus[
+                                            data.paymentStatus ||
+                                                EPaymentStatus.PENDING
+                                        ].label
                                     }
                                 </Tag>
                                 <Tag
                                     className={classNames(
                                         'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        progressStatus[data.progressStatus || 0]
-                                            .class
+                                        progressStatus[
+                                            data.progressStatus ||
+                                                EStatus.APPROVED
+                                        ].class
                                     )}
                                 >
                                     {
-                                        progressStatus[data.progressStatus || 0]
-                                            .label
+                                        progressStatus[
+                                            data.progressStatus ||
+                                                EStatus.APPROVED
+                                        ].label
                                     }
                                 </Tag>
                             </div>
                             <span className="flex items-center">
                                 <HiOutlineCalendar className="text-lg" />
                                 <span className="ltr:ml-1 rtl:mr-1">
-                                    {dayjs
-                                        .unix(data.dateTime || 0)
-                                        .format('ddd DD-MMM-YYYY, hh:mm A')}
+                                    {dayjs(data.dateTime).format(
+                                        'ddd DD-MMM-YYYY, HH:mm'
+                                    )}
                                 </span>
                             </span>
                         </div>
@@ -197,7 +197,7 @@ const PaymentDetails = () => {
                         darkModeSrc="/img/others/img-2-dark.png"
                         alt="No order found!"
                     />
-                    <h3 className="mt-8">No order found!</h3>
+                    <h3 className="mt-8">Không tìm thấy lịch hẹn nào</h3>
                 </div>
             )}
         </Container>

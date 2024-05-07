@@ -3,6 +3,8 @@ import Avatar from '@/components/ui/Avatar'
 import IconText from '@/components/shared/IconText'
 import { HiMail, HiPhone, HiExternalLink } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
+import { imagePath } from '@/utils/imagePath'
+import { defaultImagePath } from '@/constants/data.constant'
 
 type CustomerInfoProps = {
     data?: {
@@ -11,18 +13,6 @@ type CustomerInfoProps = {
         phone: string
         img: string
         previousOrder: number
-        shippingAddress: {
-            line1: string
-            line2: string
-            line3: string
-            line4: string
-        }
-        billingAddress: {
-            line1: string
-            line2: string
-            line3: string
-            line4: string
-        }
     }
 }
 
@@ -35,7 +25,10 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
                 to="/app/crm/customer-details?id=11"
             >
                 <div className="flex items-center">
-                    <Avatar shape="circle" src={data?.img} />
+                    <Avatar
+                        shape="circle"
+                        src={imagePath(data?.img || defaultImagePath)}
+                    />
                     <div className="ltr:ml-2 rtl:mr-2">
                         <div className="font-semibold group-hover:text-gray-900 group-hover:dark:text-gray-100">
                             {data?.name}
@@ -44,7 +37,7 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
                             <span className="font-semibold">
                                 {data?.previousOrder}{' '}
                             </span>
-                            previous orders
+                            lần đến khám
                         </span>
                     </div>
                 </div>

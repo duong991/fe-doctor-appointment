@@ -61,11 +61,11 @@ export async function apiCreateSalesProduct<
     })
 }
 
-export async function apiGetSalesOrders<T, U extends Record<string, unknown>>(
+export async function apiGetAppointments<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/orders',
+        url: '/admin/get-all-appointments',
         method: 'get',
         params,
     })
@@ -82,7 +82,7 @@ export async function apiDeleteSalesOrders<
     })
 }
 
-export async function apiGetSalesOrderDetails<
+export async function apiGetAppointmentDetails<
     T,
     U extends Record<string, unknown>
 >(params: U) {
