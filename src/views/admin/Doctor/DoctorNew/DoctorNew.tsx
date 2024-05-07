@@ -12,13 +12,14 @@ const DoctorNew = () => {
 
     const addProduct = async (data: FormModel) => {
         const response = await apiCreateDoctor<boolean, FormModel>(data)
-        return response.data
+        return response.data.data
     }
 
     const handleFormSubmit = async (
         values: FormModel,
         setSubmitting: SetSubmitting
     ) => {
+        console.log('🚀 ~ DoctorNew ~ values:', values)
         setSubmitting(true)
         const success = await addProduct(values)
         setSubmitting(false)

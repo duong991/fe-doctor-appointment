@@ -54,7 +54,6 @@ export async function apiCreateDoctor<T, U extends Record<string, unknown>>(
     data: U
 ) {
     const formData = new FormData()
-
     /*
      *
      */

@@ -67,7 +67,6 @@ const validationSchema = Yup.object().shape({
         .required('Email không được để trống'),
     gender: Yup.boolean().required('Điền giới tính cho bác sĩ'),
     specialist: Yup.string().required('Chọn chuyên khoa của bác sĩ'),
-    services: Yup.string().required('Chọn dịch vu của bác sĩ'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -157,6 +156,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
+                    console.log('🚀 ~ ProductForm ~ values:', values)
                     const formData = cloneDeep(values)
                     formData.services = formData.services.map((service) => {
                         if (typeof service !== 'string') {
