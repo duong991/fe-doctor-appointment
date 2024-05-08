@@ -1,12 +1,46 @@
 import Button from '@/components/ui/Button'
-import { HiDownload, HiPlusCircle } from 'react-icons/hi'
+import { HiDownload, HiPlusCircle, HiOutlineTrash } from 'react-icons/hi'
 import DoctorTableSearch from './DoctorTableSearch'
 import DoctorFilter from './DoctorFilter'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../store'
+
+const RegisterScheduleButton = ({
+    selectedRows,
+}: {
+    selectedRows: string[]
+}) => {
+    const navigate = useNavigate()
+
+    const onRegisterSchedule = () => {
+        // dispatch(setDeleteMode('batch'))
+        navigate('/appointment/create', { state: { selectedRows } })
+    }
+
+    return (
+        <Button
+            className="m-2"
+            variant="solid"
+            color="green-600"
+            size="sm"
+            icon={<HiOutlineTrash />}
+            onClick={onRegisterSchedule}
+        >
+            Đăng ký lịch khám bệnh cho bác sĩ
+        </Button>
+    )
+}
 
 const DoctorTableTools = () => {
+    const selectedRows = useAppSelector(
+        (state) => state.doctorList.data.selectedRows
+    )
+
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
+            {selectedRows.length > 0 && (
+                <RegisterScheduleButton selectedRows={selectedRows} />
+            )}
             <DoctorTableSearch />
             <DoctorFilter />
             <Link
@@ -25,15 +59,6 @@ const DoctorTableTools = () => {
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
                     Thêm mới Bác sĩ
-                </Button>
-            </Link>
-
-            <Link
-                className="block lg:inline-block md:mb-0 mb-4"
-                to="/doctor/doctor-new"
-            >
-                <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Đăng ký lịch hẹn cho bác sĩ
                 </Button>
             </Link>
         </div>

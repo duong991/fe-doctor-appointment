@@ -1,4 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+    createSlice,
+    createAsyncThunk,
+    current,
+    PayloadAction,
+} from '@reduxjs/toolkit'
 import {
     apiGetAllDoctor,
     apiDeleteSalesProducts,
@@ -33,6 +38,7 @@ export type SalesProductListState = {
     tableData: TableQueries
     filterData: FilterQueries
     doctorList: Doctor[]
+    selectedRows: string[]
 }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
@@ -81,6 +87,8 @@ const initialState: SalesProductListState = {
         name: '',
         specialist: [],
     },
+    selectedRows: [],
+    selectedProduct: '',
 }
 
 const doctorListSlice = createSlice({
@@ -103,6 +111,23 @@ const doctorListSlice = createSlice({
         setSelectedProduct: (state, action) => {
             state.selectedProduct = action.payload
         },
+        setSelectedRows: (state, action) => {
+            state.selectedRows = action.payload
+        },
+        addRowItem: (state, { payload }) => {
+            const currentState = current(state)
+            if (!currentState.selectedRows.includes(payload)) {
+                state.selectedRows = [...currentState.selectedRows, ...payload]
+            }
+        },
+        removeRowItem: (state, { payload }: PayloadAction<string>) => {
+            const currentState = current(state)
+            if (currentState.selectedRows.includes(payload)) {
+                state.selectedRows = currentState.selectedRows.filter(
+                    (id) => id !== payload
+                )
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -123,6 +148,9 @@ export const {
     setFilterData,
     toggleDeleteConfirmation,
     setSelectedProduct,
+    setSelectedRows,
+    addRowItem,
+    removeRowItem,
 } = doctorListSlice.actions
 
 export default doctorListSlice.reducer

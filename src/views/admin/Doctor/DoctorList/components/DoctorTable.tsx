@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
@@ -11,6 +11,9 @@ import {
     toggleDeleteConfirmation,
     useAppDispatch,
     useAppSelector,
+    setSelectedRows,
+    addRowItem,
+    removeRowItem,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import DoctorDeleteConfirmation from './DoctorDeleteConfirmation'
@@ -20,6 +23,7 @@ import type {
     DataTableResetHandle,
     OnSortParam,
     ColumnDef,
+    Row,
 } from '@/components/shared/DataTable'
 import { imagePath } from '@/utils/imagePath'
 import { specialists } from '@/constants/data.constant'
@@ -101,6 +105,7 @@ const DoctorTable = () => {
     const data = useAppSelector((state) => state.doctorList.data.doctorList)
 
     useEffect(() => {
+        dispatch(setSelectedRows([]))
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageIndex, pageSize, sort])
@@ -192,10 +197,36 @@ const DoctorTable = () => {
         dispatch(setTableData(newTableData))
     }
 
+    const onRowSelect = (checked: boolean, row: Doctor) => {
+        if (checked) {
+            dispatch(addRowItem([row.id]))
+        } else {
+            dispatch(removeRowItem(row.id))
+        }
+    }
+
+    const onAllRowSelect = useCallback(
+        (checked: boolean, rows: Row<Doctor>[]) => {
+            if (checked) {
+                const originalRows = rows.map((row) => row.original)
+                const selectedIds: string[] = []
+                originalRows.forEach((row) => {
+                    selectedIds.push(row.id)
+                })
+
+                dispatch(setSelectedRows(selectedIds))
+            } else {
+                dispatch(setSelectedRows([]))
+            }
+        },
+        [dispatch]
+    )
+
     return (
         <>
             <DataTable
                 ref={tableRef}
+                selectable
                 columns={columns}
                 data={data}
                 skeletonAvatarColumns={[0]}
@@ -209,6 +240,8 @@ const DoctorTable = () => {
                 onPaginationChange={onPaginationChange}
                 onSelectChange={onSelectChange}
                 onSort={onSort}
+                onCheckBoxChange={onRowSelect}
+                onIndeterminateCheckBoxChange={onAllRowSelect}
             />
             <DoctorDeleteConfirmation />
         </>

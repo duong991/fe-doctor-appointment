@@ -19,7 +19,6 @@ const DoctorNew = () => {
         values: FormModel,
         setSubmitting: SetSubmitting
     ) => {
-        console.log('🚀 ~ DoctorNew ~ values:', values)
         setSubmitting(true)
         const success = await addProduct(values)
         setSubmitting(false)

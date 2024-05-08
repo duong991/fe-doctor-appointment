@@ -27,7 +27,7 @@ const Calendar = () => {
     const events = useAppSelector((state) => state.crmCalendar.data.eventList)
 
     useEffect(() => {
-        dispatch(getEvents())
+        // dispatch(getEvents())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

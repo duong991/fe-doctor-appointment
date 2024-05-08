@@ -66,6 +66,13 @@ const adminRoutes: Routes = [
         component: lazy(() => import('@/views/admin/Payment/PaymentDetails')),
         authority: [Role.ADMIN],
     },
+
+    {
+        key: 'appointment',
+        path: '/appointment/create',
+        component: lazy(() => import('@/views/admin/Calendar')),
+        authority: [Role.ADMIN],
+    },
 ]
 
 export const doctorRoutes: Routes = [
