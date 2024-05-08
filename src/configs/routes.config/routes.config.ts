@@ -70,7 +70,7 @@ const adminRoutes: Routes = [
     {
         key: 'appointment',
         path: '/appointment/create',
-        component: lazy(() => import('@/views/admin/Calendar')),
+        component: lazy(() => import('@/views/admin/CreateCalendar')),
         authority: [Role.ADMIN],
     },
 ]

@@ -88,7 +88,6 @@ const initialState: SalesProductListState = {
         specialist: [],
     },
     selectedRows: [],
-    selectedProduct: '',
 }
 
 const doctorListSlice = createSlice({

@@ -19,14 +19,22 @@ import type {
     DateSelectArg,
 } from '@fullcalendar/core'
 import { v4 as uuidv4 } from 'uuid'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 injectReducer('crmCalendar', reducer)
 
 const Calendar = () => {
+    const navigate = useNavigate()
+
     const dispatch = useAppDispatch()
+    const location = useLocation()
+    const selectedRows = location?.state?.selectedRows
     const events = useAppSelector((state) => state.crmCalendar.data.eventList)
 
     useEffect(() => {
+        if (!selectedRows || selectedRows?.length === 0) {
+            navigate('/doctor')
+        }
         // dispatch(getEvents())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -94,17 +102,21 @@ const Calendar = () => {
     }
 
     return (
-        <Container className="h-full">
-            <CalendarView
-                editable
-                selectable
-                events={events}
-                // eventClick={onEventClick}
-                // select={onCellSelect}
-                eventDrop={onEventChange}
-            />
-            <EventDialog submit={onSubmit} />
-        </Container>
+        <div>
+            {selectedRows ? (
+                <Container className="h-full">
+                    <CalendarView
+                        editable
+                        selectable
+                        events={events}
+                        // eventClick={onEventClick}
+                        // select={onCellSelect}
+                        eventDrop={onEventChange}
+                    />
+                    <EventDialog submit={onSubmit} />
+                </Container>
+            ) : null}
+        </div>
     )
 }
 
