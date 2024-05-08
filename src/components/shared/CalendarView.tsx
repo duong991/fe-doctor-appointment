@@ -257,14 +257,14 @@ const BeforeUpload = () => {
                                 </div>
                                 <UsersAvatarGroup users={members} />
                             </div>
-                            <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
+                            {/* <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
                                 <div className="flex items-center gap-2">
                                     <Button
                                         size="sm"
                                         icon={<HiOutlineUserAdd />}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </Container>
                         <Upload
                             className="mt-2"

@@ -4,6 +4,7 @@ import DoctorTableSearch from './DoctorTableSearch'
 import DoctorFilter from './DoctorFilter'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../store'
+import { MdAddChart } from 'react-icons/md'
 
 const RegisterScheduleButton = ({
     selectedRows,
@@ -23,7 +24,7 @@ const RegisterScheduleButton = ({
             variant="solid"
             color="green-600"
             size="sm"
-            icon={<HiOutlineTrash />}
+            icon={<MdAddChart />}
             onClick={onRegisterSchedule}
         >
             Đăng ký lịch khám bệnh cho bác sĩ
