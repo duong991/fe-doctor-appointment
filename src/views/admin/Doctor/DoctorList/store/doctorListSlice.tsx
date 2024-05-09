@@ -19,7 +19,7 @@ type Doctor = {
     offlinePrice: number
 }
 
-type Doctors = Doctor[]
+export type Doctors = Doctor[]
 
 type GetSalesProductsResponse = {
     data: Doctors

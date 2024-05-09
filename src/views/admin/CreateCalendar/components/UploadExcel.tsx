@@ -5,8 +5,15 @@ import {
 } from '@/components/shared'
 import Upload from '@/components/ui/Upload'
 import { uploadExcel, useAppDispatch, useAppSelector } from '../store'
+import { Doctors } from '../../Doctor/DoctorList/store'
 
-const UploadExcel = ({ listDoctorId }: { listDoctorId: string[] }) => {
+const UploadExcel = ({
+    listDoctorId,
+    listDoctorSelected,
+}: {
+    listDoctorId: string[]
+    listDoctorSelected: Doctors
+}) => {
     const dispatch = useAppDispatch()
     const events = useAppSelector((state) => state.adminCalender.data.eventList)
     console.log('🚀 ~ UploadExcel ~ events:', events)
@@ -15,51 +22,14 @@ const UploadExcel = ({ listDoctorId }: { listDoctorId: string[] }) => {
     )
 
     const maxUpload = 1
-
-    const members = [
-        {
-            id: '1',
-            name: 'Carolyn Perkins',
-            email: 'eileen_h@hotmail.com',
-            img: '/img/avatars/thumb-1.jpg',
-        },
-        {
-            id: '2',
-            name: 'Terrance Moreno',
-            email: 'terrance_moreno@infotech.io',
-            img: '/img/avatars/thumb-2.jpg',
-        },
-        {
-            id: '3',
-            name: 'Ron Vargas',
-            email: 'ronnie_vergas@infotech.io',
-            img: '/img/avatars/thumb-3.jpg',
-        },
-        {
-            id: '5',
-            name: 'Joyce Freeman',
-            email: 'joyce991@infotech.io',
-            img: '/img/avatars/thumb-5.jpg',
-        },
-        {
-            id: '7',
-            name: 'Tara Fletcher',
-            email: 'taratarara@imaze.edu.du',
-            img: '/img/avatars/thumb-7.jpg',
-        },
-        {
-            id: '9',
-            name: 'Carolyn Hanson',
-            email: 'carolyn_h@gmail.com',
-            img: '/img/avatars/thumb-9.jpg',
-        },
-        {
-            id: '10',
-            name: 'Brittany Hale',
-            email: 'brittany1134@gmail.com',
-            img: '/img/avatars/thumb-10.jpg',
-        },
-    ]
+    const members = listDoctorSelected?.map((member) => {
+        return {
+            id: member.id,
+            name: member.name,
+            email: '',
+            img: member.img,
+        }
+    })
 
     const beforeUpload = (
         files: FileList | null,

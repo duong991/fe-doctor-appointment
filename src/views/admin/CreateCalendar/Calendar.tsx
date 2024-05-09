@@ -4,10 +4,8 @@ import Container from '@/components/shared/Container'
 // import EventDialog, { EventParam } from './components/EventDialog'
 import reducer, {
     updateEvent,
-    setSelected,
     useAppDispatch,
     useAppSelector,
-    uploadExcel,
     clearAllState,
     createAppointment,
     TCreateAppointmentRequest,
@@ -15,11 +13,7 @@ import reducer, {
 import { injectReducer } from '@/store'
 import cloneDeep from 'lodash/cloneDeep'
 import dayjs from 'dayjs'
-import type {
-    EventDropArg,
-    EventClickArg,
-    DateSelectArg,
-} from '@fullcalendar/core'
+import type { EventDropArg } from '@fullcalendar/core'
 import { v4 as uuidv4 } from 'uuid'
 import { useLocation, useNavigate } from 'react-router-dom'
 import UploadExcel from './components/UploadExcel'
@@ -29,6 +23,7 @@ import { GiCancel } from 'react-icons/gi'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Doctors } from '../Doctor/DoctorList/store'
 
 injectReducer('adminCalender', reducer)
 
@@ -38,6 +33,7 @@ const Calendar = () => {
     const dispatch = useAppDispatch()
     const location = useLocation()
     const selectedRows = location?.state?.selectedRows as string[]
+    const listDoctorSelected = location?.state?.listDoctorSelected as Doctors
     const events = useAppSelector((state) => state.adminCalender.data.eventList)
     const isUpload = useAppSelector(
         (state) => state.adminCalender.data.isUpload
@@ -148,7 +144,10 @@ const Calendar = () => {
                             </div>
                         </div>
                     ) : (
-                        <UploadExcel listDoctorId={selectedRows} />
+                        <UploadExcel
+                            listDoctorId={selectedRows}
+                            listDoctorSelected={listDoctorSelected}
+                        />
                     )}
                 </Container>
             ) : null}
