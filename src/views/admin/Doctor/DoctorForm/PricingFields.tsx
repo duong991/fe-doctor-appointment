@@ -23,7 +23,7 @@ type PricingFieldsProps = {
 }
 
 const PriceInput = (props: InputProps) => {
-    return <Input {...props} value={props.field.value} prefix="$" />
+    return <Input {...props} value={props.field.value} suffix="VND" />
 }
 
 const NumberInput = (props: InputProps) => {
@@ -75,7 +75,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Price"
+                                        placeholder="Giá khám online"
                                         customInput={
                                             PriceInput as ComponentType
                                         }
@@ -106,7 +106,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Price"
+                                        placeholder="Giá khám offline"
                                         customInput={
                                             PriceInput as ComponentType
                                         }
