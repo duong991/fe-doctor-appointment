@@ -3,7 +3,6 @@ import RichTextEditor from '@/components/shared/RichTextEditor'
 import Input from '@/components/ui/Input'
 import { FormItem } from '@/components/ui/Form'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
-import CreatableSelect from 'react-select/creatable'
 import Select from '@/components/ui/Select'
 import { genders, specialists, yoes } from '@/constants/data.constant'
 

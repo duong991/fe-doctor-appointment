@@ -3,19 +3,23 @@ import { HiDownload, HiPlusCircle, HiOutlineTrash } from 'react-icons/hi'
 import DoctorTableSearch from './DoctorTableSearch'
 import DoctorFilter from './DoctorFilter'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../store'
+import { Doctors, useAppSelector } from '../store'
 import { MdAddChart } from 'react-icons/md'
 
 const RegisterScheduleButton = ({
     selectedRows,
+    listDoctorSelected,
 }: {
     selectedRows: string[]
+    listDoctorSelected: Doctors
 }) => {
     const navigate = useNavigate()
 
     const onRegisterSchedule = () => {
         // dispatch(setDeleteMode('batch'))
-        navigate('/appointment/create', { state: { selectedRows } })
+        navigate('/appointment/create', {
+            state: { selectedRows, listDoctorSelected },
+        })
     }
 
     return (
@@ -36,11 +40,20 @@ const DoctorTableTools = () => {
     const selectedRows = useAppSelector(
         (state) => state.doctorList.data.selectedRows
     )
+    const doctorList = useAppSelector(
+        (state) => state.doctorList.data.doctorList
+    )
+    const listDoctorSelected = doctorList.filter((item) =>
+        selectedRows.includes(item.id)
+    )
 
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
             {selectedRows.length > 0 && (
-                <RegisterScheduleButton selectedRows={selectedRows} />
+                <RegisterScheduleButton
+                    selectedRows={selectedRows}
+                    listDoctorSelected={listDoctorSelected}
+                />
             )}
             <DoctorTableSearch />
             <DoctorFilter />

@@ -7,6 +7,7 @@ import Layout from '@/components/layouts'
 import mockServer from './mock'
 import appConfig from '@/configs/app.config'
 import './locales'
+import { ToastContainer } from 'react-toastify'
 
 const environment = process.env.NODE_ENV
 
@@ -23,6 +24,8 @@ function App() {
             <PersistGate loading={null} persistor={persistor}>
                 <BrowserRouter>
                     <Theme>
+                        <ToastContainer />
+
                         <Layout />
                     </Theme>
                 </BrowserRouter>

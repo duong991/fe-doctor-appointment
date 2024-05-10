@@ -19,7 +19,7 @@ type Doctor = {
     offlinePrice: number
 }
 
-type Doctors = Doctor[]
+export type Doctors = Doctor[]
 
 type GetSalesProductsResponse = {
     data: Doctors
@@ -88,7 +88,6 @@ const initialState: SalesProductListState = {
         specialist: [],
     },
     selectedRows: [],
-    selectedProduct: '',
 }
 
 const doctorListSlice = createSlice({
