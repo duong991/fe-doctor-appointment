@@ -5,10 +5,8 @@ import Container from '@/components/shared/Container'
 import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import CustomerProfile from './components/CustomerProfile'
 import PaymentHistory from './components/PaymentHistory'
-import CurrentSubscription from './components/CurrentSubscription'
 import PaymentMethods from './components/PaymentMethods'
 import reducer, { getCustomer, useAppDispatch, useAppSelector } from './store'
-
 import { injectReducer } from '@/store'
 import isEmpty from 'lodash/isEmpty'
 import useQuery from '@/utils/hooks/useQuery'
@@ -63,9 +61,9 @@ const CustomerDetail = () => {
                     <DoubleSidedImage
                         src="/img/others/img-2.png"
                         darkModeSrc="/img/others/img-2-dark.png"
-                        alt="No user found!"
+                        alt="Không tìm thấy người dùng"
                     />
-                    <h3 className="mt-8">No user found!</h3>
+                    <h3 className="mt-8">Không Tìm thấy người dùng</h3>
                 </div>
             )}
         </Container>

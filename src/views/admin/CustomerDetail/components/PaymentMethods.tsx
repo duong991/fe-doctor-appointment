@@ -9,21 +9,6 @@ import {
 } from '../store'
 import isLastChild from '@/utils/isLastChild'
 import classNames from 'classnames'
-
-const months = [
-    'Tháng 1',
-    'Tháng 2',
-    'Tháng 3',
-    'Tháng 4',
-    'Tháng 5',
-    'Tháng 6',
-    'Tháng 7',
-    'Tháng 8',
-    'Tháng 9',
-    'Tháng 10',
-    'Tháng 11',
-    'Tháng 12',
-]
 const PaymentMethods = () => {
     const dispatch = useAppDispatch()
 
@@ -36,60 +21,68 @@ const PaymentMethods = () => {
         dispatch(openDeletePaymentMethodDialog())
     }
 
+    const onBlockPaymentMethodDialogOpen = (card: PaymentMethod) => {
+        console.log('Block card:', card)
+    }
+
+    const onUnblockPaymentMethodDialogOpen = (card: PaymentMethod) => {
+        console.log('Unblock card:', card)
+    }
+
     return (
         <>
-            {data.length > 0 && (
+            {data && (
                 <div>
-                    <h6 className="mb-4">Payment Methods</h6>
+                    <h6 className="mb-4">Phương thức thanh toán</h6>
                     <div className="rounded-lg border border-gray-200 dark:border-gray-600">
-                        {data.map((card, index) => (
-                            <div
-                                key={card.last4Number}
-                                className={classNames(
-                                    'flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4',
-                                    !isLastChild(data, index) &&
-                                        'border-b border-gray-200 dark:border-gray-600'
-                                )}
-                            >
-                                <div className="flex items-center gap-3">
-                                    <img
-                                        src="/img/others/img-8.png"
-                                        alt="visa"
-                                    />
-                                    <div>
-                                        <div className="flex items-center">
-                                            <div className="text-gray-900 dark:text-gray-100 font-semibold">
-                                                {card.cardHolderName}
-                                            </div>
+                        <div
+                            className={classNames(
+                                'flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4',
+                                data.isBlocked ? 'bg-red-200' : 'bg-green-200' // Change card color based on isBlock
+                            )}
+                        >
+                            <div className="flex items-center gap-3">
+                                <img src="/img/others/img-8.png" alt="visa" />
+                                <div>
+                                    <div className="flex items-center">
+                                        <div className="text-gray-900 dark:text-gray-100 font-semibold">
+                                            {data.cardName}
                                         </div>
-                                        <span>
-                                            Hết hạn{': '}
-                                            {
-                                                months[
-                                                    parseInt(card.expMonth) - 1
-                                                ]
-                                            }{' '}
-                                            20
-                                            {card.expYear}
-                                        </span>
                                     </div>
+                                    <span>
+                                        Số dư{': '}
+                                        {data.balance.toLocaleString()} VND
+                                    </span>
                                 </div>
-                                <div className="flex">
+                            </div>
+                            <div className="flex">
+                                {data.isBlocked ? (
                                     <Button
                                         className="mr-2 rtl:ml-2"
                                         variant="plain"
                                         size="sm"
                                         onClick={() =>
-                                            onDeletePaymentMethodDialogOpen(
-                                                card
+                                            onUnblockPaymentMethodDialogOpen(
+                                                data
                                             )
                                         }
                                     >
-                                        Delete
+                                        Mở Thẻ
                                     </Button>
-                                </div>
+                                ) : (
+                                    <Button
+                                        className="mr-2 rtl:ml-2"
+                                        variant="plain"
+                                        size="sm"
+                                        onClick={() =>
+                                            onBlockPaymentMethodDialogOpen(data)
+                                        }
+                                    >
+                                        Khóa thẻ
+                                    </Button>
+                                )}
                             </div>
-                        ))}
+                        </div>
                     </div>
                 </div>
             )}

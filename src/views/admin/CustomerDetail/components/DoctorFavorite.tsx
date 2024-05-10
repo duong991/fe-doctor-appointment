@@ -7,37 +7,39 @@ import {
     useReactTable,
     createColumnHelper,
 } from '@tanstack/react-table'
-import { useAppSelector, OrderHistory } from '../store'
+import { useAppSelector, FavoriteDoctor } from '../store'
 import dayjs from 'dayjs'
 
 const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
-const columnHelper = createColumnHelper<OrderHistory>()
+const columnHelper = createColumnHelper<FavoriteDoctor>()
 
 const columns = [
-    columnHelper.accessor('item', {
+    columnHelper.accessor('name', {
         header: 'Tên',
     }),
-    columnHelper.accessor('status', {
+    columnHelper.accessor('specialist', {
         header: 'Chuyên khoa',
         cell: (props) => {
             const row = props.row.original
             return (
                 <div className="flex items-center">
                     <span className="ml-2 rtl:mr-2 capitalize">
-                        {row.status}
+                        {row.specialist}
                     </span>
                 </div>
             )
         },
     }),
-    columnHelper.accessor('date', {
+    columnHelper.accessor('rating', {
         header: 'Đánh giá',
         cell: (props) => {
             const row = props.row.original
             return (
-                <div className="flex items-center">
-                    {dayjs.unix(row.date).format('MM/DD/YYYY')}
+                <div className="rounded-md font-bold cursor-pointer select-none text-gray-900 dark:text-gray-100">
+                    <span className="ml-2 rtl:mr-2 capitalize">
+                        {row.rating}
+                    </span>
                 </div>
             )
         },
@@ -46,7 +48,7 @@ const columns = [
 
 const DoctorFavorite = () => {
     const data = useAppSelector(
-        (state) => state.crmCustomerDetails.data.paymentHistoryData
+        (state) => state.crmCustomerDetails.data.favoriteDoctorData
     )
 
     const table = useReactTable({

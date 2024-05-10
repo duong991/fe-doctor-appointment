@@ -9,24 +9,54 @@ export const usersData = [
 
 export const userDetailData = [
     {
-        id: '1',
+        id: '05cade3c-c46e-4134-967c-e5afadb0169c',
         name: 'Carolyn Perkins',
         email: 'carolyn_h@hotmail.com',
         img: '/img/avatars/thumb-1.jpg',
         role: 'Patient',
         lastOnline: 1623430400,
         smartCardStatus: 'active',
-        personalInfo: {
-            location: 'New York, US',
-            title: 'Product Manager',
-            birthday: '10/10/1992',
-            phoneNumber: '+12-123-1234',
-            facebook: 'facebook.com/sample',
-            twitter: 'twitter.com/sample',
-            pinterest: 'pinterest.com/sample',
-            linkedIn: 'linkedin/sample',
-        },
-        orderHistory: [
+        // personalInfo: {
+        address: 'New York, US',
+        title: 'Product Manager',
+        dob: '10/10/1992',
+        phone: '+12-123-1234',
+        facebook: 'facebook.com/sample',
+        twitter: 'twitter.com/sample',
+        pinterest: 'pinterest.com/sample',
+        linkedIn: 'linkedin/sample',
+        // },
+        favoriteDoctor: [
+            {
+                id: '#36223',
+                name: 'Mock premium pack',
+                specialist: 'pending',
+                amount: 39.9,
+                rating: 5,
+            },
+            {
+                id: '#34283',
+                name: 'Business board pro subscription',
+                specialist: 'paid',
+                amount: 59.9,
+                rating: 5,
+            },
+            {
+                id: '#32234',
+                name: 'Business board pro subscription',
+                specialist: 'paid',
+                amount: 59.9,
+                rating: 5,
+            },
+            {
+                id: '#31354',
+                name: 'Business board pro subscription',
+                specialist: 'paid',
+                amount: 59.9,
+                rating: 5,
+            },
+        ],
+        paymentHistory: [
             {
                 id: '#36223',
                 item: 'Mock premium pack',
@@ -58,12 +88,15 @@ export const userDetailData = [
         ],
         paymentMethod: [
             {
-                cardHolderName: 'Smart Card',
+                id: '1',
+                cardName: 'Carolyn Perkins',
                 cardType: 'VISA',
                 expMonth: '12',
                 expYear: '25',
                 last4Number: '',
                 primary: true,
+                isBlocked: true,
+                balance: 0,
             },
         ],
         subscription: [

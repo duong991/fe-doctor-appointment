@@ -60,7 +60,6 @@ export enum EPaymentStatus {
     SUCCESS = 'SUCCESS',
     FAILED = 'FAILED',
 }
-const defaultImagePath =
-    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fvi.pngtree.com%2Ffreebackground%2Fmale-avatar-image-in-the-circle_3377421.html&psig=AOvVaw3rYE-VdSOqKaNvTHkvI2gt&ust=1714980589689000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPigptf-9YUDFQAAAAAdAAAAABAE0'
+const defaultImagePath = '/img/avatars/thumb-1.jpg'
 
 export { specialists, yoes, genders, defaultImagePath }

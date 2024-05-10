@@ -21,9 +21,7 @@ const DeletePaymentMethod = () => {
 
     const onDelete = () => {
         let newData = cloneDeep(data) || []
-        newData = newData.filter(
-            (payment) => payment.last4Number !== selectedCard.last4Number
-        )
+        newData = newData.filter((payment) => payment.id !== selectedCard.id)
         dispatch(closeDeletePaymentMethodDialog())
         dispatch(updatePaymentMethodData(newData))
     }

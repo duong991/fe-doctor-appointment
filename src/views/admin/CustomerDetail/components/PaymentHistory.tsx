@@ -9,26 +9,31 @@ import {
     createColumnHelper,
 } from '@tanstack/react-table'
 import { NumericFormat } from 'react-number-format'
-import { useAppSelector, OrderHistory } from '../store'
+import { useAppSelector } from '../store'
+import type { PaymentHistory } from '../store'
 import dayjs from 'dayjs'
+import { EPaymentStatus } from '@/constants/data.constant'
+import { getPaymentStatusLabel } from '@/utils/imagePath'
 
 const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
-const statusColor: Record<string, string> = {
-    paid: 'bg-emerald-500',
-    pending: 'bg-amber-400',
+const statusColor: Record<EPaymentStatus, string> = {
+    [EPaymentStatus.PENDING]: 'bg-amber-400',
+    [EPaymentStatus.SUCCESS]: 'bg-emerald-500',
+    [EPaymentStatus.FAILED]: 'bg-red-500',
 }
 
-const columnHelper = createColumnHelper<OrderHistory>()
+const columnHelper = createColumnHelper<PaymentHistory>()
 
 const columns = [
     columnHelper.accessor('id', {
         header: 'Mã giao dịch',
         cell: (props) => {
             const row = props.row.original
+            const shortId = row.id.slice(0, 8)
             return (
                 <div>
-                    <span className="cursor-pointer">{row.id}</span>
+                    <span className="cursor-pointer">{shortId}</span>
                 </div>
             )
         },
@@ -42,7 +47,7 @@ const columns = [
                 <div className="flex items-center">
                     <Badge className={statusColor[row.status]} />
                     <span className="ml-2 rtl:mr-2 capitalize">
-                        {row.status}
+                        {getPaymentStatusLabel(row.status)}
                     </span>
                 </div>
             )
@@ -54,7 +59,7 @@ const columns = [
             const row = props.row.original
             return (
                 <div className="flex items-center">
-                    {dayjs.unix(row.date).format('MM/DD/YYYY')}
+                    {dayjs(row.date).format('MM/DD/YYYY')}
                 </div>
             )
         },
@@ -67,7 +72,7 @@ const columns = [
                 <div className="flex items-center">
                     <NumericFormat
                         displayType="text"
-                        value={(Math.round(row.amount * 100) / 100).toFixed(2)}
+                        value={(Math.round(row.amount * 100) / 100).toFixed(0)}
                         suffix={' VND'}
                         thousandSeparator={true}
                     />
@@ -102,7 +107,7 @@ const PaymentHistory = () => {
 
     return (
         <div className="mb-8">
-            <h6 className="mb-4">Payment History</h6>
+            <h6 className="mb-4">Lịch sử thanh toán</h6>
             <Table>
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (

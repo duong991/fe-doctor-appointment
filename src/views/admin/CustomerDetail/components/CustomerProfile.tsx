@@ -20,6 +20,9 @@ import {
     Customer,
 } from '../store'
 import EditCustomerProfile from './EditCustomerProfile'
+import { imagePath } from '@/utils/imagePath'
+import { defaultImagePath } from '@/constants/data.constant'
+import dayjs from 'dayjs'
 
 type CustomerInfoFieldProps = {
     title?: string
@@ -75,7 +78,7 @@ const CustomerProfileAction = ({ id }: { id?: string }) => {
     return (
         <>
             <Button block icon={<HiOutlineTrash />} onClick={onDialogOpen}>
-                Delete
+                Xóa
             </Button>
             <Button
                 block
@@ -83,7 +86,7 @@ const CustomerProfileAction = ({ id }: { id?: string }) => {
                 variant="solid"
                 onClick={onEdit}
             >
-                Edit
+                Chỉnh sửa
             </Button>
             <ConfirmDialog
                 isOpen={dialogOpen}
@@ -111,22 +114,23 @@ const CustomerProfile = ({ data = {} }: CustomerProfileProps) => {
         <Card>
             <div className="flex flex-col xl:justify-between h-full 2xl:min-w-[360px] mx-auto">
                 <div className="flex xl:flex-col items-center gap-4">
-                    <Avatar size={90} shape="circle" src={data.img} />
+                    <Avatar
+                        size={90}
+                        shape="circle"
+                        src={imagePath(data.img || defaultImagePath)}
+                    />
                     <h4 className="font-bold">{data.name}</h4>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-y-7 gap-x-4 mt-8">
                     <CustomerInfoField title="Email" value={data.email} />
                     <CustomerInfoField
-                        title="Phone"
-                        value={data.personalInfo?.phoneNumber}
+                        title="Số điện thoại"
+                        value={data.phone}
                     />
+                    <CustomerInfoField title="Địa chỉ" value={data.address} />
                     <CustomerInfoField
-                        title="Location"
-                        value={data.personalInfo?.location}
-                    />
-                    <CustomerInfoField
-                        title="Date of birth"
-                        value={data.personalInfo?.birthday}
+                        title="Ngày sinh"
+                        value={dayjs(data.dob).format('DD/MM/YYYY')}
                     />
                 </div>
                 <div className="mt-4 flex flex-col xl:flex-row gap-2">

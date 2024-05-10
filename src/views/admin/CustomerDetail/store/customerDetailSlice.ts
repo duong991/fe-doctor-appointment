@@ -4,39 +4,28 @@ import {
     apiDeleteCrmCustomer,
     apPutCrmCustomer,
 } from '@/services/PatientService'
+import { EPaymentStatus } from '@/constants/data.constant'
 
 export const SLICE_NAME = 'crmCustomerDetails'
 
-type PersonalInfo = {
-    location: string
-    title: string
-    birthday: string
-    phoneNumber: string
-}
-
-export type OrderHistory = {
+export type FavoriteDoctor = {
     id: string
-    item: string
-    status: string
+    name: string
+    specialist: string
+    rating: number
+}
+export type PaymentHistory = {
+    id: string
+    status: EPaymentStatus
     amount: number
     date: number
 }
 
 export type PaymentMethod = {
-    cardHolderName: string
-    cardType: string
-    expMonth: string
-    expYear: string
-    last4Number: string
-    primary: boolean
-}
-
-export type Subscription = {
-    plan: string
-    status: string
-    billing: string
-    nextPaymentDate: number
-    amount: number
+    id: number
+    cardName: string
+    balance: number
+    isBlocked: boolean
 }
 
 export type Customer = {
@@ -47,13 +36,14 @@ export type Customer = {
     role: string
     address: string
     smartCardStatus: string
-    personalInfo: PersonalInfo
+    dob: string
+    phone: string
 }
 
-type GetCrmCustomerDetailsResponse = Customer & {
-    orderHistory?: OrderHistory[]
-    paymentMethod?: PaymentMethod[]
-    subscription?: Subscription[]
+type GetPatientDetailsResponse = Customer & {
+    favoriteDoctor?: FavoriteDoctor[]
+    paymentMethod?: PaymentMethod
+    paymentHistory?: PaymentHistory[]
 }
 
 type GetCrmCustomerDetailsRequest = { id: string }
@@ -66,9 +56,9 @@ type DeleteCrmCustomerRequest = { id: string }
 export type CustomerDetailState = {
     loading: boolean
     profileData: Partial<Customer>
-    subscriptionData: Subscription[]
-    paymentHistoryData: OrderHistory[]
-    paymentMethodData: PaymentMethod[]
+    favoriteDoctorData: FavoriteDoctor[]
+    paymentHistoryData: PaymentHistory[]
+    paymentMethodData: PaymentMethod
     deletePaymentMethodDialog: boolean
     editPaymentMethodDialog: boolean
     editCustomerDetailDialog: boolean
@@ -79,7 +69,7 @@ export const getCustomer = createAsyncThunk(
     SLICE_NAME + '/getCustomer',
     async (data: GetCrmCustomerDetailsRequest) => {
         const response = await apiGetCrmCustomerDetails<
-            GetCrmCustomerDetailsResponse,
+            GetPatientDetailsResponse,
             GetCrmCustomerDetailsRequest
         >(data)
         return response.data.data
@@ -108,9 +98,14 @@ export const putCustomer = createAsyncThunk(
 const initialState: CustomerDetailState = {
     loading: true,
     profileData: {},
-    subscriptionData: [],
+    favoriteDoctorData: [],
     paymentHistoryData: [],
-    paymentMethodData: [],
+    paymentMethodData: {
+        id: 0,
+        cardName: '',
+        balance: 0,
+        isBlocked: false,
+    },
     deletePaymentMethodDialog: false,
     editPaymentMethodDialog: false,
     editCustomerDetailDialog: false,
@@ -154,9 +149,14 @@ const customerDetailSlice = createSlice({
             .addCase(getCustomer.fulfilled, (state, action) => {
                 state.loading = false
                 state.profileData = action.payload
-                state.subscriptionData = action.payload?.subscription || []
-                state.paymentHistoryData = action.payload?.orderHistory || []
-                state.paymentMethodData = action.payload?.paymentMethod || []
+                state.paymentHistoryData = action.payload?.paymentHistory || []
+                state.favoriteDoctorData = action.payload?.favoriteDoctor || []
+                state.paymentMethodData = action.payload?.paymentMethod || {
+                    id: 0,
+                    cardName: '',
+                    balance: 0,
+                    isBlocked: false,
+                }
             })
             .addCase(getCustomer.pending, (state) => {
                 state.loading = true
