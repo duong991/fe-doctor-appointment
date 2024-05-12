@@ -94,7 +94,7 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
                 type="button"
                 onClick={onConfirmDialogOpen}
             >
-                Delete
+                Xóa
             </Button>
             <ConfirmDialog
                 isOpen={dialogOpen}

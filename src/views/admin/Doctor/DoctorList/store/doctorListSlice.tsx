@@ -15,6 +15,7 @@ type Doctor = {
     name: string
     img: string
     specialist: string
+    averageRating: number
     onlinePrice: number
     offlinePrice: number
 }

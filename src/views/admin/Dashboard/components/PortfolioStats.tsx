@@ -13,24 +13,23 @@ type RevStatsProps = {
 
 const RevStats = ({ data = {}, className }: RevStatsProps) => {
     const [timeRange, setTimeRange] = useState<string[]>(['month'])
+    const getTotalRevenue = (timeRange: string) => {
+        const seriesData = data[timeRange]?.series[0]?.data || []
+        return seriesData.reduce((total, value) => total + value, 0)
+    }
 
     return (
         <Card className={className}>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
                 <div>
-                    <p>Portfolio Balance</p>
+                    <p>Doanh thu</p>
                     <h4 className="font-bold">
                         {!isEmpty(data) && (
                             <NumericFormat
                                 thousandSeparator
                                 displayType="text"
-                                value={
-                                    data[timeRange[0]]?.series[0].data[
-                                        (data[timeRange[0]]?.series[0].data
-                                            .length as number) - 1
-                                    ]
-                                }
-                                prefix="$"
+                                value={getTotalRevenue(timeRange[0])}
+                                suffix=" VND"
                             />
                         )}
                     </h4>
@@ -40,9 +39,9 @@ const RevStats = ({ data = {}, className }: RevStatsProps) => {
                     size="sm"
                     onChange={(val) => setTimeRange(val as string[])}
                 >
-                    <Segment.Item value="week">Week</Segment.Item>
-                    <Segment.Item value="month">Month</Segment.Item>
-                    <Segment.Item value="year">Year</Segment.Item>
+                    <Segment.Item value="week">Tuần</Segment.Item>
+                    <Segment.Item value="month">Tháng</Segment.Item>
+                    <Segment.Item value="year">Năm</Segment.Item>
                 </Segment>
             </div>
             {!isEmpty(data) && (

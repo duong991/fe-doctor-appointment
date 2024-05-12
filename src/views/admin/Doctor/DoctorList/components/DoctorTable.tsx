@@ -27,6 +27,7 @@ import type {
 } from '@/components/shared/DataTable'
 import { imagePath } from '@/utils/imagePath'
 import { specialists } from '@/constants/data.constant'
+import { Tag } from '@/components/ui'
 
 type Doctor = {
     id: string
@@ -165,6 +166,20 @@ const DoctorTable = () => {
                             )[0]?.label || ''}
                             {row.specialist}
                         </span>
+                    )
+                },
+            },
+            {
+                header: 'Đánh giá',
+                accessorKey: 'averageRating',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="rounded-md font-bold cursor-pointer select-none text-gray-900 dark:text-gray-100">
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.averageRating}
+                            </span>
+                        </div>
                     )
                 },
             },

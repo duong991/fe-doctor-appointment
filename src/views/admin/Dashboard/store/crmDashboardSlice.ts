@@ -47,9 +47,8 @@ export const SLICE_NAME = 'Dashboard'
 export const getCrmDashboardData = createAsyncThunk(
     'Dashboard/data/getCrmDashboardData',
     async () => {
-        const response = await apiGetCrmDashboardData<
-            IResponse<CrmDashboardDataResponse>
-        >()
+        const response =
+            await apiGetCrmDashboardData<CrmDashboardDataResponse>()
         return response.data.data
     }
 )

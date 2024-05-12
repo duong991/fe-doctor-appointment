@@ -11,6 +11,7 @@ import {
 } from 'react-icons/hi'
 import type { Statistic } from '../store'
 import { convertNumberToOneDecimalPlaces } from '@/utils'
+import { NumericFormat } from 'react-number-format'
 
 const GrowShrink = ({ value }: { value: number }) => {
     return (
@@ -88,7 +89,11 @@ const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
                 <div>
                     <div className="flex gap-1.5 items-end mb-2">
                         <h3 className="font-bold leading-none">
-                            {data?.value || 0}
+                            <NumericFormat
+                                value={data?.value || 0}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                            />
                         </h3>
                         <p className="font-semibold">{data.label}</p>
                     </div>
@@ -98,7 +103,7 @@ const StatisticCard = ({ data = {} }: { data: Partial<Statistic> }) => {
                                 data.growShrink || 0
                             )}
                         />
-                        <span>this month</span>
+                        <span>với tháng trước</span>
                     </p>
                 </div>
             </div>
