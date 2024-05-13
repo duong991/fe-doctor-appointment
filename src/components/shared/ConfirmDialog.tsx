@@ -81,8 +81,8 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         children,
         onCancel,
         onConfirm,
-        cancelText = 'Cancel',
-        confirmText = 'Confirm',
+        cancelText = 'Hủy',
+        confirmText = 'Xác nhận',
         confirmButtonColor,
         ...rest
     } = props

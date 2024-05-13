@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCrmCalendar } from '@/services/PatientService'
+import { apiGetSchedule } from '@/services/PatientService'
 import { apiCreateAppointment, apiUploadExcel } from '@/services/AdminService'
 
 type Event = {

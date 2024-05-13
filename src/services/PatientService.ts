@@ -7,13 +7,6 @@ export async function apiGetCrmDashboardData<T>() {
     })
 }
 
-export async function apiGetCrmCalendar<T>() {
-    return ApiService.fetchData<T>({
-        url: '/crm/calendar',
-        method: 'get',
-    })
-}
-
 export async function apiGetPatients<T, U extends Record<string, unknown>>(
     data: U
 ) {

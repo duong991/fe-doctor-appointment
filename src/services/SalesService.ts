@@ -65,7 +65,7 @@ export async function apiGetAppointments<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/admin/get-all-appointments',
+        url: '/doctor/get-all-appointments',
         method: 'get',
         params,
     })

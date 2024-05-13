@@ -22,10 +22,10 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     return (
         <div className="text-right w-full">
             <Button size="sm" className="mr-2" onClick={onCancel}>
-                Cancel
+                Hủy
             </Button>
             <Button size="sm" variant="solid" onClick={onSaveClick}>
-                Save
+                Lưu
             </Button>
         </div>
     )
@@ -53,20 +53,24 @@ const EditCustomerProfile = () => {
 
     const onFormSubmit = (values: FormModel) => {
         const clonedData = cloneDeep(customer)
-        const { name, birthday, email, img, location, title, phoneNumber } =
-            values
+        const { name, dob, email, img, address, phone } = values
 
-        const basicInfo = { name, email, img }
-        const personalInfo = {
-            location,
-            title,
-            birthday: dayjs(birthday).format('DD/MM/YYYY'),
-            phoneNumber,
+        const basicInfo = {
+            name,
+            email,
+            img,
+            address,
+            phone,
+            dob: dayjs(dob).format('YYYY-MM-DD'),
         }
-        clonedData.personalInfo = {
-            ...clonedData.personalInfo,
-            ...personalInfo,
-        }
+        // const personalInfo = {
+        //     address,
+        //     birthday: dayjs(birthday).format('DD/MM/YYYY'),
+        //     phoneNumber,
+        // }
+        // clonedData = {
+        //     ...personalInfo,
+        // }
         const newData = { ...clonedData, ...basicInfo }
         dispatch(updateProfileData(newData))
         dispatch(putCustomer(newData as Customer))

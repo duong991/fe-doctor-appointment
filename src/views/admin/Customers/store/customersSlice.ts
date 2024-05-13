@@ -7,7 +7,7 @@ import {
 import type { TableQueries } from '@/@types/common'
 
 type PersonalInfo = {
-    location: string
+    address: string
     title: string
     birthday: string
     phoneNumber: string

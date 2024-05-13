@@ -1,5 +1,5 @@
+import { apiGetSchedule } from '@/services/DoctorService'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCrmCalendar } from '@/services/PatientService'
 
 type Event = {
     id: string
@@ -28,8 +28,8 @@ export const SLICE_NAME = 'crmCalendar'
 export const getEvents = createAsyncThunk(
     SLICE_NAME + '/getEvents',
     async () => {
-        const response = await apiGetCrmCalendar<GetCrmCalendarResponse>()
-        return response.data
+        const response = await apiGetSchedule<GetCrmCalendarResponse>()
+        return response.data.data
     }
 )
 

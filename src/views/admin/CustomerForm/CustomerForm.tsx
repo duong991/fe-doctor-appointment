@@ -10,27 +10,22 @@ import SocialLinkForm from './SocialLinkForm'
 
 type BaseCustomerInfo = {
     name: string
+    phone: string
+    address: string
     email: string
     img: string
+    dob: string
 }
 
-type CustomerPersonalInfo = {
-    location: string
-    phoneNumber: string
-    birthday: string
-}
+export type Customer = BaseCustomerInfo
 
-export type Customer = BaseCustomerInfo & CustomerPersonalInfo
-
-export interface FormModel extends Omit<Customer, 'birthday'> {
-    birthday: Date
+export interface FormModel extends Omit<Customer, 'dob'> {
+    dob: Date
 }
 
 export type FormikRef = FormikProps<FormModel>
 
-export type CustomerProps = Partial<
-    BaseCustomerInfo & { personalInfo: CustomerPersonalInfo }
->
+export type CustomerProps = Partial<BaseCustomerInfo>
 
 type CustomerFormProps = {
     customer: CustomerProps
@@ -44,13 +39,13 @@ const validationSchema = Yup.object().shape({
         .email('Email không hợp lệ')
         .required('Email là bắt buộc'),
     name: Yup.string().required('Tên người dùng là bắt buộc'),
-    location: Yup.string(),
-    title: Yup.string(),
+    // address: Yup.string(),
+    // title: Yup.string(),
     phoneNumber: Yup.string().matches(
         /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
         'Số điện thoại không hợp lệ'
     ),
-    birthday: Yup.string(),
+    dob: Yup.string(),
     img: Yup.string(),
 })
 
@@ -58,6 +53,7 @@ const { TabNav, TabList, TabContent } = Tabs
 
 const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
     const { customer, onFormSubmit } = props
+    console.log('🚀 ~ CustomerForm ~ customer:', customer.dob)
 
     return (
         <Formik<FormModel>
@@ -66,13 +62,9 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                 name: customer.name || '',
                 email: customer.email || '',
                 img: customer.img || '',
-                location: customer?.personalInfo?.location || '',
-                phoneNumber: customer?.personalInfo?.phoneNumber || '',
-                birthday: (customer?.personalInfo?.birthday &&
-                    dayjs(
-                        customer.personalInfo.birthday,
-                        'DD/MM/YYYY'
-                    ).toDate()) as Date,
+                address: customer?.address || '',
+                phone: customer?.phone || '',
+                dob: (customer?.dob && dayjs(customer.dob).toDate()) as Date,
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {

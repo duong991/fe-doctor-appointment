@@ -20,8 +20,10 @@ const DeletePaymentMethod = () => {
     )
 
     const onDelete = () => {
-        let newData = cloneDeep(data) || []
-        newData = newData.filter((payment) => payment.id !== selectedCard.id)
+        let newData = null
+        if (data && data.id !== selectedCard.id) {
+            newData = cloneDeep(data)
+        }
         dispatch(closeDeletePaymentMethodDialog())
         dispatch(updatePaymentMethodData(newData))
     }
@@ -41,7 +43,7 @@ const DeletePaymentMethod = () => {
             onCancel={onDialogClose}
             onConfirm={onDelete}
         >
-            <p> Are you sure you want to remove this payment method? </p>
+            <p> Bạn có chắc chắn muốn xóa phương thức thanh toán này không? </p>
         </ConfirmDialog>
     )
 }

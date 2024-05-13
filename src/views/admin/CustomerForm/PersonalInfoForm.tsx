@@ -12,14 +12,16 @@ import {
     HiOutlineUser,
 } from 'react-icons/hi'
 import { Field, FieldProps, FormikErrors, FormikTouched } from 'formik'
+import { imagePath } from '@/utils/imagePath'
+import dayjs from 'dayjs'
 
 type FormFieldsName = {
     upload: string
     name: string
     email: string
-    location: string
-    phoneNumber: string
-    birthday: Date
+    address: string
+    phone: string
+    dob: Date
 }
 
 type PersonalInfoFormProps = {
@@ -39,7 +41,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 <Field name="img">
                     {({ field, form }: FieldProps) => {
                         const avatarProps = field.value
-                            ? { src: field.value }
+                            ? { src: imagePath(field.value) }
                             : {}
                         return (
                             <div className="flex justify-center">
@@ -74,7 +76,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 </Field>
             </FormItem>
             <FormItem
-                label="Name"
+                label="Họ tên "
                 invalid={errors.name && touched.name}
                 errorMessage={errors.name}
             >
@@ -102,28 +104,28 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 />
             </FormItem>
             <FormItem
-                label="Location"
-                invalid={errors.location && touched.location}
-                errorMessage={errors.location}
+                label="Địa chỉ"
+                invalid={errors.address && touched.address}
+                errorMessage={errors.address}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="location"
-                    placeholder="Location"
+                    name="address"
+                    placeholder="Address"
                     component={Input}
                     prefix={<HiLocationMarker className="text-xl" />}
                 />
             </FormItem>
             <FormItem
-                label="Phone Number"
-                invalid={errors.phoneNumber && touched.phoneNumber}
-                errorMessage={errors.phoneNumber}
+                label="Số điện thoại"
+                invalid={errors.phone && touched.phone}
+                errorMessage={errors.phone}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="phoneNumber"
+                    name="phone"
                     placeholder="Phone Number"
                     component={Input}
                     prefix={<HiPhone className="text-xl" />}
@@ -131,22 +133,24 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
             </FormItem>
 
             <FormItem
-                label="Birthday"
-                invalid={(errors.birthday && touched.birthday) as boolean}
-                errorMessage={errors.birthday as string}
+                label="Ngày sinh"
+                invalid={(errors.dob && touched.dob) as boolean}
+                errorMessage={errors.dob as string}
             >
-                <Field name="birthday" placeholder="Date">
-                    {({ field, form }: FieldProps) => (
-                        <DatePicker
-                            field={field}
-                            form={form}
-                            value={field.value}
-                            inputPrefix={<HiCake className="text-xl" />}
-                            onChange={(date) => {
-                                form.setFieldValue(field.name, date)
-                            }}
-                        />
-                    )}
+                <Field name="dob" placeholder="Date">
+                    {({ field, form }: FieldProps) => {
+                        return (
+                            <DatePicker
+                                field={field}
+                                form={form}
+                                value={dayjs(field.value).toDate()}
+                                inputPrefix={<HiCake className="text-xl" />}
+                                onChange={(date) => {
+                                    form.setFieldValue(field.name, date)
+                                }}
+                            />
+                        )
+                    }}
                 </Field>
             </FormItem>
         </>

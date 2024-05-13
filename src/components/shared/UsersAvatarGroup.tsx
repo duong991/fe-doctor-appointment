@@ -4,6 +4,7 @@ import Avatar from '@/components/ui/Avatar'
 import acronym from '@/utils/acronym'
 import useTwColorByName from '@/utils/hooks/useTwColorByName'
 import type { AvatarProps, AvatarGroupProps } from '@/components/ui/Avatar'
+import { imagePath } from '@/utils/imagePath'
 
 type User = Record<string, string>
 
@@ -57,7 +58,7 @@ const UsersAvatarGroup = (props: UsersAvatarGroupProps) => {
                         className={`${
                             elm[imgKey] ? '' : bgColor(elm[nameKey])
                         } ${defaultAvatarProps.className}`}
-                        src={elm[imgKey]}
+                        src={imagePath(elm[imgKey])}
                         onClick={() => handleAvatarClick(elm)}
                     >
                         {acronym(elm.name)}

@@ -66,7 +66,7 @@ const CustomerProfileAction = ({ id }: { id?: string }) => {
         navigate('/app/crm/customers')
         toast.push(
             <Notification title={'Successfuly Deleted'} type="success">
-                Customer successfuly deleted
+                Xóa khách hàng thành công
             </Notification>
         )
     }
@@ -91,7 +91,7 @@ const CustomerProfileAction = ({ id }: { id?: string }) => {
             <ConfirmDialog
                 isOpen={dialogOpen}
                 type="danger"
-                title="Delete customer"
+                title="Xóa khách hàng"
                 confirmButtonColor="red-600"
                 onClose={onDialogClose}
                 onRequestClose={onDialogClose}
@@ -99,9 +99,9 @@ const CustomerProfileAction = ({ id }: { id?: string }) => {
                 onConfirm={onDelete}
             >
                 <p>
-                    Are you sure you want to delete this customer? All record
-                    related to this customer will be deleted as well. This
-                    action cannot be undone.
+                    Bạn có chắc chắn muốn xóa khách hàng này không? Tất cả các
+                    bản ghi liên quan đến khách hàng này cũng sẽ bị xóa. Hành
+                    động này không thể hoàn tác.
                 </p>
             </ConfirmDialog>
             <EditCustomerProfile />

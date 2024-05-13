@@ -108,3 +108,10 @@ export async function apiGetAppointmentDetails<
         params,
     })
 }
+
+export async function apiGetSchedule<T>() {
+    return ApiService.fetchData<T>({
+        url: '/doctor/get-all-scheduled',
+        method: 'get',
+    })
+}

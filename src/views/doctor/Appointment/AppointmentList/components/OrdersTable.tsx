@@ -126,18 +126,24 @@ const OrdersTable = () => {
     const columns: ColumnDef<Order>[] = useMemo(
         () => [
             {
-                header: 'Số thứ tự',
+                header: 'Mã Lịch hẹn',
                 accessorKey: 'id',
-                cell: (props) => <OrderColumn row={props.row.original} />,
+                cell: (props) => {
+                    const id = props.row.original.id
+                    const truncatedId = id.substring(0, 8)
+                    return (
+                        <OrderColumn
+                            row={{ ...props.row.original, id: truncatedId }}
+                        />
+                    )
+                },
             },
             {
                 header: 'Thời gian khám',
                 accessorKey: 'date',
                 cell: (props) => {
                     const row = props.row.original
-                    return (
-                        <span>{dayjs.unix(row.date).format('DD/MM/YYYY')}</span>
-                    )
+                    return <span>{dayjs(row.date).format('DD/MM/YYYY')}</span>
                 },
             },
             {

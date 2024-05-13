@@ -7,7 +7,7 @@ import appConfig from '@/configs/app.config'
 const resources = {
     en: {
         translation: en,
-    }
+    },
 }
 
 i18n.use(initReactI18next).init({
@@ -22,7 +22,7 @@ i18n.use(initReactI18next).init({
 export const dateLocales: {
     [key: string]: () => Promise<ILocale>
 } = {
-    en: () => import('dayjs/locale/en'),
+    en: () => import('dayjs/locale/vi'),
 }
 
 export default i18n

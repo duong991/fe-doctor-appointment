@@ -22,11 +22,11 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const { id } = customer
 
     const onFormSubmit = (values: FormModel) => {
-        const { name, birthday, email, img, location, phoneNumber } = values
+        const { name, birthday, email, img, address, phoneNumber } = values
 
         const basicInfo = { name, email, img }
         const personalInfo = {
-            location,
+            address,
             birthday: dayjs(birthday).format('DD/MM/YYYY'),
             phoneNumber,
         }
