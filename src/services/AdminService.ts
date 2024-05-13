@@ -48,3 +48,14 @@ export async function apiChangeStatusSmartCard<
         data,
     })
 }
+
+export async function apiGetDoctorCalender<
+    T,
+    U extends Record<string, unknown>
+>(params: U) {
+    return ApiService.fetchData<T>({
+        url: '/admin/get-doctor-calender',
+        method: 'get',
+        params,
+    })
+}

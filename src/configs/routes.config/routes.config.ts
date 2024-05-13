@@ -35,6 +35,13 @@ const adminRoutes: Routes = [
             header: 'Edit Doctor',
         },
     },
+
+    {
+        key: 'doctor.viewCalender',
+        path: `/doctor/doctor-calender/:doctorId`,
+        component: lazy(() => import('@/views/admin/Doctor/DoctorCalendar')),
+        authority: [Role.ADMIN],
+    },
     {
         key: '/doctor-info',
         path: '/doctor',
