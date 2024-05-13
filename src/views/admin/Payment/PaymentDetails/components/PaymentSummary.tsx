@@ -39,7 +39,7 @@ const PaymentInfo = ({ label, value, isLast }: PaymentInfoProps) => {
 const PaymentSummary = ({ data }: PaymentSummaryProps) => {
     return (
         <Card className="mb-4">
-            <h5 className="mb-4">Chi tiết Thanh toán</h5>
+            <h5 className="mb-4">Chi tiết Thanh toán </h5>
             <ul>
                 <PaymentInfo label="Giá khám" value={data?.subTotal} />
                 <li className="flex items-center justify-between mb-3">

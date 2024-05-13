@@ -24,7 +24,6 @@ dayjs.locale('vi')
 type SalesOrderDetailsResponse = {
     id?: string
     progressStatus?: EStatus
-    paymentStatus?: EPaymentStatus
     dateTime?: string
     paymentSummary?: {
         subTotal: number
@@ -53,20 +52,20 @@ type PaymentStatus = {
     class: string
 }
 
-const paymentStatus: Record<EPaymentStatus, PaymentStatus> = {
-    PENDING: {
-        label: 'đang chờ',
-        class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
-    },
-    SUCCESS: {
-        label: 'Thành công',
-        class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
-    },
-    FAILED: {
-        label: 'Thất bại',
-        class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
-    },
-}
+// const paymentStatus: Record<EPaymentStatus, PaymentStatus> = {
+//     PENDING: {
+//         label: 'đang chờ',
+//         class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
+//     },
+//     SUCCESS: {
+//         label: 'Thành công',
+//         class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
+//     },
+//     FAILED: {
+//         label: 'Thất bại',
+//         class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
+//     },
+// }
 const progressStatus: Record<EStatus, PaymentStatus> = {
     APPROVED: {
         label: 'Đã chấp thuận',
@@ -132,22 +131,6 @@ const PaymentDetails = () => {
                                         #{data.id?.substring(0, 8)}
                                     </span>
                                 </h3>
-                                <Tag
-                                    className={classNames(
-                                        'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        paymentStatus[
-                                            data.paymentStatus ||
-                                                EPaymentStatus.PENDING
-                                        ].class
-                                    )}
-                                >
-                                    {
-                                        paymentStatus[
-                                            data.paymentStatus ||
-                                                EPaymentStatus.PENDING
-                                        ].label
-                                    }
-                                </Tag>
                                 <Tag
                                     className={classNames(
                                         'border-0 rounded-md ltr:ml-2 rtl:mr-2',

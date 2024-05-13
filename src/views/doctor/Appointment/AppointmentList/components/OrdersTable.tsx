@@ -4,8 +4,6 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlineEye } from 'react-icons/hi'
 import {
     setSelectedRows,
-    addRowItem,
-    removeRowItem,
     setDeleteMode,
     setSelectedRow,
     getOrders,
@@ -17,12 +15,7 @@ import useThemeClass from '@/utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import dayjs from 'dayjs'
-import type {
-    DataTableResetHandle,
-    OnSortParam,
-    ColumnDef,
-    Row,
-} from '@/components/shared/DataTable'
+import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
 import { MdDone } from 'react-icons/md'
 
 type Order = {
@@ -30,8 +23,8 @@ type Order = {
     date: number
     customer: string
     status: number
-    paymentMehod: string
-    paymentIdendifier: string
+    paymentMethod: string
+
     totalAmount: number
 }
 
@@ -43,13 +36,13 @@ export const OrderColumn = ({ row }: { row: Order }) => {
         console.log('row', row)
         navigate(`/appointment-detail/${row.id}`)
     }, [navigate, row])
-
+    const shortId = row.id.substr(0, 8)
     return (
         <span
-            className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
+            className={`cursor-pointer select-none font-bold hover:${textTheme}`}
             onClick={onView}
         >
-            #{row.id}
+            #{shortId}
         </span>
     )
 }
@@ -129,13 +122,7 @@ const OrdersTable = () => {
                 header: 'Mã Lịch hẹn',
                 accessorKey: 'id',
                 cell: (props) => {
-                    const id = props.row.original.id
-                    const truncatedId = id.substring(0, 8)
-                    return (
-                        <OrderColumn
-                            row={{ ...props.row.original, id: truncatedId }}
-                        />
-                    )
+                    return <OrderColumn row={props.row.original} />
                 },
             },
             {

@@ -3,6 +3,9 @@ import Avatar from '@/components/ui/Avatar'
 import IconText from '@/components/shared/IconText'
 import { HiMail, HiPhone, HiExternalLink } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
+import { imagePath } from '@/utils/imagePath'
+import { defaultImagePath } from '@/constants/data.constant'
+import { NumericFormat } from 'react-number-format'
 
 type CustomerInfoProps = {
     data?: {
@@ -11,18 +14,9 @@ type CustomerInfoProps = {
         phone: string
         img: string
         previousOrder: number
-        shippingAddress: {
-            line1: string
-            line2: string
-            line3: string
-            line4: string
-        }
-        billingAddress: {
-            line1: string
-            line2: string
-            line3: string
-            line4: string
-        }
+        age: string
+        fee: number
+        reasons: string
     }
 }
 
@@ -35,7 +29,10 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
                 // to="/app/crm/customer-details?id=11"
             >
                 <div className="flex items-center">
-                    <Avatar shape="circle" src={data?.img} />
+                    <Avatar
+                        shape="circle"
+                        src={imagePath(data?.img || defaultImagePath)}
+                    />
                     <div className="ltr:ml-2 rtl:mr-2">
                         <div className="font-semibold group-hover:text-gray-900 group-hover:dark:text-gray-100">
                             {data?.name}
@@ -46,38 +43,40 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
                                 {' '}
                                 {data?.previousOrder}{' '}
                             </span>
-                            trước đó
+                            lần trước đó
                         </span>
                     </div>
                 </div>
                 <HiExternalLink className="text-xl hidden group-hover:block" />
             </span>
             <hr className="my-5" />
-            <IconText
-                className="mb-4"
-                icon={<HiMail className="text-xl opacity-70" />}
-            >
-                <span className="font-semibold">{data?.email}</span>
-            </IconText>
-            <IconText icon={<HiPhone className="text-xl opacity-70" />}>
-                <span className="font-semibold">{data?.phone}</span>
-            </IconText>
-            <hr className="my-5" />
-            <h6 className="mb-4">Tiền sử bệnh án</h6>
-            <address className="not-italic">
-                <div className="mb-1">{data?.shippingAddress.line1}</div>
-                {/* <div className="mb-1">{data?.shippingAddress.line2}</div> */}
-                {/* <div className="mb-1">{data?.shippingAddress.line3}</div> */}
-                <div>{data?.shippingAddress.line4}</div>
-            </address>
+            <div className="mb-4">
+                <span className="font-semibold">Email: </span>
+                <span>{data?.email}</span>
+            </div>
+            <div className="mb-4">
+                <span className="font-semibold">Số Điện Thoại: </span>
+                <span>{data?.phone}</span>
+            </div>
+            <div className="mb-4">
+                <span className="font-semibold">Tuổi: </span>
+                <span>{data?.age}</span>
+            </div>
+            <div className="mb-4">
+                <span className="font-semibold">Giá Khám: </span>
+                <span className="font-semibold">
+                    <NumericFormat
+                        displayType="text"
+                        value={Math.round(data?.fee as number)}
+                        thousandSeparator={true}
+                    />{' '}
+                    VND
+                </span>
+            </div>
             <hr className="my-5" />
             <h6 className="mb-4">Lý do thăm khám</h6>
-            <address className="not-italic">
-                <div className="mb-1">{data?.billingAddress.line1}</div>
-                {/* <div className="mb-1">{data?.billingAddress.line2}</div> */}
-                {/* <div className="mb-1">{data?.billingAddress.line3}</div> */}
-                <div>{data?.billingAddress.line4}</div>
-            </address>
+            <address className="not-italic">{data?.reasons}</address>
+            <hr className="my-5" />
         </Card>
     )
 }
