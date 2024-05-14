@@ -8,7 +8,7 @@ import { COLORS } from '@/constants/chart.constant'
 import isEmpty from 'lodash/isEmpty'
 import { useAppSelector } from '../store'
 
-type ProjectOverviewChart = {
+type ScheduleOverviewChart = {
     onGoing: number
     finished: number
     total: number
@@ -16,12 +16,12 @@ type ProjectOverviewChart = {
         name: string
         data: number[]
     }[]
-    range: string[]
+    timeRange: string[]
 }
 
 type TaskOverviewProps = {
     data?: {
-        chart?: Record<string, ProjectOverviewChart>
+        chart?: Record<string, ScheduleOverviewChart>
     }
     className?: string
 }
@@ -123,7 +123,7 @@ const TaskOverview = ({ data = {}, className }: TaskOverviewProps) => {
                     <div>
                         <Chart
                             series={data.chart[timeRange[0]].series}
-                            xAxis={data.chart[timeRange[0]].range}
+                            xAxis={data.chart[timeRange[0]].timeRange}
                             type={type[0] as TChartType}
                             customOptions={{
                                 colors: [COLORS[0], COLORS[2]],

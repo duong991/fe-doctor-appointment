@@ -199,7 +199,7 @@ export const projectList = [
 
 export const projectDashboardData = {
     userName: 'Carolyn Perkins',
-    projectOverviewData: {
+    scheduleOverviewData: {
         chart: {
             daily: {
                 onGoing: 13,
@@ -277,7 +277,7 @@ export const projectDashboardData = {
     myTasksData: [
         {
             taskId: 'KCM-1393',
-            taskSubject: 'Design sign up flow',
+            patientName: 'Design sign up flow',
             priority: 0,
             assignees: [
                 {
@@ -296,7 +296,7 @@ export const projectDashboardData = {
         },
         {
             taskId: 'KCM-2039',
-            taskSubject: 'Update contact page',
+            patientName: 'Update contact page',
             priority: 1,
             assignees: [
                 {
@@ -309,7 +309,7 @@ export const projectDashboardData = {
         },
         {
             taskId: 'KCM-2155',
-            taskSubject: 'Document features 2.0',
+            patientName: 'Document features 2.0',
             priority: 1,
             assignees: [
                 {
@@ -334,7 +334,7 @@ export const projectDashboardData = {
         },
         {
             taskId: 'KCM-2270',
-            taskSubject: 'Fix typo in home page',
+            patientName: 'Fix typo in home page',
             priority: 2,
             assignees: [
                 {
@@ -353,7 +353,7 @@ export const projectDashboardData = {
         },
         {
             taskId: 'KCM-1957',
-            taskSubject: 'Fix broken API',
+            patientName: 'Fix broken API',
             priority: 0,
             assignees: [
                 {

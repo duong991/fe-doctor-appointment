@@ -10,6 +10,7 @@ const Room = () => {
     const url = '8x8.vc'
 
     const { user } = useAuth()
+    console.log('🚀 ~ Room ~ user:', user)
     return (
         <div className="flex flex-col gap-4 h-full ">
             <JitsiMeeting

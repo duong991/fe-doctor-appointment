@@ -3,7 +3,7 @@ import Notification from '@/components/ui/Notification'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import {
     confirmVideoScheduleCompletion,
-    getProjectDashboardData,
+    getDoctorDashboardData,
     setScheduleSelected,
     useAppDispatch,
     useAppSelector,
@@ -29,7 +29,7 @@ const DialogConfirmation = () => {
     }
 
     const fetchData = () => {
-        dispatch(getProjectDashboardData())
+        dispatch(getDoctorDashboardData())
     }
 
     const deleteSucceed = (success: boolean) => {

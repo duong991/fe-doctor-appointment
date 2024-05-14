@@ -24,7 +24,6 @@ type Order = {
     customer: string
     status: number
     paymentMethod: string
-
     totalAmount: number
 }
 
@@ -36,13 +35,12 @@ export const OrderColumn = ({ row }: { row: Order }) => {
         console.log('row', row)
         navigate(`/appointment-detail/${row.id}`)
     }, [navigate, row])
-    const shortId = row.id.substr(0, 8)
     return (
         <span
             className={`cursor-pointer select-none font-bold hover:${textTheme}`}
             onClick={onView}
         >
-            #{shortId}
+            #{row.id}
         </span>
     )
 }

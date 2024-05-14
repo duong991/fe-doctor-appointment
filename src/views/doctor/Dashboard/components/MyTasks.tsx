@@ -5,7 +5,6 @@ import Table from '@/components/ui/Table'
 import Tag from '@/components/ui/Tag'
 import { useNavigate } from 'react-router-dom'
 import UsersAvatarGroup from '@/components/shared/UsersAvatarGroup'
-import ActionLink from '@/components/shared/ActionLink'
 import {
     useReactTable,
     getCoreRowModel,
@@ -13,17 +12,14 @@ import {
     ColumnDef,
 } from '@tanstack/react-table'
 import { OrderColumn } from '../../Appointment/AppointmentList/components/OrdersTable'
+import { ActionLink } from '@/components/shared'
+import { EStatus } from '@/constants/data.constant'
 
 type Task = {
-    taskId: string
-    taskSubject: string
-    priority: number
-    assignees: {
-        id: string
-        name: string
-        email: string
-        img: string
-    }[]
+    id: string
+    patientName: string
+    status: EStatus
+    scheduleTime: string
 }
 
 type MyTasksProps = {
@@ -32,24 +28,36 @@ type MyTasksProps = {
 
 const { Tr, Th, Td, THead, TBody } = Table
 
-const PriorityTag = ({ priority }: { priority: number }) => {
-    switch (priority) {
-        case 0:
+const StatusTag = ({ status }: { status: EStatus }) => {
+    switch (status) {
+        case EStatus.APPROVED:
+            return (
+                <Tag className="text-green-600 bg-green-100 dark:text-green-100 dark:bg-green-500/20 rounded border-0">
+                    Approved
+                </Tag>
+            )
+        case EStatus.REJECTED:
             return (
                 <Tag className="text-red-600 bg-red-100 dark:text-red-100 dark:bg-red-500/20 rounded border-0">
-                    High
+                    Rejected
                 </Tag>
             )
-        case 1:
+        case EStatus.CANCELLED:
             return (
-                <Tag className="text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20 rounded border-0">
-                    Medium
+                <Tag className="text-yellow-600 bg-yellow-100 dark:text-yellow-100 dark:bg-yellow-500/20 rounded border-0">
+                    Cancelled
                 </Tag>
             )
-        case 2:
+        case EStatus.COMPLETED:
             return (
-                <Tag className="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-100 rounded border-0">
-                    Low
+                <Tag className="text-blue-600 bg-blue-100 dark:text-blue-100 dark:bg-blue-500/20 rounded border-0">
+                    Completed
+                </Tag>
+            )
+        case EStatus.AWAITING_PAYMENT:
+            return (
+                <Tag className="text-purple-600 bg-purple-100 dark:text-purple-100 dark:bg-purple-500/20 rounded border-0">
+                    Awaiting Payment
                 </Tag>
             )
         default:
@@ -65,38 +73,37 @@ const MyTasks = ({ data = [] }: MyTasksProps) => {
             {
                 header: 'Số thứ tự',
                 accessorKey: 'id',
-                // cell: (props) => {
-                //     const { taskId } = props.row.original
-                //     return (
-                //         <ActionLink
-                //             themeColor={false}
-                //             className="font-semibold"
-                //             to="/app/project/scrum-board"
-                //         >
-                //             {taskId}
-                //         </ActionLink>
-                //     )
-                // },
-                cell: (props) => <OrderColumn row={props.row.original} />,
-            },
-            {
-                header: 'Subject',
-                accessorKey: 'taskSubject',
-            },
-            {
-                header: 'Priority',
-                accessorKey: 'priority',
                 cell: (props) => {
-                    const { priority } = props.row.original
-                    return <PriorityTag priority={priority} />
+                    const { id } = props.row.original
+                    return (
+                        <ActionLink
+                            themeColor={false}
+                            className="font-semibold"
+                            to="/app/project/scrum-board"
+                        >
+                            #{id}
+                        </ActionLink>
+                    )
                 },
             },
             {
-                header: 'Assignees',
-                accessorKey: 'Assignees',
+                header: 'Tên bệnh nhân',
+                accessorKey: 'patientName',
+            },
+            {
+                header: 'Trạng thái',
+                accessorKey: 'status',
                 cell: (props) => {
-                    const { assignees } = props.row.original
-                    return <UsersAvatarGroup users={assignees} />
+                    const { status } = props.row.original
+                    return <StatusTag status={status} />
+                },
+            },
+            {
+                header: 'Thời gian hẹn khám',
+                accessorKey: 'scheduleTime',
+                cell: (props) => {
+                    const { scheduleTime } = props.row.original
+                    return scheduleTime
                 },
             },
         ],

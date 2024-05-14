@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import reducer, {
-    getProjectDashboardData,
+    getDoctorDashboardData,
     useAppDispatch,
     useAppSelector,
 } from './store'
@@ -30,7 +30,7 @@ const ProjectDashboard = () => {
     }, [])
 
     const fetchData = () => {
-        dispatch(getProjectDashboardData())
+        dispatch(getDoctorDashboardData())
     }
 
     return (
@@ -43,7 +43,7 @@ const ProjectDashboard = () => {
                 <div className="flex flex-col xl:flex-row gap-4">
                     <div className="flex flex-col gap-4 flex-auto">
                         <TaskOverview
-                            data={dashboardData?.projectOverviewData}
+                            data={dashboardData?.scheduleOverviewData}
                         />
                         <MyTasks data={dashboardData?.myTasksData} />
                     </div>

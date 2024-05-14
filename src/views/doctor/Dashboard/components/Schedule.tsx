@@ -13,10 +13,8 @@ import reducer, { setScheduleSelected } from '../store'
 type ScheduleProps = {
     data?: {
         id: string
-        time: string
-        eventName: string
-        desciption: string
-        type: string
+        scheduleTime: string
+        patientName: string
     }[]
 }
 
@@ -117,12 +115,9 @@ const Schedule = ({ data = [] }: ScheduleProps) => {
                     >
                         <EventIcon />
                         <div>
-                            <h6 className="text-sm font-bold">
-                                {/* {event.eventName} */}
-                                Bệnh nhân
-                            </h6>
-                            <p>Đồng Minh Dương</p>
-                            <p>{event.time}</p>
+                            <h6 className="text-sm font-bold">Bệnh nhân</h6>
+                            <p>{event.patientName}</p>
+                            <p>{event.scheduleTime}</p>
                         </div>
                     </div>
                     <span

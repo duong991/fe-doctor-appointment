@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetProjectDashboardData } from '@/services/ProjectService'
+import { apiGetDoctorDashboardData } from '@/services/ProjectService'
+import { EStatus } from '@/constants/data.constant'
 
-type ProjectOverviewChart = {
+type ScheduleOverviewChart = {
     onGoing: number
     finished: number
     total: number
@@ -9,56 +10,34 @@ type ProjectOverviewChart = {
         name: string
         data: number[]
     }[]
-    range: string[]
+    timeRange: string[]
 }
 
 type DashboardData = {
     userName?: string
     taskCount?: number
-    projectOverviewData?: {
+    scheduleOverviewData?: {
         chart: {
-            daily: ProjectOverviewChart
-            weekly: ProjectOverviewChart
-            monthly: ProjectOverviewChart
+            daily: ScheduleOverviewChart
+            weekly: ScheduleOverviewChart
+            monthly: ScheduleOverviewChart
         }
     }
     myTasksData?: {
-        taskId: string
-        taskSubject: string
-        priority: number
-        assignees: {
-            id: string
-            name: string
-            email: string
-            img: string
-        }[]
+        id: string
+        patientName: string
+        status: EStatus
+        scheduleTime: string
     }[]
     scheduleData?: {
         id: string
-        time: string
-        eventName: string
-        desciption: string
-        type: string
-    }[]
-    projectsData?: {
-        id: number
-        name: string
-        category: string
-        desc: string
-        attachmentCount: number
-        totalTask: number
-        completedTask: number
-        progression: number
-        dayleft: number
-        status: string
-        member: {
-            name: string
-            img: string
-        }[]
+        scheduleTime: string
+        status: EStatus
+        patientName: string
     }[]
 }
 
-type GetProjectDashboardDataResponse = DashboardData
+type GetDoctorDashboardDataResponse = DashboardData
 
 export type ProjectDashboardState = {
     loading: boolean
@@ -68,12 +47,12 @@ export type ProjectDashboardState = {
 
 export const SLICE_NAME = 'projectDashboard'
 
-export const getProjectDashboardData = createAsyncThunk(
-    SLICE_NAME + '/getProjectDashboardData',
+export const getDoctorDashboardData = createAsyncThunk(
+    SLICE_NAME + '/getDoctorDashboardData',
     async () => {
         const response =
-            await apiGetProjectDashboardData<GetProjectDashboardDataResponse>()
-        return response.data
+            await apiGetDoctorDashboardData<GetDoctorDashboardDataResponse>()
+        return response.data.data
     }
 )
 
@@ -98,11 +77,11 @@ const projectDashboardSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getProjectDashboardData.fulfilled, (state, action) => {
+            .addCase(getDoctorDashboardData.fulfilled, (state, action) => {
                 state.dashboardData = action.payload
                 state.loading = false
             })
-            .addCase(getProjectDashboardData.pending, (state) => {
+            .addCase(getDoctorDashboardData.pending, (state) => {
                 state.loading = true
             })
     },

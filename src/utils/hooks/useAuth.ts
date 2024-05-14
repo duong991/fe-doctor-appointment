@@ -107,6 +107,8 @@ function useAuth() {
     }
 
     const handleSignOut = () => {
+        console.log('🚀 ~ handleSignOut ~ handleSignOut:', handleSignOut)
+
         dispatch(signOutSuccess())
         dispatch(
             setUser({

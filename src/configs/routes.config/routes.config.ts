@@ -111,12 +111,18 @@ export const doctorRoutes: Routes = [
         ),
         authority: [Role.DOCTOR],
     },
+    // {
+    //     key: 'room1',
+    //     path: '/room',
+    //     component: lazy(() => import('@/views/doctor/Room')),
+    //     authority: [Role.DOCTOR],
+    // },
 
     {
         key: 'room',
         path: '/room',
         component: lazy(() => import('@/views/doctor/Room')),
-        authority: [Role.DOCTOR],
+        authority: [Role.DOCTOR, Role.ADMIN],
         meta: {
             layout: 'blank',
             pageContainerType: 'gutterless',

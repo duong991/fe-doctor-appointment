@@ -1,8 +1,8 @@
 import ApiService from './ApiService'
 
-export async function apiGetProjectDashboardData<T>() {
+export async function apiGetDoctorDashboardData<T>() {
     return ApiService.fetchData<T>({
-        url: '/project/dashboard',
+        url: '/doctor/dashboard',
         method: 'get',
     })
 }
