@@ -40,7 +40,6 @@ export const OrderColumn = ({ row }: { row: Order }) => {
     const navigate = useNavigate()
 
     const onView = useCallback(() => {
-        console.log('row', row)
         navigate(`/appointment-detail/${row.id}`)
     }, [navigate, row])
 
@@ -130,7 +129,7 @@ const OrdersTable = () => {
                 accessorKey: 'id',
                 cell: (props) => {
                     const id = props.row.original.id
-                    const truncatedId = id.substring(0, 8)
+                    const truncatedId = id.substring(0, 8).toUpperCase()
                     return (
                         <OrderColumn
                             row={{ ...props.row.original, id: truncatedId }}

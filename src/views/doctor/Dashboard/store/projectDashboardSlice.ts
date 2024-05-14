@@ -23,15 +23,13 @@ type DashboardData = {
         }
     }
     myTasksData?: {
-        taskId: string
-        taskSubject: string
-        priority: number
-        assignees: {
-            id: string
-            name: string
-            email: string
-            img: string
-        }[]
+        id: string
+        date: number
+        customer: string
+        status: number
+        paymentMehod: string
+        paymentIdendifier: string
+        totalAmount: number
     }[]
     scheduleData?: {
         id: string
@@ -60,10 +58,14 @@ type DashboardData = {
 
 type GetProjectDashboardDataResponse = DashboardData
 
+export type TScheduleSelected = {
+    id: string
+    type: string
+}
 export type ProjectDashboardState = {
     loading: boolean
     dashboardData: DashboardData
-    scheduleSelected: string
+    scheduleSelected: TScheduleSelected
 }
 
 export const SLICE_NAME = 'projectDashboard'
@@ -80,10 +82,16 @@ export const getProjectDashboardData = createAsyncThunk(
 const initialState: ProjectDashboardState = {
     loading: true,
     dashboardData: {},
-    scheduleSelected: '',
+    scheduleSelected: {
+        id: '',
+        type: '',
+    },
 }
 
-export const confirmVideoScheduleCompletion = async (data: { id: string }) => {
+export const confirmVideoScheduleCompletion = async (data: {
+    id: string
+    type: string
+}) => {
     console.log('Call API')
     return true
 }
@@ -93,6 +101,7 @@ const projectDashboardSlice = createSlice({
     initialState,
     reducers: {
         setScheduleSelected: (state, action) => {
+            console.log('🚀 ~ action:', action)
             state.scheduleSelected = action.payload
         },
     },

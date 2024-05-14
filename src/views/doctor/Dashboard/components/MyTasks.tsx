@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Table from '@/components/ui/Table'
@@ -13,91 +13,111 @@ import {
     ColumnDef,
 } from '@tanstack/react-table'
 import { OrderColumn } from '../../Appointment/AppointmentList/components/OrdersTable'
+import dayjs from 'dayjs'
+import { setScheduleSelected, useAppDispatch } from '../store'
+import useThemeClass from '@/utils/hooks/useThemeClass'
+import Tooltip from '@/components/ui/Tooltip'
 
-type Task = {
-    taskId: string
-    taskSubject: string
-    priority: number
-    assignees: {
-        id: string
-        name: string
-        email: string
-        img: string
-    }[]
+import { HiOutlineEye } from 'react-icons/hi'
+import { MdDone } from 'react-icons/md'
+
+type Order = {
+    id: string
+    date: number
+    customer: string
+    status: number
+    paymentMehod: string
+    paymentIdendifier: string
+    totalAmount: number
 }
 
 type MyTasksProps = {
-    data?: Task[]
+    data?: Order[]
 }
 
 const { Tr, Th, Td, THead, TBody } = Table
 
-const PriorityTag = ({ priority }: { priority: number }) => {
-    switch (priority) {
-        case 0:
-            return (
-                <Tag className="text-red-600 bg-red-100 dark:text-red-100 dark:bg-red-500/20 rounded border-0">
-                    High
-                </Tag>
-            )
-        case 1:
-            return (
-                <Tag className="text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20 rounded border-0">
-                    Medium
-                </Tag>
-            )
-        case 2:
-            return (
-                <Tag className="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-100 rounded border-0">
-                    Low
-                </Tag>
-            )
-        default:
-            return null
+const ActionColumn = ({ row }: { row: Order }) => {
+    const dispatch = useAppDispatch()
+    const { textTheme } = useThemeClass()
+    const navigate = useNavigate()
+
+    const handleSubmit = (id: string) => {
+        console.log('🚀 ~ handleSubmit ~ id:', id)
+        dispatch(
+            setScheduleSelected({
+                id,
+                type: 'offline',
+            })
+        )
     }
+
+    const onView = useCallback(() => {
+        navigate(`/appointment-detail/${row.id}`)
+    }, [navigate, row])
+
+    return (
+        <div className="flex justify-end text-lg">
+            <Tooltip title="View">
+                <span
+                    className={`cursor-pointer p-2 hover:${textTheme}`}
+                    onClick={onView}
+                >
+                    <HiOutlineEye size={18} />
+                </span>
+            </Tooltip>
+            <Tooltip title="Done">
+                <span
+                    className="text-sm font-bold text-green-600  cursor-pointer
+                            border-spacing-2 border-green-600 rounded-full p-2 hover:bg-green-600 hover:text-white"
+                    onClick={() => handleSubmit(row.id)}
+                >
+                    <MdDone size={18} />
+                </span>
+            </Tooltip>
+        </div>
+    )
 }
 
 const MyTasks = ({ data = [] }: MyTasksProps) => {
     const navigate = useNavigate()
 
-    const columns: ColumnDef<Task>[] = useMemo(
+    const columns: ColumnDef<Order>[] = useMemo(
         () => [
             {
-                header: 'Số thứ tự',
+                header: 'Mã đặt lịch hẹn',
                 accessorKey: 'id',
-                // cell: (props) => {
-                //     const { taskId } = props.row.original
-                //     return (
-                //         <ActionLink
-                //             themeColor={false}
-                //             className="font-semibold"
-                //             to="/app/project/scrum-board"
-                //         >
-                //             {taskId}
-                //         </ActionLink>
-                //     )
-                // },
-                cell: (props) => <OrderColumn row={props.row.original} />,
-            },
-            {
-                header: 'Subject',
-                accessorKey: 'taskSubject',
-            },
-            {
-                header: 'Priority',
-                accessorKey: 'priority',
                 cell: (props) => {
-                    const { priority } = props.row.original
-                    return <PriorityTag priority={priority} />
+                    const { id } = props.row.original
+                    const truncatedId = id.substring(0, 8)
+                    return (
+                        <ActionLink
+                            themeColor={false}
+                            className="font-semibold"
+                            to={`/appointment-detail/${id}`}
+                        >
+                            #{truncatedId.toUpperCase()}
+                        </ActionLink>
+                    )
+                },
+            },
+
+            {
+                header: 'Thời gian khám',
+                accessorKey: 'date',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span>{dayjs(row.date).format('DD/MM/YYYY')}</span>
                 },
             },
             {
-                header: 'Assignees',
-                accessorKey: 'Assignees',
-                cell: (props) => {
-                    const { assignees } = props.row.original
-                    return <UsersAvatarGroup users={assignees} />
-                },
+                header: 'Bệnh nhân',
+                accessorKey: 'customer',
+            },
+            {
+                header: '',
+                id: 'action',
+                cell: (props) => <ActionColumn row={props.row.original} />,
             },
         ],
         []

@@ -17,12 +17,18 @@ const DialogConfirmation = () => {
     )
 
     const onDialogClose = () => {
-        dispatch(setScheduleSelected(''))
+        dispatch(
+            setScheduleSelected({
+                id: '',
+                type: '',
+            })
+        )
     }
 
     const onDelete = async () => {
         const success = await confirmVideoScheduleCompletion({
-            id: scheduleSelected,
+            id: scheduleSelected.id,
+            type: scheduleSelected.type,
         })
         deleteSucceed(success || true)
         dispatch(setScheduleSelected(''))
@@ -52,7 +58,7 @@ const DialogConfirmation = () => {
 
     return (
         <ConfirmDialog
-            isOpen={scheduleSelected !== ''}
+            isOpen={scheduleSelected.id !== '' && scheduleSelected.type !== ''}
             type="success"
             title="Xác nhận hoàn thành lịch hẹn"
             confirmButtonColor="green-600"

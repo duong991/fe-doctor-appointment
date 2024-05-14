@@ -58,7 +58,13 @@ const Schedule = ({ data = [] }: ScheduleProps) => {
         window.open(`http://localhost:5173/room?roomId=${roomId}`, '_blank')
     }
     const handleSubmit = (id: string) => {
-        dispatch(setScheduleSelected(id))
+        console.log('🚀 ~ handleSubmit ~ id:', id)
+        dispatch(
+            setScheduleSelected({
+                id,
+                type: 'online',
+            })
+        )
     }
 
     return (
