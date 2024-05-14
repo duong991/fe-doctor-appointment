@@ -6,27 +6,42 @@ import {
     useAppDispatch,
     useAppSelector,
     PaymentMethod,
+    changeStatusSmartCard,
+    closeSmartCardDialog,
+    openSmartCardDialog,
 } from '../store'
 import isLastChild from '@/utils/isLastChild'
 import classNames from 'classnames'
+import { ConfirmDialog } from '@/components/shared'
+import useQuery from '@/utils/hooks/useQuery'
+
 const PaymentMethods = () => {
     const dispatch = useAppDispatch()
-
+    const query = useQuery()
+    const userId = query.get('id') as string
     const data = useAppSelector(
         (state) => state.crmCustomerDetails.data.paymentMethodData
     )
+    const isOpenSmartCardDialog = useAppSelector(
+        (state) => state.crmCustomerDetails.data.openSmartCardDialog
+    )
 
-    const onDeletePaymentMethodDialogOpen = (card: PaymentMethod) => {
-        dispatch(updateSelectedCard(card))
-        dispatch(openDeletePaymentMethodDialog())
+    const onConfirmDialogClose = () => {
+        dispatch(closeSmartCardDialog())
     }
 
-    const onBlockPaymentMethodDialogOpen = (card: PaymentMethod) => {
-        console.log('Block card:', card)
+    const handleOpenSmartCardDialog = () => {
+        dispatch(openSmartCardDialog())
     }
-
-    const onUnblockPaymentMethodDialogOpen = (card: PaymentMethod) => {
-        console.log('Unblock card:', card)
+    const handleConfirm = () => {
+        dispatch(
+            changeStatusSmartCard({
+                userId,
+                status: !data.isBlocked,
+            })
+        )
+        dispatch
+        dispatch(closeSmartCardDialog())
     }
 
     return (
@@ -61,11 +76,7 @@ const PaymentMethods = () => {
                                         className="mr-2 rtl:ml-2"
                                         variant="plain"
                                         size="sm"
-                                        onClick={() =>
-                                            onUnblockPaymentMethodDialogOpen(
-                                                data
-                                            )
-                                        }
+                                        onClick={handleOpenSmartCardDialog}
                                     >
                                         Mở Thẻ
                                     </Button>
@@ -74,13 +85,32 @@ const PaymentMethods = () => {
                                         className="mr-2 rtl:ml-2"
                                         variant="plain"
                                         size="sm"
-                                        onClick={() =>
-                                            onBlockPaymentMethodDialogOpen(data)
-                                        }
+                                        onClick={handleOpenSmartCardDialog}
                                     >
                                         Khóa thẻ
                                     </Button>
                                 )}
+
+                                <ConfirmDialog
+                                    isOpen={isOpenSmartCardDialog}
+                                    type="danger"
+                                    title={
+                                        data.isBlocked ? 'Khoá thẻ' : 'Mở thẻ'
+                                    }
+                                    confirmButtonColor="red-600"
+                                    onClose={onConfirmDialogClose}
+                                    onRequestClose={onConfirmDialogClose}
+                                    onCancel={onConfirmDialogClose}
+                                    onConfirm={handleConfirm}
+                                >
+                                    {data.isBlocked ? (
+                                        <p>
+                                            Xác nhận mở khóa thẻ cho bệnh nhân
+                                        </p>
+                                    ) : (
+                                        <p>Xác nhận khóa thẻ của bệnh nhân</p>
+                                    )}
+                                </ConfirmDialog>
                             </div>
                         </div>
                     </div>

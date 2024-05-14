@@ -5,6 +5,7 @@ import {
     apPutCrmCustomer,
 } from '@/services/PatientService'
 import { EPaymentStatus } from '@/constants/data.constant'
+import { apiChangeStatusSmartCard } from '@/services/AdminService'
 
 export const SLICE_NAME = 'crmCustomerDetails'
 
@@ -63,6 +64,7 @@ export type CustomerDetailState = {
     editPaymentMethodDialog: boolean
     editCustomerDetailDialog: boolean
     selectedCard: Partial<PaymentMethod>
+    openSmartCardDialog: boolean
 }
 
 export const getCustomer = createAsyncThunk(
@@ -95,6 +97,24 @@ export const putCustomer = createAsyncThunk(
     }
 )
 
+export type TChangeStatusSmartCardRequest = {
+    userId: string
+    status: boolean
+}
+export type TChangeStatusSmartCardResponse = PaymentMethod
+
+export const changeStatusSmartCard = createAsyncThunk(
+    SLICE_NAME + '/changeStatusSmartCard',
+    async (data: TChangeStatusSmartCardRequest) => {
+        const response = await apiChangeStatusSmartCard<
+            TChangeStatusSmartCardResponse,
+            TChangeStatusSmartCardRequest
+        >(data)
+
+        return response.data.data
+    }
+)
+
 const initialState: CustomerDetailState = {
     loading: true,
     profileData: {},
@@ -110,6 +130,7 @@ const initialState: CustomerDetailState = {
     editPaymentMethodDialog: false,
     editCustomerDetailDialog: false,
     selectedCard: {},
+    openSmartCardDialog: false,
 }
 
 const customerDetailSlice = createSlice({
@@ -143,6 +164,12 @@ const customerDetailSlice = createSlice({
         updateSelectedCard: (state, action) => {
             state.selectedCard = action.payload
         },
+        openSmartCardDialog: (state) => {
+            state.openSmartCardDialog = true
+        },
+        closeSmartCardDialog: (state) => {
+            state.openSmartCardDialog = false
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -161,6 +188,21 @@ const customerDetailSlice = createSlice({
             .addCase(getCustomer.pending, (state) => {
                 state.loading = true
             })
+
+            /*
+             * @API: Change status smart card
+             */
+            .addCase(changeStatusSmartCard.fulfilled, (state, action) => {
+                state.loading = false
+                state.paymentMethodData = action.payload
+            })
+            .addCase(changeStatusSmartCard.fulfilled, (state, action) => {
+                state.loading = true
+                state.paymentMethodData = action.payload
+            })
+            .addCase(changeStatusSmartCard.rejected, (state, action) => {
+                state.loading = false
+            })
     },
 })
 
@@ -174,6 +216,8 @@ export const {
     openEditCustomerDetailDialog,
     closeEditCustomerDetailDialog,
     updateSelectedCard,
+    openSmartCardDialog,
+    closeSmartCardDialog,
 } = customerDetailSlice.actions
 
 export default customerDetailSlice.reducer

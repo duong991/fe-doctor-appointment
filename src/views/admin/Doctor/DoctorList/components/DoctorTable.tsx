@@ -27,7 +27,7 @@ import type {
 } from '@/components/shared/DataTable'
 import { imagePath } from '@/utils/imagePath'
 import { specialists } from '@/constants/data.constant'
-import { Tag } from '@/components/ui'
+import { FaRegCalendarCheck } from 'react-icons/fa'
 
 type Doctor = {
     id: string
@@ -50,6 +50,10 @@ const ActionColumn = ({ row }: { row: Doctor }) => {
         navigate(`/doctor/doctor-edit/${row.id}`)
     }
 
+    const onViewCalender = () => {
+        navigate(`/doctor/doctor-calender/${row.id}`)
+    }
+
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
         dispatch(setSelectedProduct(row.id))
@@ -57,6 +61,12 @@ const ActionColumn = ({ row }: { row: Doctor }) => {
 
     return (
         <div className="flex justify-end text-lg">
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
+                onClick={onViewCalender}
+            >
+                <FaRegCalendarCheck />
+            </span>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
