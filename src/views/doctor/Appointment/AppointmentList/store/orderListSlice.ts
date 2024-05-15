@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit'
 import {
     apiGetAppointments,
-    apiDeleteSalesOrders,
+    apiConfirmAppointment,
 } from '@/services/SalesService'
 import type { TableQueries } from '@/@types/common'
 import { EPaymentType, EStatus } from '@/constants/data.constant'
@@ -49,8 +49,8 @@ export const getOrders = createAsyncThunk(
     }
 )
 
-export const deleteOrders = async (data: { id: string | string[] }) => {
-    const response = await apiDeleteSalesOrders<
+export const confirmAppointment = async (data: { id: string | string[] }) => {
+    const response = await apiConfirmAppointment<
         boolean,
         { id: string | string[] }
     >(data)

@@ -5,10 +5,10 @@ import {
     setDeleteMode,
     setSelectedRow,
     setSelectedRows,
-    deleteOrders,
     getOrders,
     useAppDispatch,
     useAppSelector,
+    confirmAppointment,
 } from '../store'
 
 const OrderDeleteConfirmation = () => {
@@ -34,20 +34,20 @@ const OrderDeleteConfirmation = () => {
         }
     }
 
-    const onDelete = async () => {
+    const onConfirm = async () => {
         dispatch(setDeleteMode(''))
 
         if (deleteMode === 'single') {
-            const success = await deleteOrders({ id: selectedRow })
+            const success = await confirmAppointment({ id: selectedRow })
             deleteSucceed(success)
             dispatch(setSelectedRow([]))
         }
 
-        if (deleteMode === 'batch') {
-            const success = await deleteOrders({ id: selectedRows })
-            deleteSucceed(success, selectedRows.length)
-            dispatch(setSelectedRows([]))
-        }
+        // if (deleteMode === 'batch') {
+        //     const success = await confirmAppointment({ id: selectedRows })
+        //     deleteSucceed(success, selectedRows.length)
+        //     dispatch(setSelectedRows([]))
+        // }
     }
 
     const deleteSucceed = (success: boolean, orders = 0) => {
@@ -55,7 +55,7 @@ const OrderDeleteConfirmation = () => {
             dispatch(getOrders(tableData))
             toast.push(
                 <Notification
-                    title={'Successfuly'}
+                    title={'Thành công'}
                     type="success"
                     duration={2500}
                 >
@@ -79,7 +79,7 @@ const OrderDeleteConfirmation = () => {
             onClose={onDialogClose}
             onRequestClose={onDialogClose}
             onCancel={onDialogClose}
-            onConfirm={onDelete}
+            onConfirm={onConfirm}
         >
             <p>Hãy chắc chắn bạn đã hoàn thành khám bệnh với bệnh nhân</p>
         </ConfirmDialog>

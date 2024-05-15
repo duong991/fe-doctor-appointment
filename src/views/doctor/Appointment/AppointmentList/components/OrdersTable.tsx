@@ -17,12 +17,14 @@ import cloneDeep from 'lodash/cloneDeep'
 import dayjs from 'dayjs'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
 import { MdDone } from 'react-icons/md'
+import { EStatus } from '@/constants/data.constant'
 
 type Order = {
     id: string
-    date: number
-    customer: string
-    status: number
+    scheduleDate: string
+    patientName: string
+    scheduleTime: string
+    status: EStatus
     paymentMethod: string
     totalAmount: number
 }
@@ -32,15 +34,15 @@ export const OrderColumn = ({ row }: { row: Order }) => {
     const navigate = useNavigate()
 
     const onView = useCallback(() => {
-        console.log('row', row)
         navigate(`/appointment-detail/${row.id}`)
     }, [navigate, row])
+    const truncatedId = row.id.substring(0, 8)
     return (
         <span
             className={`cursor-pointer select-none font-bold hover:${textTheme}`}
             onClick={onView}
         >
-            #{row.id}
+            #{truncatedId.toLocaleUpperCase()}
         </span>
     )
 }
@@ -50,9 +52,9 @@ const ActionColumn = ({ row }: { row: Order }) => {
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
-    const onDelete = () => {
+    const onConfirm = () => {
         dispatch(setDeleteMode('single'))
-        dispatch(setSelectedRow([row.id]))
+        dispatch(setSelectedRow(row.id))
     }
 
     const onView = useCallback(() => {
@@ -61,7 +63,7 @@ const ActionColumn = ({ row }: { row: Order }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <Tooltip title="View">
+            <Tooltip title="Xem chi tiết">
                 <span
                     className={`cursor-pointer p-2 hover:${textTheme}`}
                     onClick={onView}
@@ -69,11 +71,11 @@ const ActionColumn = ({ row }: { row: Order }) => {
                     <HiOutlineEye size={18} />
                 </span>
             </Tooltip>
-            <Tooltip title="Done">
+            <Tooltip title="Hoàn thành">
                 <span
                     className="text-sm font-bold text-green-600  cursor-pointer
                             border-spacing-2 border-green-600 rounded-full p-2 hover:bg-green-600 hover:text-white"
-                    onClick={onDelete}
+                    onClick={onConfirm}
                 >
                     <MdDone size={18} />
                 </span>
@@ -125,15 +127,15 @@ const OrdersTable = () => {
             },
             {
                 header: 'Thời gian khám',
-                accessorKey: 'date',
+                accessorKey: 'scheduleTime',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span>{dayjs(row.date).format('DD/MM/YYYY')}</span>
+                    return <span>{row.scheduleTime}</span>
                 },
             },
             {
                 header: 'Bệnh nhân',
-                accessorKey: 'customer',
+                accessorKey: 'patientName',
             },
 
             {

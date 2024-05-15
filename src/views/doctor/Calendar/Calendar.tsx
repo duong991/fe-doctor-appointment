@@ -96,7 +96,7 @@ const Calendar = () => {
     return (
         <Container className="h-full">
             <CalendarView
-                editable
+                // editable
                 selectable
                 events={events}
                 // eventClick={onEventClick}

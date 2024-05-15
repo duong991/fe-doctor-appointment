@@ -17,15 +17,21 @@ const DialogConfirmation = () => {
     )
 
     const onDialogClose = () => {
-        dispatch(setScheduleSelected(''))
+        dispatch(
+            setScheduleSelected({
+                id: '',
+                type: '',
+            })
+        )
     }
 
-    const onDelete = async () => {
+    const onConfirm = async () => {
         const success = await confirmVideoScheduleCompletion({
-            id: scheduleSelected,
+            id: scheduleSelected.id,
+            type: scheduleSelected.type,
         })
-        deleteSucceed(success || true)
-        dispatch(setScheduleSelected(''))
+        deleteSucceed(success)
+        dispatch(setScheduleSelected({ id: '', type: '' }))
     }
 
     const fetchData = () => {
@@ -37,7 +43,7 @@ const DialogConfirmation = () => {
             fetchData()
             toast.push(
                 <Notification
-                    title={'Successfuly'}
+                    title={'Thành công'}
                     type="success"
                     duration={2500}
                 >
@@ -52,14 +58,14 @@ const DialogConfirmation = () => {
 
     return (
         <ConfirmDialog
-            isOpen={scheduleSelected !== ''}
+            isOpen={scheduleSelected.id !== '' && scheduleSelected.type !== ''}
             type="success"
             title="Xác nhận hoàn thành lịch hẹn"
             confirmButtonColor="green-600"
             onClose={onDialogClose}
             onRequestClose={onDialogClose}
             onCancel={onDialogClose}
-            onConfirm={onDelete}
+            onConfirm={onConfirm}
         >
             <p>Hãy chắc chắn bạn đã hoàn thành khám bệnh với bệnh nhân</p>
         </ConfirmDialog>

@@ -103,7 +103,7 @@ const TaskOverview = ({ data = {}, className }: TaskOverviewProps) => {
                         <div>
                             <ChartLegend
                                 showBadge={false}
-                                label="Total Tasks"
+                                label="Tổng số lịch hẹn"
                                 value={data.chart[timeRange[0]].total}
                             />
                         </div>

@@ -71,13 +71,13 @@ export async function apiGetAppointments<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiDeleteSalesOrders<
+export async function apiConfirmAppointment<
     T,
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/orders/delete',
-        method: 'delete',
+        url: '/doctor/confirm-appointment',
+        method: 'post',
         data,
     })
 }

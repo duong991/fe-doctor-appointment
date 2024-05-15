@@ -276,95 +276,25 @@ export const projectDashboardData = {
     },
     myTasksData: [
         {
-            taskId: 'KCM-1393',
-            patientName: 'Design sign up flow',
-            priority: 0,
-            assignees: [
-                {
-                    id: '1',
-                    name: 'Carolyn Perkins',
-                    email: 'eileen_h@hotmail.com',
-                    img: '/img/avatars/thumb-1.jpg',
-                },
-                {
-                    id: '2',
-                    name: 'Terrance Moreno',
-                    email: '',
-                    img: '/img/avatars/thumb-2.jpg',
-                },
-            ],
+            id: '1',
+            date: 1633027200000,
+            customer: 'John Doe',
+            status: 1,
+            paymentMehod: 'Credit Card',
+            paymentIdendifier: 'CC1234',
+            totalAmount: 100.5,
         },
         {
-            taskId: 'KCM-2039',
-            patientName: 'Update contact page',
-            priority: 1,
-            assignees: [
-                {
-                    id: '1',
-                    name: 'Carolyn Perkins',
-                    email: 'eileen_h@hotmail.com',
-                    img: '/img/avatars/thumb-1.jpg',
-                },
-            ],
-        },
-        {
-            taskId: 'KCM-2155',
-            patientName: 'Document features 2.0',
-            priority: 1,
-            assignees: [
-                {
-                    id: '1',
-                    name: 'Carolyn Perkins',
-                    email: 'eileen_h@hotmail.com',
-                    img: '/img/avatars/thumb-1.jpg',
-                },
-                {
-                    id: '2',
-                    name: 'Terrance Moreno',
-                    email: '',
-                    img: '/img/avatars/thumb-2.jpg',
-                },
-                {
-                    id: '3',
-                    name: 'Ron Vargas',
-                    email: 'ronnie_vergas@infotech.io',
-                    img: '/img/avatars/thumb-3.jpg',
-                },
-            ],
-        },
-        {
-            taskId: 'KCM-2270',
-            patientName: 'Fix typo in home page',
-            priority: 2,
-            assignees: [
-                {
-                    id: '1',
-                    name: 'Carolyn Perkins',
-                    email: 'eileen_h@hotmail.com',
-                    img: '/img/avatars/thumb-1.jpg',
-                },
-                {
-                    id: '5',
-                    name: 'Joyce Freeman',
-                    email: 'joyce991@infotech.io',
-                    img: '/img/avatars/thumb-5.jpg',
-                },
-            ],
-        },
-        {
-            taskId: 'KCM-1957',
-            patientName: 'Fix broken API',
-            priority: 0,
-            assignees: [
-                {
-                    id: '1',
-                    name: 'Carolyn Perkins',
-                    email: 'eileen_h@hotmail.com',
-                    img: '/img/avatars/thumb-1.jpg',
-                },
-            ],
+            id: '2',
+            date: 1633113600000,
+            customer: 'Jane Doe',
+            status: 2,
+            paymentMehod: 'PayPal',
+            paymentIdendifier: 'PP5678',
+            totalAmount: 200.75,
         },
     ],
+
     scheduleData: [
         {
             id: '0',

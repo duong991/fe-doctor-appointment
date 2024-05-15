@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Table from '@/components/ui/Table'
@@ -12,99 +12,113 @@ import {
     ColumnDef,
 } from '@tanstack/react-table'
 import { OrderColumn } from '../../Appointment/AppointmentList/components/OrdersTable'
+import dayjs from 'dayjs'
+import { setScheduleSelected, useAppDispatch } from '../store'
+import useThemeClass from '@/utils/hooks/useThemeClass'
+import Tooltip from '@/components/ui/Tooltip'
+
+import { HiOutlineEye } from 'react-icons/hi'
+import { MdDone } from 'react-icons/md'
 import { ActionLink } from '@/components/shared'
 import { EStatus } from '@/constants/data.constant'
 
-type Task = {
+type Order = {
     id: string
+    scheduleDate: string
     patientName: string
-    status: EStatus
     scheduleTime: string
+    status: EStatus
+    paymentMethod: string
+    totalAmount: number
 }
 
 type MyTasksProps = {
-    data?: Task[]
+    data?: Order[]
 }
 
 const { Tr, Th, Td, THead, TBody } = Table
 
-const StatusTag = ({ status }: { status: EStatus }) => {
-    switch (status) {
-        case EStatus.APPROVED:
-            return (
-                <Tag className="text-green-600 bg-green-100 dark:text-green-100 dark:bg-green-500/20 rounded border-0">
-                    Approved
-                </Tag>
-            )
-        case EStatus.REJECTED:
-            return (
-                <Tag className="text-red-600 bg-red-100 dark:text-red-100 dark:bg-red-500/20 rounded border-0">
-                    Rejected
-                </Tag>
-            )
-        case EStatus.CANCELLED:
-            return (
-                <Tag className="text-yellow-600 bg-yellow-100 dark:text-yellow-100 dark:bg-yellow-500/20 rounded border-0">
-                    Cancelled
-                </Tag>
-            )
-        case EStatus.COMPLETED:
-            return (
-                <Tag className="text-blue-600 bg-blue-100 dark:text-blue-100 dark:bg-blue-500/20 rounded border-0">
-                    Completed
-                </Tag>
-            )
-        case EStatus.AWAITING_PAYMENT:
-            return (
-                <Tag className="text-purple-600 bg-purple-100 dark:text-purple-100 dark:bg-purple-500/20 rounded border-0">
-                    Awaiting Payment
-                </Tag>
-            )
-        default:
-            return null
+const ActionColumn = ({ row }: { row: Order }) => {
+    const dispatch = useAppDispatch()
+    const { textTheme } = useThemeClass()
+    const navigate = useNavigate()
+
+    const handleSubmit = (id: string) => {
+        console.log('🚀 ~ handleSubmit ~ id:', id)
+        dispatch(
+            setScheduleSelected({
+                id,
+                type: 'offline',
+            })
+        )
     }
+
+    const onView = useCallback(() => {
+        navigate(`/appointment-detail/${row.id}`)
+    }, [navigate, row])
+
+    return (
+        <div className="flex justify-end text-lg">
+            <Tooltip title="View">
+                <span
+                    className={`cursor-pointer p-2 hover:${textTheme}`}
+                    onClick={onView}
+                >
+                    <HiOutlineEye size={18} />
+                </span>
+            </Tooltip>
+            <Tooltip title="Done">
+                <span
+                    className="text-sm font-bold text-green-600  cursor-pointer
+                            border-spacing-2 border-green-600 rounded-full p-2 hover:bg-green-600 hover:text-white"
+                    onClick={() => handleSubmit(row.id)}
+                >
+                    <MdDone size={18} />
+                </span>
+            </Tooltip>
+        </div>
+    )
 }
 
 const MyTasks = ({ data = [] }: MyTasksProps) => {
     const navigate = useNavigate()
 
-    const columns: ColumnDef<Task>[] = useMemo(
+    const columns: ColumnDef<Order>[] = useMemo(
         () => [
             {
-                header: 'Số thứ tự',
+                header: 'Mã đặt lịch hẹn',
                 accessorKey: 'id',
                 cell: (props) => {
                     const { id } = props.row.original
+                    const truncatedId = id.substring(0, 8)
                     return (
                         <ActionLink
                             themeColor={false}
                             className="font-semibold"
-                            to="/app/project/scrum-board"
+                            to={`/appointment-detail/${id}`}
                         >
-                            #{id}
+                            #{truncatedId.toUpperCase()}
                         </ActionLink>
                     )
                 },
             },
+
             {
-                header: 'Tên bệnh nhân',
+                header: 'Thời gian khám',
+                accessorKey: 'scheduleTime',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span>{row.scheduleTime}</span>
+                },
+            },
+            {
+                header: 'Bệnh nhân',
                 accessorKey: 'patientName',
             },
             {
-                header: 'Trạng thái',
-                accessorKey: 'status',
-                cell: (props) => {
-                    const { status } = props.row.original
-                    return <StatusTag status={status} />
-                },
-            },
-            {
-                header: 'Thời gian hẹn khám',
-                accessorKey: 'scheduleTime',
-                cell: (props) => {
-                    const { scheduleTime } = props.row.original
-                    return scheduleTime
-                },
+                header: '',
+                id: 'action',
+                cell: (props) => <ActionColumn row={props.row.original} />,
             },
         ],
         []
@@ -123,7 +137,7 @@ const MyTasks = ({ data = [] }: MyTasksProps) => {
     return (
         <Card>
             <div className="flex items-center justify-between mb-6">
-                <h4>Danh sách bệnh nhân đặt lịch hẹn tại bệnh viện</h4>
+                <h4>Danh sách bệnh nhân đặt lịch hẹn tại bệnh viện hôm nay </h4>
                 <Button size="sm" onClick={onViewAllTask}>
                     Xem toàn bộ
                 </Button>

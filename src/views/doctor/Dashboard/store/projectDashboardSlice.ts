@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiGetDoctorDashboardData } from '@/services/ProjectService'
 import { EStatus } from '@/constants/data.constant'
+import { apiConfirmAppointment } from '@/services/SalesService'
 
 type ScheduleOverviewChart = {
     onGoing: number
@@ -25,24 +26,34 @@ type DashboardData = {
     }
     myTasksData?: {
         id: string
+        scheduleDate: string
         patientName: string
-        status: EStatus
         scheduleTime: string
+        status: EStatus
+        paymentMethod: string
+        totalAmount: number
     }[]
     scheduleData?: {
         id: string
+        scheduleDate: string
+        patientName: string
         scheduleTime: string
         status: EStatus
-        patientName: string
+        paymentMethod: string
+        totalAmount: number
     }[]
 }
 
 type GetDoctorDashboardDataResponse = DashboardData
 
+export type TScheduleSelected = {
+    id: string
+    type: string
+}
 export type ProjectDashboardState = {
     loading: boolean
     dashboardData: DashboardData
-    scheduleSelected: string
+    scheduleSelected: TScheduleSelected
 }
 
 export const SLICE_NAME = 'projectDashboard'
@@ -59,12 +70,31 @@ export const getDoctorDashboardData = createAsyncThunk(
 const initialState: ProjectDashboardState = {
     loading: true,
     dashboardData: {},
-    scheduleSelected: '',
+    scheduleSelected: {
+        id: '',
+        type: '',
+    },
 }
 
-export const confirmVideoScheduleCompletion = async (data: { id: string }) => {
-    console.log('Call API')
-    return true
+export const confirmVideoScheduleCompletion = async (data: {
+    id: string
+    type: string
+}) => {
+    const response = await apiConfirmAppointment<
+        boolean,
+        {
+            id: string
+            type: string
+        }
+    >(data)
+    return response.data.data
+}
+export const confirmAppointment = async (data: { id: string | string[] }) => {
+    const response = await apiConfirmAppointment<
+        boolean,
+        { id: string | string[] }
+    >(data)
+    return response.data.data
 }
 
 const projectDashboardSlice = createSlice({
@@ -72,6 +102,7 @@ const projectDashboardSlice = createSlice({
     initialState,
     reducers: {
         setScheduleSelected: (state, action) => {
+            console.log('🚀 ~ action:', action)
             state.scheduleSelected = action.payload
         },
     },
@@ -84,6 +115,8 @@ const projectDashboardSlice = createSlice({
             .addCase(getDoctorDashboardData.pending, (state) => {
                 state.loading = true
             })
+
+        // API con
     },
 })
 
