@@ -26,49 +26,43 @@ import type {
     Row,
 } from '@/components/shared/DataTable'
 // eslint-disable-next-line import/named
-import { EPaymentType, EStatus } from '@/constants/data.constant'
+import {
+    EPaymentStatus,
+    EPaymentType,
+    EStatus,
+} from '@/constants/data.constant'
 
-type Order = {
+type PaymentDetail = {
     id: string
-    date: number
-    patient: string
-    status: EStatus
+    scheduleDate: string
+    patientName: string
+    status: EPaymentStatus
     paymentMethod: EPaymentType
     totalAmount: number
 }
 
-const orderStatusColor: Record<
-    EStatus,
+const paymentStatusColor: Record<
+    EPaymentStatus,
     {
         label: string
         dotClass: string
         textClass: string
     }
 > = {
-    [EStatus.APPROVED]: {
-        label: 'Approved',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    [EStatus.REJECTED]: {
-        label: 'Rejected',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-    [EStatus.CANCELLED]: {
-        label: 'Cancelled',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    [EStatus.COMPLETED]: {
-        label: 'Completed',
-        dotClass: 'bg-blue-500',
-        textClass: 'text-blue-500',
-    },
-    [EStatus.AWAITING_PAYMENT]: {
-        label: 'Awaiting Payment',
+    [EPaymentStatus.PENDING]: {
+        label: 'Đang chờ',
         dotClass: 'bg-yellow-500',
         textClass: 'text-yellow-500',
+    },
+    [EPaymentStatus.SUCCESS]: {
+        label: 'Thành công',
+        dotClass: 'bg-green-500',
+        textClass: 'text-green-500',
+    },
+    [EPaymentStatus.FAILED]: {
+        label: 'Thất bại',
+        dotClass: 'bg-red-500',
+        textClass: 'text-red-500',
     },
 }
 
@@ -101,7 +95,7 @@ const PaymentMethodImage = ({
     }
 }
 
-const PaymentColumn = ({ row }: { row: Order }) => {
+const PaymentColumn = ({ row }: { row: PaymentDetail }) => {
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
@@ -114,12 +108,12 @@ const PaymentColumn = ({ row }: { row: Order }) => {
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
             onClick={onView}
         >
-            #{shortId}
+            #{shortId.toLocaleUpperCase()}
         </span>
     )
 }
 
-const ActionColumn = ({ row }: { row: Order }) => {
+const ActionColumn = ({ row }: { row: PaymentDetail }) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
@@ -135,7 +129,7 @@ const ActionColumn = ({ row }: { row: Order }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <Tooltip title="View">
+            <Tooltip title="Xem chi tiết">
                 <span
                     className={`cursor-pointer p-2 hover:${textTheme}`}
                     onClick={onView}
@@ -143,7 +137,7 @@ const ActionColumn = ({ row }: { row: Order }) => {
                     <HiOutlineEye />
                 </span>
             </Tooltip>
-            <Tooltip title="Delete">
+            <Tooltip title="Xóa">
                 <span
                     className="cursor-pointer p-2 hover:text-red-500"
                     onClick={onDelete}
@@ -193,7 +187,7 @@ const PaymentTable = () => {
         [pageIndex, pageSize, sort, query, total]
     )
 
-    const columns: ColumnDef<Order>[] = useMemo(
+    const columns: ColumnDef<PaymentDetail>[] = useMemo(
         () => [
             {
                 header: 'Mã Số',
@@ -202,19 +196,21 @@ const PaymentTable = () => {
             },
             {
                 header: 'Ngày Khám',
-                accessorKey: 'date',
+                accessorKey: 'scheduleDate',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <span>
-                            {dayjs(row.date, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+                            {dayjs(row.scheduleDate, 'YYYY-MM-DD').format(
+                                'DD/MM/YYYY'
+                            )}
                         </span>
                     )
                 },
             },
             {
                 header: 'Người Khám',
-                accessorKey: 'customer',
+                accessorKey: 'patientName',
             },
             {
                 header: 'Trạng thái',
@@ -224,12 +220,12 @@ const PaymentTable = () => {
                     return (
                         <div className="flex items-center">
                             <Badge
-                                className={orderStatusColor[status].dotClass}
+                                className={paymentStatusColor[status].dotClass}
                             />
                             <span
-                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${orderStatusColor[status].textClass}`}
+                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${paymentStatusColor[status].textClass}`}
                             >
-                                {orderStatusColor[status].label}
+                                {paymentStatusColor[status].label}
                             </span>
                         </div>
                     )
@@ -241,12 +237,12 @@ const PaymentTable = () => {
                 cell: (props) => {
                     const { paymentMethod } = props.row.original
                     return (
-                        <span className="flex items-center">
+                        <div className="flex items-center justify-center">
                             <PaymentMethodImage
-                                className="max-h-[20px]"
+                                className="max-h-[40px]"
                                 paymentMethod={paymentMethod}
                             />
-                        </span>
+                        </div>
                     )
                 },
             },
@@ -295,7 +291,7 @@ const PaymentTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onRowSelect = (checked: boolean, row: Order) => {
+    const onRowSelect = (checked: boolean, row: PaymentDetail) => {
         if (checked) {
             dispatch(addRowItem([row.id]))
         } else {
@@ -304,7 +300,7 @@ const PaymentTable = () => {
     }
 
     const onAllRowSelect = useCallback(
-        (checked: boolean, rows: Row<Order>[]) => {
+        (checked: boolean, rows: Row<PaymentDetail>[]) => {
             if (checked) {
                 const originalRows = rows.map((row) => row.original)
                 const selectedIds: string[] = []

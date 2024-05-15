@@ -10,24 +10,24 @@ import {
 import { NumericFormat } from 'react-number-format'
 import { imagePath } from '@/utils/imagePath'
 
-type Product = {
+type Doctor = {
     id: string
     name: string
     img: string
     price: number
-    quantity: string
+    service: string
     total: number
 }
 
 type OrderProductsProps = {
-    data?: Product[]
+    data?: Doctor[]
 }
 
 const { Tr, Th, Td, THead, TBody } = Table
 
-const columnHelper = createColumnHelper<Product>()
+const columnHelper = createColumnHelper<Doctor>()
 
-const ProductColumn = ({ row }: { row: Product }) => {
+const ProductColumn = ({ row }: { row: Doctor }) => {
     return (
         <div className="flex items-center">
             <Avatar size={90} src={imagePath(row.img)} />
@@ -77,7 +77,7 @@ const columns = [
             return <PriceAmount amount={row.price} />
         },
     }),
-    columnHelper.accessor('quantity', {
+    columnHelper.accessor('service', {
         header: 'Dịch vụ',
     }),
     columnHelper.accessor('total', {

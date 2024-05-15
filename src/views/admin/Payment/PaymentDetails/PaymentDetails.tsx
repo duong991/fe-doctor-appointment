@@ -13,32 +13,28 @@ import { useLocation } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
 import 'dayjs/locale/vi'
-import {
-    EPaymentStatus,
-    EPaymentType,
-    EStatus,
-} from '@/constants/data.constant'
+import { EPaymentStatus, EPaymentType } from '@/constants/data.constant'
 
 dayjs.locale('vi')
 
-type SalesOrderDetailsResponse = {
+type paymentDetailsResponse = {
     id?: string
-    progressStatus?: EStatus
+    paymentStatus?: EPaymentStatus
     dateTime?: string
     paymentSummary?: {
         subTotal: number
         paymentMethod: EPaymentType
         total: number
     }
-    product?: {
+    doctor?: {
         id: string
         name: string
         img: string
         price: number
-        quantity: string
+        service: string
         total: number
     }[]
-    customer?: {
+    patient?: {
         name: string
         email: string
         phone: string
@@ -52,40 +48,18 @@ type PaymentStatus = {
     class: string
 }
 
-// const paymentStatus: Record<EPaymentStatus, PaymentStatus> = {
-//     PENDING: {
-//         label: 'đang chờ',
-//         class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
-//     },
-//     SUCCESS: {
-//         label: 'Thành công',
-//         class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
-//     },
-//     FAILED: {
-//         label: 'Thất bại',
-//         class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
-//     },
-// }
-const progressStatus: Record<EStatus, PaymentStatus> = {
-    APPROVED: {
-        label: 'Đã chấp thuận',
+const paymentStatus: Record<EPaymentStatus, PaymentStatus> = {
+    PENDING: {
+        label: 'đang chờ thanh toán',
+        class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
+    },
+    SUCCESS: {
+        label: 'Thanh toán thành công',
         class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
     },
-    REJECTED: {
-        label: 'Đã từ chối',
+    FAILED: {
+        label: 'Thanh toán thất bại',
         class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
-    },
-    CANCELLED: {
-        label: 'Đã hủy',
-        class: 'text-amber-600 bg-amber-100 dark:text-amber-100 dark:bg-amber-500/20',
-    },
-    COMPLETED: {
-        label: 'Đã hoàn thành',
-        class: 'bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-100',
-    },
-    AWAITING_PAYMENT: {
-        label: 'Đang chờ thanh toán',
-        class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-100',
     },
 }
 
@@ -93,7 +67,7 @@ const PaymentDetails = () => {
     const location = useLocation()
 
     const [loading, setLoading] = useState(true)
-    const [data, setData] = useState<SalesOrderDetailsResponse>({})
+    const [data, setData] = useState<paymentDetailsResponse>({})
 
     useEffect(() => {
         fetchData()
@@ -107,7 +81,7 @@ const PaymentDetails = () => {
         if (id) {
             setLoading(true)
             const response = await apiGetAppointmentDetails<
-                SalesOrderDetailsResponse,
+                paymentDetailsResponse,
                 { id: string }
             >({ id })
             if (response) {
@@ -126,24 +100,27 @@ const PaymentDetails = () => {
                         <div className="mb-6">
                             <div className="flex items-center mb-2">
                                 <h3>
-                                    <span>Lịch hẹn</span>
+                                    <span>Hóa đơn chi tiết</span>
                                     <span className="ltr:ml-2 rtl:mr-2">
-                                        #{data.id?.substring(0, 8)}
+                                        #
+                                        {data.id
+                                            ?.substring(0, 8)
+                                            .toLocaleUpperCase()}
                                     </span>
                                 </h3>
                                 <Tag
                                     className={classNames(
                                         'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        progressStatus[
-                                            data.progressStatus ||
-                                                EStatus.APPROVED
+                                        paymentStatus[
+                                            data.paymentStatus ||
+                                                EPaymentStatus.PENDING
                                         ].class
                                     )}
                                 >
                                     {
-                                        progressStatus[
-                                            data.progressStatus ||
-                                                EStatus.APPROVED
+                                        paymentStatus[
+                                            data.paymentStatus ||
+                                                EPaymentStatus.PENDING
                                         ].label
                                     }
                                 </Tag>
@@ -159,7 +136,7 @@ const PaymentDetails = () => {
                         </div>
                         <div className="xl:flex gap-4">
                             <div className="w-full">
-                                <OrderProducts data={data.product} />
+                                <OrderProducts data={data.doctor} />
                                 <div className="xl:grid grid-cols-2 gap-4">
                                     <PaymentSummary
                                         data={data.paymentSummary}
@@ -167,7 +144,7 @@ const PaymentDetails = () => {
                                 </div>
                             </div>
                             <div className="xl:max-w-[360px] w-full">
-                                <CustomerInfo data={data.customer} />
+                                <CustomerInfo data={data.patient} />
                             </div>
                         </div>
                     </>

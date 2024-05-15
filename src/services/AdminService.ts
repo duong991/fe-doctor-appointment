@@ -59,3 +59,14 @@ export async function apiGetDoctorCalender<
         params,
     })
 }
+
+export async function apiGetAllPaymentDetails<
+    T,
+    U extends Record<string, unknown>
+>(params: U) {
+    return ApiService.fetchData<T>({
+        url: '/admin/get-all-paymentDetails',
+        method: 'get',
+        params,
+    })
+}

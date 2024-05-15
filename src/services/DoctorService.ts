@@ -89,21 +89,12 @@ export async function apiDeleteSalesOrders<
     })
 }
 
-export async function apiGetAppointments<T, U extends Record<string, unknown>>(
-    params: U
-) {
-    return ApiService.fetchData<T>({
-        url: '/admin/get-all-appointments',
-        method: 'get',
-        params,
-    })
-}
 export async function apiGetAppointmentDetails<
     T,
     U extends Record<string, unknown>
 >(params: U) {
     return ApiService.fetchData<T>({
-        url: '/admin/get-appointment-details',
+        url: '/admin/get-payment-details',
         method: 'get',
         params,
     })

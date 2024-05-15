@@ -4,32 +4,34 @@ import {
     current,
     PayloadAction,
 } from '@reduxjs/toolkit'
-import {
-    apiGetAppointments,
-    apiDeleteSalesOrders,
-} from '@/services/DoctorService'
+import { apiDeleteSalesOrders } from '@/services/DoctorService'
 import type { TableQueries } from '@/@types/common'
-import { EPaymentType, EStatus } from '@/constants/data.constant'
+import {
+    EPaymentStatus,
+    EPaymentType,
+    EStatus,
+} from '@/constants/data.constant'
+import { apiGetAllPaymentDetails } from '@/services/AdminService'
 
-type Order = {
+type PaymentDetail = {
     id: string
-    date: number
-    customer: string
-    status: EStatus
+    scheduleDate: string
+    patientName: string
+    status: EPaymentStatus
     paymentMethod: EPaymentType
     totalAmount: number
 }
 
-type Orders = Order[]
+type PaymentDetails = PaymentDetail[]
 
-type GetSalesOrdersResponse = {
-    data: Orders
+type GetPaymentDetailsResponse = {
+    data: PaymentDetails
     total: number
 }
 
 export type SalesOrderListState = {
     loading: boolean
-    orderList: Orders
+    orderList: PaymentDetails
     tableData: TableQueries
     deleteMode: 'single' | 'batch' | ''
     selectedRows: string[]
@@ -41,8 +43,8 @@ export const SLICE_NAME = 'salesOrderList'
 export const getOrders = createAsyncThunk(
     SLICE_NAME + '/getAppointments',
     async (data: TableQueries) => {
-        const response = await apiGetAppointments<
-            GetSalesOrdersResponse,
+        const response = await apiGetAllPaymentDetails<
+            GetPaymentDetailsResponse,
             TableQueries
         >(data)
         return response.data.data
