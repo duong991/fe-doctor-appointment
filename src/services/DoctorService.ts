@@ -24,7 +24,7 @@ export async function apiDeleteSalesProducts<
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/products/delete',
+        url: '/admin/delete-doctor',
         method: 'delete',
         data,
     })

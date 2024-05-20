@@ -6,16 +6,12 @@ import {
 } from '@/services/PatientService'
 import type { TableQueries } from '@/@types/common'
 
-type PersonalInfo = {
-    address: string
-    title: string
-    birthday: string
-    phoneNumber: string
-    facebook: string
-    twitter: string
-    pinterest: string
-    linkedIn: string
-}
+// type PersonalInfo = {
+//     address: string
+//     title: string
+//     birthday: string
+//     phoneNumber: string
+// }
 
 type OrderHistory = {
     id: string
@@ -49,8 +45,9 @@ export type Customer = {
     img: string
     role: string
     address: string
+    phone: string
+    dob: string
     smartCardStatus: ESmartCardStatus
-    personalInfo: PersonalInfo
     orderHistory: OrderHistory[]
     paymentMethod: PaymentMethod[]
     subscription: Subscription[]

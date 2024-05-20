@@ -95,7 +95,7 @@ const PaymentMethods = () => {
                                     isOpen={isOpenSmartCardDialog}
                                     type="danger"
                                     title={
-                                        data.isBlocked ? 'Khoá thẻ' : 'Mở thẻ'
+                                        !data.isBlocked ? 'Khoá thẻ' : 'Mở thẻ'
                                     }
                                     confirmButtonColor="red-600"
                                     onClose={onConfirmDialogClose}

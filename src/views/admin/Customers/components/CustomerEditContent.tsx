@@ -22,21 +22,21 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const { id } = customer
 
     const onFormSubmit = (values: FormModel) => {
-        const { name, birthday, email, img, address, phoneNumber } = values
-
-        const basicInfo = { name, email, img }
-        const personalInfo = {
-            address,
-            birthday: dayjs(birthday).format('DD/MM/YYYY'),
-            phoneNumber,
-        }
+        const { name, dob, email, img, address, phone } = values
         let newData = cloneDeep(data)
         let editedCustomer: Partial<Customer> = {}
         newData = newData.map((elm) => {
             if (elm.id === id) {
-                elm = { ...elm, ...basicInfo }
-                elm.personalInfo = { ...elm.personalInfo, ...personalInfo }
-                editedCustomer = elm
+                editedCustomer = {
+                    id,
+                    name,
+                    dob: dayjs(dob).format('YYYY-MM-DD'),
+                    email,
+                    img,
+                    address,
+                    phone,
+                }
+                return { ...elm, ...editedCustomer }
             }
             return elm
         })

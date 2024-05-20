@@ -28,7 +28,7 @@ export async function apPutCrmCustomer<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/crm/customers',
+        url: '/admin/update-patient',
         method: 'put',
         data,
     })
@@ -50,7 +50,7 @@ export async function apiDeleteCrmCustomer<
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/crm/customer/delete',
+        url: '/admin/delete-patient',
         method: 'delete',
         data,
     })

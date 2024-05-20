@@ -41,7 +41,7 @@ const ActionColumn = ({ row }: { row: Customer }) => {
             className={`${textTheme} cursor-pointer select-none font-semibold`}
             onClick={onEdit}
         >
-            Edit
+            Chỉnh Sửa
         </div>
     )
 }

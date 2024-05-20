@@ -43,7 +43,7 @@ export async function apiChangeStatusSmartCard<
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/admin/appointment/change-status-smart-card',
+        url: '/admin/change-status-smart-card',
         method: 'post',
         data,
     })

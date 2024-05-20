@@ -108,14 +108,14 @@ const ImageList = (props: ImageListProps) => {
             <ConfirmDialog
                 isOpen={deleteConfirmationOpen}
                 type="danger"
-                title="Remove image"
+                title="Xóa ảnh"
                 confirmButtonColor="red-600"
                 onClose={onDeleteConfirmationClose}
                 onRequestClose={onDeleteConfirmationClose}
                 onCancel={onDeleteConfirmationClose}
                 onConfirm={onDelete}
             >
-                <p> Are you sure you want to remove this image? </p>
+                <p>Bạn có chắc muốn xóa ảnh này không?</p>
             </ConfirmDialog>
         </>
     )
@@ -213,7 +213,7 @@ const DoctorImages = (props: ProductImagesProps) => {
                                                 darkModeSrc="/img/others/upload-dark.png"
                                             />
                                             <p className="font-semibold text-center text-gray-800 dark:text-white">
-                                                Upload
+                                                Tải lên{' '}
                                             </p>
                                         </div>
                                     </Upload>
