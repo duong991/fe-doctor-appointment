@@ -32,7 +32,6 @@ type InitialData = {
     }[]
     yearsOfExperience?: string
     specialist?: string
-    services?: string[]
     onlinePrice?: number
     offlinePrice?: number
     description?: string
@@ -129,7 +128,6 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             img: '',
             imgList: [],
             specialist: '',
-            services: [],
             onlinePrice: 0,
             offlinePrice: 0,
             description: '',
@@ -145,25 +143,11 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         <>
             <Formik
                 innerRef={ref}
-                initialValues={{
-                    ...initialData,
-                    services: initialData?.services
-                        ? initialData.services.map((value) => ({
-                              label: value,
-                              value,
-                          }))
-                        : [],
-                }}
+                initialValues={initialData}
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
                     console.log('🚀 ~ ProductForm ~ values:', values)
                     const formData = cloneDeep(values)
-                    formData.services = formData.services.map((service) => {
-                        if (typeof service !== 'string') {
-                            return service.value
-                        }
-                        return service
-                    })
                     if (type === 'new') {
                         formData.id = newId
                         if (formData.imgList && formData.imgList.length > 0) {
@@ -210,7 +194,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                         type="button"
                                         onClick={() => onDiscard?.()}
                                     >
-                                        Discard
+                                        Hủy
                                     </Button>
                                     <Button
                                         size="sm"
@@ -219,7 +203,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                         icon={<AiOutlineSave />}
                                         type="submit"
                                     >
-                                        Save
+                                        Lưu
                                     </Button>
                                 </div>
                             </StickyFooter>

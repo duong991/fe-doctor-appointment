@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiPutSalesProduct,
     apiDeleteSalesProducts,
     apiGetDoctorDetail,
+    apiUpDateDoctor,
 } from '@/services/DoctorService'
+import { FormModel } from '../../DoctorForm'
 
 type DoctorData = {
     id?: string
@@ -21,7 +22,6 @@ type DoctorData = {
     address?: string
     yearsOfExperience?: string
     specialist?: string
-    services?: string[]
     onlinePrice?: number
     offlinePrice?: number
     description?: string
@@ -47,12 +47,25 @@ export const getDoctorDetail = createAsyncThunk(
     }
 )
 
-export const updateProduct = async <T, U extends Record<string, unknown>>(
-    data: U
-) => {
-    const response = await apiPutSalesProduct<T, U>(data)
-    return response.data
-}
+type TUpdateDoctorResponse = DoctorData
+type TUpdateDoctorRequest = DoctorData
+export const updateDoctor = createAsyncThunk(
+    SLICE_NAME + '/updateDoctor',
+    async (data: FormModel) => {
+        const response = await apiUpDateDoctor<
+            TUpdateDoctorResponse,
+            TUpdateDoctorRequest
+        >(data)
+        return response.data.data
+    }
+)
+
+// export const updateDoctor = async <T, U extends Record<string, unknown>>(
+//     data: U
+// ) => {
+//     const response = await apiUpDateDoctor<T, U>(data)
+//     return response.data
+// }
 
 export const deleteProduct = async <T, U extends Record<string, unknown>>(
     data: U
@@ -78,6 +91,18 @@ const productEditSlice = createSlice({
             })
             .addCase(getDoctorDetail.pending, (state) => {
                 state.loading = true
+            })
+            .addCase(getDoctorDetail.rejected, (state) => {
+                state.loading = false
+            })
+            .addCase(updateDoctor.fulfilled, (state, action) => {
+                state.doctorData = action.payload
+            })
+            .addCase(updateDoctor.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(updateDoctor.rejected, (state) => {
+                state.loading = false
             })
     },
 })

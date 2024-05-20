@@ -40,13 +40,30 @@ export async function apiGetDoctorDetail<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiPutSalesProduct<T, U extends Record<string, unknown>>(
+export async function apiUpDateDoctor<T, U extends Record<string, unknown>>(
     data: U
 ) {
+    const formData = new FormData()
+    /*
+     *
+     */
+    Object.keys(data).forEach((key) => {
+        if (key === 'imgList') {
+            const imgList = (data[key] as any[])?.map(
+                (item: any) => item.files
+            ) as Array<File>
+            imgList.forEach((file, index) => {
+                formData.append(`image`, file)
+            })
+        } else {
+            formData.append(key, data[key] as string)
+        }
+    })
     return ApiService.fetchData<T>({
-        url: '/sales/products/update',
-        method: 'put',
-        data,
+        url: '/doctors/update',
+        headers: { 'Content-Type': 'multipart/form-data' },
+        method: 'post',
+        data: formData,
     })
 }
 

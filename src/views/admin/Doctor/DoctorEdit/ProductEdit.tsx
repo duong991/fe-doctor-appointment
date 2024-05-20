@@ -5,7 +5,7 @@ import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
     getDoctorDetail,
-    updateProduct,
+    updateDoctor,
     deleteProduct,
     useAppSelector,
     useAppDispatch,
@@ -42,11 +42,8 @@ const DoctorEdit = () => {
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
-        const success = await updateProduct(values)
+        dispatch(updateDoctor(values))
         setSubmitting(false)
-        if (success) {
-            popNotification('updated')
-        }
     }
 
     const handleDiscard = () => {
@@ -106,7 +103,7 @@ const DoctorEdit = () => {
                     <DoubleSidedImage
                         src="/img/others/img-2.png"
                         darkModeSrc="/img/others/img-2-dark.png"
-                        alt="No product found!"
+                        alt="Không tìm thấy bác sĩ!"
                     />
                     <h3 className="mt-8">Không tìm thấy bác sĩ</h3>
                 </div>
