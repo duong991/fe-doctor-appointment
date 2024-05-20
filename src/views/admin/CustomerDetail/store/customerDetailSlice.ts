@@ -196,9 +196,8 @@ const customerDetailSlice = createSlice({
                 state.loading = false
                 state.paymentMethodData = action.payload
             })
-            .addCase(changeStatusSmartCard.fulfilled, (state, action) => {
+            .addCase(changeStatusSmartCard.pending, (state) => {
                 state.loading = true
-                state.paymentMethodData = action.payload
             })
             .addCase(changeStatusSmartCard.rejected, (state, action) => {
                 state.loading = false
