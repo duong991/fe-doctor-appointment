@@ -14,7 +14,7 @@ import { apiGetAppointmentDetails } from '@/services/SalesService'
 import { useLocation } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
-import { EStatus } from '@/constants/data.constant'
+import { EPaymentStatus, EStatus } from '@/constants/data.constant'
 
 dayjs.locale('vi')
 
@@ -100,8 +100,27 @@ const OrderDetails = () => {
                                 <h3>
                                     <span>Lịch hẹn</span>
                                     <span className="ltr:ml-2 rtl:mr-2">
-                                        #{data.id?.substring(0, 8)}
+                                        #
+                                        {data.id
+                                            ?.substring(0, 8)
+                                            .toLocaleUpperCase()}
                                     </span>
+                                    <Tag
+                                        className={classNames(
+                                            'border-0 rounded-md ltr:ml-2 rtl:mr-2',
+                                            progressStatus[
+                                                data.progressStatus! ||
+                                                    EPaymentStatus.PENDING
+                                            ].class
+                                        )}
+                                    >
+                                        {
+                                            progressStatus[
+                                                data.progressStatus! ||
+                                                    EPaymentStatus.PENDING
+                                            ].label
+                                        }
+                                    </Tag>
                                 </h3>
                             </div>
                             <span className="flex items-center">

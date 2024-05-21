@@ -51,8 +51,8 @@ const Schedule = ({ data = [] }: ScheduleProps) => {
 
     const { textTheme } = useThemeClass()
 
-    const navigationToRoomId = () => {
-        const roomId = uuidv4()
+    const navigationToRoomId = (_roomId: string) => {
+        const roomId = _roomId
         window.open(`http://localhost:5173/room?roomId=${roomId}`, '_blank')
     }
     const handleSubmit = (id: string) => {
@@ -117,7 +117,7 @@ const Schedule = ({ data = [] }: ScheduleProps) => {
                 >
                     <div
                         className="flex items-center gap-3"
-                        onClick={navigationToRoomId}
+                        onClick={() => navigationToRoomId(event.id)}
                     >
                         <EventIcon />
                         <div>

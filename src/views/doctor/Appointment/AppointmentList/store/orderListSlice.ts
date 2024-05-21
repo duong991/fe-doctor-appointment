@@ -9,12 +9,17 @@ import {
     apiConfirmAppointment,
 } from '@/services/SalesService'
 import type { TableQueries } from '@/@types/common'
-import { EPaymentType, EStatus } from '@/constants/data.constant'
+import {
+    EPaymentStatus,
+    EPaymentType,
+    EStatus,
+} from '@/constants/data.constant'
 
 type Order = {
     id: string
-    date: number
-    customer: string
+    scheduleDate: string
+    patientName: string
+    scheduleTime: string
     status: EStatus
     paymentMethod: EPaymentType
     totalAmount: number
