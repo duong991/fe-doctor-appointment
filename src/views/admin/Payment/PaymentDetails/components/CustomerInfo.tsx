@@ -8,6 +8,7 @@ import { defaultImagePath } from '@/constants/data.constant'
 
 type CustomerInfoProps = {
     data?: {
+        id: string
         name: string
         email: string
         phone: string
@@ -22,7 +23,7 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
             <h5 className="mb-4">Khách hàng</h5>
             <Link
                 className="group flex items-center justify-between"
-                to="/app/crm/customer-details?id=11"
+                to={`/patient-details?id=${data?.id}`}
             >
                 <div className="flex items-center">
                     <Avatar

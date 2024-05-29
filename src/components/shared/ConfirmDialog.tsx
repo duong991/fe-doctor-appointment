@@ -7,8 +7,9 @@ import {
 import Avatar from '@/components/ui/Avatar'
 import Button from '@/components/ui/Button'
 import Dialog from '@/components/ui/Dialog'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { DialogProps } from '@/components/ui/Dialog'
+import RichTextEditor from './RichTextEditor'
 
 type StatusType = 'info' | 'success' | 'warning' | 'danger'
 
@@ -18,8 +19,9 @@ interface ConfirmDialogProps extends DialogProps {
     confirmButtonColor?: string
     type?: StatusType
     title?: ReactNode | string
+    textEditor?: boolean
     onCancel?: () => void
-    onConfirm?: () => void
+    onConfirm?: ((text: string) => void) | (() => void)
 }
 
 const StatusIcon = ({ status }: { status: StatusType }) => {
@@ -75,6 +77,7 @@ const StatusIcon = ({ status }: { status: StatusType }) => {
 }
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
+    const [text, setText] = useState('' as string)
     const {
         type = 'info',
         title,
@@ -84,6 +87,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         cancelText = 'Hủy',
         confirmText = 'Xác nhận',
         confirmButtonColor,
+        textEditor = true,
         ...rest
     } = props
 
@@ -92,7 +96,11 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     }
 
     const handleConfirm = () => {
-        onConfirm?.()
+        onConfirm?.(text)
+    }
+
+    const handleChange = (val: string) => {
+        setText(val)
     }
 
     return (
@@ -104,6 +112,14 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
                 <div className="ml-4 rtl:mr-4">
                     <h5 className="mb-2">{title}</h5>
                     {children}
+
+                    <div className="mt-4">
+                        <h6 className="mb-2">Điền kết luận</h6>
+
+                        {textEditor && (
+                            <RichTextEditor onChange={handleChange} />
+                        )}
+                    </div>
                 </div>
             </div>
             <div className="text-right px-6 py-3 bg-gray-100 dark:bg-gray-700 rounded-bl-lg rounded-br-lg">

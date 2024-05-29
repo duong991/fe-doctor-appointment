@@ -32,7 +32,7 @@ const adminRoutes: Routes = [
         component: lazy(() => import('@/views/admin/Doctor/DoctorEdit')),
         authority: [Role.ADMIN],
         meta: {
-            header: 'Edit Doctor',
+            header: 'Chỉnh sửa thông tin bác sĩ',
         },
     },
 
@@ -58,7 +58,7 @@ const adminRoutes: Routes = [
         key: 'patient-details',
         path: '/patient-details',
         component: lazy(() => import('@/views/admin/CustomerDetail')),
-        authority: [Role.ADMIN],
+        authority: [Role.ADMIN, Role.DOCTOR],
     },
     {
         key: 'payment',

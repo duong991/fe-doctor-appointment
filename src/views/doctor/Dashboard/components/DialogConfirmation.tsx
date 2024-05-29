@@ -25,10 +25,11 @@ const DialogConfirmation = () => {
         )
     }
 
-    const onConfirm = async () => {
+    const onConfirm = async (text: string) => {
         const success = await confirmVideoScheduleCompletion({
             id: scheduleSelected.id,
             type: scheduleSelected.type,
+            conclusion: text,
         })
         deleteSucceed(success)
         dispatch(setScheduleSelected({ id: '', type: '' }))

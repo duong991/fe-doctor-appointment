@@ -28,11 +28,12 @@ import type {
 import { imagePath } from '@/utils/imagePath'
 import { specialists } from '@/constants/data.constant'
 import { FaRegCalendarCheck } from 'react-icons/fa'
+import { NumericFormat } from 'react-number-format'
 
 type Doctor = {
     id: string
     name: string
-    phone: string
+    revenue: number
     email: string
     img: string
     averageRating: number
@@ -155,11 +156,20 @@ const DoctorTable = () => {
                 },
             },
             {
-                header: 'Điện thoại',
-                accessorKey: 'phone',
+                header: 'Doanh thu',
+                accessorKey: 'revenue',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span>{row.phone}</span>
+                    return (
+                        <span>
+                            <NumericFormat
+                                thousandSeparator
+                                displayType="text"
+                                value={row.revenue}
+                                suffix=" VND"
+                            />
+                        </span>
+                    )
                 },
             },
             {

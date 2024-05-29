@@ -9,6 +9,7 @@ import { NumericFormat } from 'react-number-format'
 
 type CustomerInfoProps = {
     data?: {
+        id: string
         name: string
         email: string
         phone: string
@@ -35,7 +36,9 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
                     />
                     <div className="ltr:ml-2 rtl:mr-2">
                         <div className="font-semibold group-hover:text-gray-900 group-hover:dark:text-gray-100">
-                            {data?.name}
+                            <Link to={`/patient-details?id=${data?.id}`}>
+                                {data?.name}
+                            </Link>
                         </div>
                         <span>
                             Đã khám

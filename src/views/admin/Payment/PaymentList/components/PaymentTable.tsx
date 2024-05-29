@@ -78,7 +78,7 @@ const PaymentMethodImage = ({
             return (
                 <img
                     className={className}
-                    src="/img/others/img-8.png"
+                    src="/img/others/img-9.png"
                     alt={paymentMethod}
                 />
             )
@@ -86,7 +86,7 @@ const PaymentMethodImage = ({
             return (
                 <img
                     className={className}
-                    src="/img/others/img-9.png"
+                    src="/img/others/img-8.png"
                     alt={paymentMethod}
                 />
             )

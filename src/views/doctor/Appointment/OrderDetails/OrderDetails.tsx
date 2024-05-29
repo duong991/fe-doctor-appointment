@@ -23,6 +23,7 @@ type AppointmentDetailsResponse = {
     progressStatus?: EStatus
     dateTime?: string
     customer?: {
+        id: string
         name: string
         email: string
         phone: string

@@ -79,12 +79,14 @@ const initialState: ProjectDashboardState = {
 export const confirmVideoScheduleCompletion = async (data: {
     id: string
     type: string
+    conclusion: string
 }) => {
     const response = await apiConfirmAppointment<
         boolean,
         {
             id: string
             type: string
+            conclusion: string
         }
     >(data)
     return response.data.data

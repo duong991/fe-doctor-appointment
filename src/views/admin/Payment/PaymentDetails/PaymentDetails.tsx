@@ -35,6 +35,7 @@ type paymentDetailsResponse = {
         total: number
     }[]
     patient?: {
+        id: string
         name: string
         email: string
         phone: string
