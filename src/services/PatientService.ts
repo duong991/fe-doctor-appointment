@@ -44,6 +44,16 @@ export async function apiGetCrmCustomerDetails<
         params,
     })
 }
+export async function apiGetCustomerDetails<
+    T,
+    U extends Record<string, unknown>
+>(params: U) {
+    return ApiService.fetchData<T>({
+        url: '/doctor/get-patient-details',
+        method: 'get',
+        params,
+    })
+}
 
 export async function apiDeleteCrmCustomer<
     T,

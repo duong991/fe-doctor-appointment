@@ -32,6 +32,8 @@ type AppointmentDetailsResponse = {
         age: string
         fee: number
         reasons: string
+        status: EStatus
+        conclusion: string
     }
 }
 

@@ -158,7 +158,7 @@ const PaymentDetails = () => {
                         darkModeSrc="/img/others/img-2-dark.png"
                         alt="No order found!"
                     />
-                    <h3 className="mt-8">Không tìm thấy lịch hẹn nào</h3>
+                    <h3 className="mt-8">Không tìm thấy giao dịch nào</h3>
                 </div>
             )}
         </Container>

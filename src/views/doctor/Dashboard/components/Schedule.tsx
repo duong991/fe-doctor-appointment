@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import classNames from 'classnames'
 import Card from '@/components/ui/Card'
 import Calendar from '@/components/ui/Calendar'
 import Badge from '@/components/ui/Badge'
 import useThemeClass from '@/utils/hooks/useThemeClass'
-import { HiVideoCamera, HiDocumentText, HiChatAlt2 } from 'react-icons/hi'
-import { v4 as uuidv4 } from 'uuid'
+import { HiVideoCamera, HiOutlineEye } from 'react-icons/hi'
+import { useNavigate } from 'react-router-dom'
 import { MdDone } from 'react-icons/md'
 import { injectReducer, useAppDispatch } from '@/store'
 import reducer, { setScheduleSelected } from '../store'
+import Tooltip from '@/components/ui/Tooltip'
 
 type ScheduleProps = {
     data?: {
@@ -48,7 +49,7 @@ injectReducer('projectDashboard', reducer)
 const Schedule = ({ data = [] }: ScheduleProps) => {
     const [value, setValue] = useState<Date | null>()
     const dispatch = useAppDispatch()
-
+    const navigate = useNavigate()
     const { textTheme } = useThemeClass()
 
     const navigationToRoomId = (_roomId: string) => {
@@ -64,7 +65,12 @@ const Schedule = ({ data = [] }: ScheduleProps) => {
             })
         )
     }
-
+    const onView = useCallback(
+        (id: string) => {
+            navigate(`/appointment-detail/${id}`)
+        },
+        [navigate]
+    )
     return (
         <Card className="mb-4">
             <div className="mx-auto max-w-[420px]">
@@ -126,13 +132,25 @@ const Schedule = ({ data = [] }: ScheduleProps) => {
                             <p>{event.scheduleTime}</p>
                         </div>
                     </div>
-                    <span
-                        className="text-sm font-bold text-green-600 m-2 cursor-pointer
-                            border border-green-600 rounded-full p-2 hover:bg-green-600 hover:text-white"
-                        onClick={() => handleSubmit(event.id)}
-                    >
-                        <MdDone />
-                    </span>
+                    <div className="flex justify-end text-lg">
+                        <Tooltip title="Xem chi tiết">
+                            <span
+                                className={`cursor-pointer p-2 hover:${textTheme}`}
+                                onClick={() => onView(event.id)}
+                            >
+                                <HiOutlineEye size={18} />
+                            </span>
+                        </Tooltip>
+                        <Tooltip title="Hoàn thành">
+                            <span
+                                className="text-sm font-bold text-green-600  cursor-pointer
+                            border-spacing-2 border-green-600 rounded-full p-2 hover:bg-green-600 hover:text-white"
+                                onClick={() => handleSubmit(event.id)}
+                            >
+                                <MdDone size={18} />
+                            </span>
+                        </Tooltip>
+                    </div>
                 </div>
             ))}
         </Card>

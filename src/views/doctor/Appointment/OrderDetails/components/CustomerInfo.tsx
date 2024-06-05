@@ -3,8 +3,8 @@ import Avatar from '@/components/ui/Avatar'
 import IconText from '@/components/shared/IconText'
 import { HiMail, HiPhone, HiExternalLink } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
-import { imagePath } from '@/utils/imagePath'
-import { defaultImagePath } from '@/constants/data.constant'
+import { extractPText, imagePath } from '@/utils/imagePath'
+import { defaultImagePath, EStatus } from '@/constants/data.constant'
 import { NumericFormat } from 'react-number-format'
 
 type CustomerInfoProps = {
@@ -18,6 +18,8 @@ type CustomerInfoProps = {
         age: string
         fee: number
         reasons: string
+        status: EStatus
+        conclusion: string
     }
 }
 
@@ -80,6 +82,16 @@ const CustomerInfo = ({ data }: CustomerInfoProps) => {
             <h6 className="mb-4">Lý do thăm khám</h6>
             <address className="not-italic">{data?.reasons}</address>
             <hr className="my-5" />
+            {/* Thêm phần kết luận dựa vào trạng thái của cuộc hẹn */}
+            {data?.status === EStatus.COMPLETED && (
+                <>
+                    <h6 className="mb-4">Kết luận</h6>
+                    <address className="not-italic">
+                        {extractPText(data?.conclusion)}
+                    </address>
+                    <hr className="my-5" />
+                </>
+            )}
         </Card>
     )
 }

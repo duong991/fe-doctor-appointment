@@ -59,7 +59,7 @@ const ActionColumn = ({ row }: { row: Order }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <Tooltip title="View">
+            <Tooltip title="Xem chi tiết">
                 <span
                     className={`cursor-pointer p-2 hover:${textTheme}`}
                     onClick={onView}
@@ -67,7 +67,7 @@ const ActionColumn = ({ row }: { row: Order }) => {
                     <HiOutlineEye size={18} />
                 </span>
             </Tooltip>
-            <Tooltip title="Done">
+            <Tooltip title="Hoàn thành">
                 <span
                     className="text-sm font-bold text-green-600  cursor-pointer
                             border-spacing-2 border-green-600 rounded-full p-2 hover:bg-green-600 hover:text-white"
