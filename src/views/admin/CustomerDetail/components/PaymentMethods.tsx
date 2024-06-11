@@ -46,7 +46,7 @@ const PaymentMethods = () => {
 
     return (
         <>
-            {data && (
+            {data && data.id !== 0 && (
                 <div>
                     <h6 className="mb-4">Phương thức thanh toán</h6>
                     <div className="rounded-lg border border-gray-200 dark:border-gray-600">

@@ -60,7 +60,7 @@ const DoctorFavorite = () => {
 
     return (
         <div className="mb-8">
-            <h6 className="mb-4">Bác sĩ yêu thích</h6>
+            <h6 className="mb-4">Bác sĩ đã từng khám</h6>
             <Table>
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (

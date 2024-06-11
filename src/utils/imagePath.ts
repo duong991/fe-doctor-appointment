@@ -11,11 +11,11 @@ export function imagePath(imageName: string) {
 export const getPaymentStatusLabel = (status: EPaymentStatus): string => {
     switch (status) {
         case EPaymentStatus.PENDING:
-            return 'pending'
+            return 'Đang chờ xử lý'
         case EPaymentStatus.SUCCESS:
-            return 'success'
+            return 'Thành công'
         case EPaymentStatus.FAILED:
-            return 'failed'
+            return 'Thất bại'
         default:
             return ''
     }

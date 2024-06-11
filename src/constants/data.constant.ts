@@ -1,17 +1,17 @@
 const specialists = [
-    { label: 'Nhãn khoa', value: '1ef5d817-3d04-4a5f-a8a4-9ef7c2330277' },
+    { label: 'Nhãn khoa', value: 'efa885d5-3365-49c8-8e73-e21bd4e9513e' },
     {
         label: 'Ngoại thần kinh',
-        value: '2c1d26b5-ea2a-418f-9540-fa56489df84c',
+        value: 'd545dac7-5f37-4976-9de0-afc4a3d0575f',
     },
-    { label: 'Thần kinh', value: '39c4c531-442f-4a54-ba08-b3431d9757e1' },
-    { label: 'Phụ khoa', value: '43b622ed-2c1d-46cd-8900-477ece84a171' },
-    { label: 'Tim Mạch', value: '7d2e9106-864f-47a7-8ed7-852b24b1e142' },
-    { label: 'Da Liễu', value: 'a5cf9713-520b-4c34-99e6-cbf095009040' },
-    { label: 'Nhi Khoa', value: 'c53396c2-9215-4efb-b656-edb0f2302a5e' },
+    { label: 'Thần kinh', value: '84a70fca-ba9a-47e1-9e15-c7f10a247d90' },
+    { label: 'Phụ khoa', value: '09865999-781f-42cf-bb5e-e12feb62807d' },
+    { label: 'Tim Mạch', value: '9b1eb80a-90ed-4afe-a65a-a463c947b129' },
+    { label: 'Da Liễu', value: '36fe4b6a-473b-439c-a6ef-46f46f4e8dea' },
+    { label: 'Nhi Khoa', value: '85867033-80c8-4c9d-affa-349e7e34af4c' },
     {
         label: 'Răng hàm mặt',
-        value: 'd922a008-b255-4587-901a-0e9d57aad5f4',
+        value: 'f90c2175-b205-40ef-a65f-94f560abc131',
     },
 ]
 

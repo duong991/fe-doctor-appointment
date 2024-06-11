@@ -14,6 +14,7 @@ import type { PaymentHistory } from '../store'
 import dayjs from 'dayjs'
 import { EPaymentStatus } from '@/constants/data.constant'
 import { getPaymentStatusLabel } from '@/utils/imagePath'
+import { Link } from 'react-router-dom'
 
 const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
@@ -30,11 +31,11 @@ const columns = [
         header: 'Mã giao dịch',
         cell: (props) => {
             const row = props.row.original
-            const shortId = row.id.slice(0, 8)
+            const shortId = row.id.slice(0, 8).toUpperCase()
             return (
-                <div>
-                    <span className="cursor-pointer">{shortId}</span>
-                </div>
+                <Link to={`/payment/details/${props.row.original.id}`}>
+                    #{shortId}
+                </Link>
             )
         },
     }),

@@ -5,8 +5,10 @@ import { useLocation } from 'react-router-dom'
 const Room = () => {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
+        .toString()
+        .split('=')[1]
     const roomId =
-        'vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/' + searchParams
+        'vpaas-magic-cookie-81ab7c0a26124f9c9a85e4294b6cd2ac/' + searchParams
     const url = '8x8.vc'
 
     const { user } = useAuth()
